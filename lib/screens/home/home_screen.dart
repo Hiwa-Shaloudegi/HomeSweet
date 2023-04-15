@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:home_sweet/constants/colors.dart';
-import 'package:home_sweet/my_custom_icon_icons.dart';
 
+import '../../widgets/custom_appbar.dart';
 import '../../widgets/navbar.dart';
+import 'widgets/app_drawer.dart';
 import 'widgets/management_item.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -10,70 +11,17 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var textTheme = Theme.of(context).textTheme;
-
     return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: const CustomAppBar(),
+      drawer: AppDrawer(),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 32, bottom: 64),
-                child: Row(
-                  children: [
-                    IconButton(
-                      iconSize: 42,
-                      icon: const Icon(MyCustomIcon.menu,
-                          color: AppColors.primaryColor),
-                      splashColor: AppColors.primaryColor.withOpacity(0.1),
-                      highlightColor: AppColors.primaryColor.withOpacity(0.1),
-                      padding: const EdgeInsets.all(0),
-                      onPressed: () {},
-                    ),
-                    const Spacer(),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8),
-                      child: Column(
-                        children: [
-                          Text(
-                            'کیان صداقتی',
-                            style: textTheme.bodyLarge,
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            'مدیر ساختمان',
-                            style: textTheme.bodySmall,
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    Container(
-                      width: 80,
-                      height: 80,
-                      margin: const EdgeInsets.only(right: 8),
-                      decoration: BoxDecoration(
-                        // color: Colors.grey,
-                        shape: BoxShape.circle,
-                        image: const DecorationImage(
-                          image: AssetImage('assets/images/manager.png'),
-                          fit: BoxFit.cover,
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.shade400,
-                            offset: const Offset(0, 3),
-                            blurRadius: 2,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 50),
               Container(
                 // color: Colors.amber,
                 height: 400,
@@ -95,6 +43,54 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: const NavBar(),
+    );
+  }
+}
+
+class SettingItem extends StatelessWidget {
+  final String title;
+  final Icon icon;
+  final Color? iconColor;
+  final Color? textColor;
+  final Widget? trailing;
+  final VoidCallback onTap;
+
+  const SettingItem({
+    super.key,
+    required this.title,
+    required this.icon,
+    required this.onTap,
+    this.iconColor,
+    this.trailing,
+    this.textColor,
+    // const Icon(
+    //   Icons.arrow_back_ios_rounded,
+    //   size: 18,
+    //   color: AppColors.lightGrey,
+    //   textDirection: TextDirection.ltr,
+    // ),
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+
+    return ListTile(
+      textColor: textColor ?? AppColors.lightGrey,
+      iconColor: iconColor ?? AppColors.lightGrey,
+      leading: icon,
+      title: Text(
+        title,
+        style: textTheme.titleMedium?.copyWith(color: textColor),
+      ),
+      trailing: trailing ??
+          const Icon(
+            Icons.arrow_back_ios_rounded,
+            size: 20,
+            color: AppColors.lightGrey,
+            textDirection: TextDirection.ltr,
+          ),
+      onTap: onTap,
     );
   }
 }

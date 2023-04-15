@@ -10,7 +10,7 @@ class ManagementItem extends StatelessWidget {
     'شارژ ماهیانه و قبوض': '📘',
   };
 
-  var entries = managementItems.entries.toList();
+  var managementItemList = managementItems.entries.toList();
 
   ManagementItem({
     super.key,
@@ -21,45 +21,48 @@ class ManagementItem extends StatelessWidget {
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
 
-    return Container(
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: const Color(0xffF6F7F9),
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: const [
-          BoxShadow(
-            color: Color(0xffF6F7F9),
-            offset: Offset(0, -1),
-          ),
-          BoxShadow(
-            color: Color(0xffF6F7F9),
-            offset: Offset(0, 1),
-          ),
-          BoxShadow(
-            color: Color(0xffF6F7F9),
-            offset: Offset(1, 0),
-          ),
-          BoxShadow(
-            color: Color(0xffF6F7F9),
-            offset: Offset(-1, 0),
-          ),
-        ],
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            entries[index].value,
-            style: const TextStyle(fontSize: 50),
-          ),
-          const SizedBox(height: 12),
-          Text(
-            entries[index].key,
-            textAlign: TextAlign.center,
-            style: textTheme.bodySmall!.copyWith(fontSize: 19),
-            maxLines: 2,
-          ),
-        ],
+    return GestureDetector(
+      onTap: () {},
+      child: Container(
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          color: const Color(0xffF6F7F9),
+          borderRadius: BorderRadius.circular(12),
+          boxShadow: const [
+            BoxShadow(
+              color: Color(0xffF6F7F9),
+              offset: Offset(0, -1),
+            ),
+            BoxShadow(
+              color: Color(0xffF6F7F9),
+              offset: Offset(0, 1),
+            ),
+            BoxShadow(
+              color: Color(0xffF6F7F9),
+              offset: Offset(1, 0),
+            ),
+            BoxShadow(
+              color: Color(0xffF6F7F9),
+              offset: Offset(-1, 0),
+            ),
+          ],
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              managementItemList[index].value,
+              style: const TextStyle(fontSize: 50),
+            ),
+            const SizedBox(height: 12),
+            Text(
+              managementItemList[index].key,
+              textAlign: TextAlign.center,
+              style: textTheme.bodySmall!.copyWith(fontSize: 19),
+              maxLines: 2,
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -42,7 +42,7 @@ class _NavBarState extends State<NavBar> {
             label: 'خانه',
           ),
           BottomNavigationBarItem(
-            icon: Icon(MyCustomIcon.uil_building),
+            icon: Icon(MyCustomIcon.building),
             label: 'آپارتمان',
           ),
         ],

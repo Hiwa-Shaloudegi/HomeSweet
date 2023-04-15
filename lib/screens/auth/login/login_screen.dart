@@ -4,6 +4,7 @@ import 'package:home_sweet/constants/colors.dart';
 import 'package:home_sweet/screens/auth/singup/signup_screen.dart';
 
 import '../widgets/custom_text_field.dart';
+import '../widgets/save_button.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -11,13 +12,13 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Form(
-            child: Container(
-              // color: Colors.amber,
-              child: Center(
+      body: SingleChildScrollView(
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Form(
+              child: Container(
+                // color: Colors.amber,
                 child: Column(
                   children: [
                     const SizedBox(height: 60),
@@ -43,27 +44,11 @@ class LoginScreen extends StatelessWidget {
                       thickness: 2,
                       height: 20,
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        Get.to(const SignUpScreen());
-                      },
-                      child: Text(
-                        'ساخت حساب کاربری',
-                        style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                              fontSize: 14,
-                              color: AppColors.primaryColor,
-                            ),
-                      ),
-                    ),
-                    const Spacer(),
-                    Container(
-                      width: double.infinity,
-                      height: 64,
-                      margin: const EdgeInsets.only(bottom: 16),
-                      child: ElevatedButton(
-                        onPressed: () {},
-                        child: const Text('ورود'),
-                      ),
+                    _goToSignUpScreen(context),
+                    const SizedBox(height: 180),
+                    SaveButton(
+                      text: 'ورود',
+                      onPressed: () {},
                     ),
                   ],
                 ),
@@ -71,6 +56,21 @@ class LoginScreen extends StatelessWidget {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _goToSignUpScreen(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Get.to(const SignUpScreen());
+      },
+      child: Text(
+        'ساخت حساب کاربری',
+        style: Theme.of(context).textTheme.bodySmall!.copyWith(
+              fontSize: 14,
+              color: AppColors.primaryColor,
+            ),
       ),
     );
   }
