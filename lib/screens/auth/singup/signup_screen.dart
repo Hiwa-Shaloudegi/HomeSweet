@@ -7,8 +7,15 @@ import 'package:home_sweet/screens/auth/widgets/save_button.dart';
 import '../login/login_screen.dart';
 import '../widgets/custom_text_field.dart';
 
-class SignUpScreen extends StatelessWidget {
+class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
+
+  @override
+  State<SignUpScreen> createState() => _SignUpScreenState();
+}
+
+class _SignUpScreenState extends State<SignUpScreen> {
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +25,7 @@ class SignUpScreen extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Form(
+              key: _formKey,
               child: Container(
                 // color: Colors.amber,
                 child: Center(
@@ -38,15 +46,21 @@ class SignUpScreen extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 24),
-                      const CustomTextField(hintText: 'نام کاربری'),
-                      const CustomTextField.password(),
-                      const CustomTextField.repeatPassword(),
+                      CustomTextField(
+                        hintText: 'نام کاربری',
+                      ),
+                      CustomTextField.password(),
+                      CustomTextField.repeatPassword(),
                       const SizedBox(height: 8),
                       _goToLoginScreenSection(context),
                       const SizedBox(height: 60),
                       SaveButton(
                         text: 'ثبت نام',
-                        onPressed: () {},
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            _formKey.currentState!.save();
+                          }
+                        },
                       ),
                     ],
                   ),

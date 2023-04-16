@@ -2,12 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:home_sweet/constants/colors.dart';
 import 'package:home_sweet/screens/auth/singup/signup_screen.dart';
+import 'package:home_sweet/utils/validators.dart';
 
 import '../widgets/custom_text_field.dart';
 import '../widgets/save_button.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +25,7 @@ class LoginScreen extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Form(
+              key: _formKey,
               child: Container(
                 // color: Colors.amber,
                 child: Column(
@@ -34,8 +43,8 @@ class LoginScreen extends StatelessWidget {
                           TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
                     ),
                     const SizedBox(height: 24),
-                    const CustomTextField(hintText: 'نام کاربری'),
-                    const CustomTextField.password(),
+                    CustomTextField(hintText: 'نام کاربری'),
+                    CustomTextField.password(),
                     const SizedBox(height: 8),
                     const Divider(
                       color: Color(0xffCACACF),
@@ -48,7 +57,11 @@ class LoginScreen extends StatelessWidget {
                     const SizedBox(height: 180),
                     SaveButton(
                       text: 'ورود',
-                      onPressed: () {},
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          _formKey.currentState!.save();
+                        }
+                      },
                     ),
                   ],
                 ),

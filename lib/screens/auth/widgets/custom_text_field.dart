@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:home_sweet/my_custom_icon_icons.dart';
+import 'package:home_sweet/utils/validators.dart';
 
 class CustomTextField extends StatelessWidget {
   final String hintText;
@@ -7,10 +8,13 @@ class CustomTextField extends StatelessWidget {
   final Widget suffixIcon;
   final bool obscureText;
   final TextInputType keyboardType;
+  // final String? validator;
+  // final String? Function(String?) validator;
 
   const CustomTextField({
     super.key,
     required this.hintText,
+    // required this.validator,
     this.padding = 10,
     this.suffixIcon = const SizedBox.shrink(),
     this.obscureText = false,
@@ -19,17 +23,17 @@ class CustomTextField extends StatelessWidget {
 
   const CustomTextField.password({
     super.key,
+    // required this.validator,
     this.hintText = 'رمز عبور',
     this.padding = 10,
-    // TODO: Icon for eye in passeord field
-    this.suffixIcon =
-        const Icon(MyCustomIcon.eyeOff), //const Icon(MyCustomIcon.),
+    this.suffixIcon = const Icon(Icons.remove_red_eye_outlined),
     this.obscureText = true,
     this.keyboardType = TextInputType.number,
   });
 
   const CustomTextField.repeatPassword({
     super.key,
+    // required this.validator,
     this.hintText = 'تکرار رمز عبور',
     this.padding = 10,
     this.suffixIcon = const Icon(Icons.remove_red_eye_outlined),
@@ -50,13 +54,20 @@ class CustomTextField extends StatelessWidget {
           ),
           const SizedBox(height: 14),
           TextFormField(
+            autovalidateMode: AutovalidateMode.onUserInteraction,
             textInputAction: TextInputAction.next,
             keyboardType: keyboardType,
             obscureText: obscureText,
             decoration: InputDecoration(
+              errorStyle: const TextStyle(
+                color: Colors.red,
+                fontSize: 14,
+              ),
               suffixIcon: suffixIcon,
               hintText: hintText,
             ),
+            onSaved: (newValue) {},
+            validator: (value) => Validators.usernameValidator(value),
           ),
         ],
       ),

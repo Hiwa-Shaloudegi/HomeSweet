@@ -5,8 +5,8 @@ import '../../../constants/colors.dart';
 import '../../../my_custom_icon_icons.dart';
 import '../home_screen.dart';
 
-class AppDrawer extends StatelessWidget {
-  AppDrawer({super.key});
+class SettingDrawer extends StatelessWidget {
+  SettingDrawer({super.key});
 
   static const Map<String, dynamic> settingItems = {
     'حساب کاربری': Icon(MyCustomIcon.profile),
