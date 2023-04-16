@@ -21,7 +21,6 @@ class Validators {
     return null;
   }
 
-  // TODO: match with password field.
   static String? repeatPasswordValidator(String? value) {
     if (value == null || value.isEmpty) {
       return '* این فیلد الزامی است';

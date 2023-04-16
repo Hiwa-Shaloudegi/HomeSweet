@@ -5,17 +5,25 @@ import 'package:home_sweet/routes/pages.dart';
 import 'package:home_sweet/routes/routes.dart';
 import 'package:home_sweet/themes/app_theme.dart';
 
-void main() {
+import 'controllers/theme_controller.dart';
+
+void main() async {
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
     ),
   );
-  runApp(const MainApp());
+
+  // await GetStorage.init(); // Initialize GetStorage
+  // bool isFirstTime = GetStorage().read<bool>('first_time') ?? true;
+  // runApp(MyApp(isFirstTime: isFirstTime));
+  runApp(MainApp());
 }
 
 class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+  MainApp({super.key});
+
+  final ThemeController _themeController = Get.put(ThemeController());
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +31,11 @@ class MainApp extends StatelessWidget {
       title: 'AMS',
       debugShowCheckedModeBanner: false,
       locale: const Locale('fa'),
-      theme: AppTheme.themeData(),
-      initialRoute: AppRoutes.loginScreen,
+      theme: AppTheme.lightTheme(),
+      darkTheme: AppTheme.darkTheme(),
+      themeMode:
+          _themeController.switchValue ? ThemeMode.light : ThemeMode.dark,
+      initialRoute: AppRoutes.homeScreen,
       getPages: AppPages.getPages,
     );
   }

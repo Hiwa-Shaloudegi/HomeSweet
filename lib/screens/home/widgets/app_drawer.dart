@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:home_sweet/controllers/theme_controller.dart';
 
 import '../../../constants/colors.dart';
 import '../../../my_custom_icon_icons.dart';
@@ -21,6 +22,8 @@ class SettingDrawer extends StatelessWidget {
   };
 
   var settingItemList = settingItems.entries.toList();
+
+  final themeController = Get.put(ThemeController());
 
   @override
   Widget build(BuildContext context) {
@@ -47,10 +50,14 @@ class SettingDrawer extends StatelessWidget {
                     if (index == settingItemList.length - 1) {
                       trailing = const SizedBox.shrink();
                     } else if (index == 2) {
-                      trailing = Switch.adaptive(
-                        value: true,
-                        onChanged: (value) {},
-                      );
+                      trailing = GetBuilder<ThemeController>(
+                          builder: (themeController) {
+                        return Switch.adaptive(
+                          value: themeController.switchValue,
+                          onChanged: (value) =>
+                              themeController.onChanged(value),
+                        );
+                      });
                     } else {
                       trailing = null; // use default widget.
                     }

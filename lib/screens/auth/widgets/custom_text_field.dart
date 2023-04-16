@@ -6,40 +6,44 @@ class CustomTextField extends StatelessWidget {
   final double padding;
   final Widget suffixIcon;
   final bool obscureText;
+  // final int maxLength;
   final TextInputType keyboardType;
   final String? Function(String?)? validator;
   final void Function(String?)? onSaved;
 
-  CustomTextField({
+  const CustomTextField({
     super.key,
     required this.controller,
     required this.hintText,
     required this.validator,
     required this.onSaved,
+    // this.maxLength = 20,
     this.padding = 10,
     this.suffixIcon = const SizedBox.shrink(),
     this.obscureText = false,
     this.keyboardType = TextInputType.text,
   });
 
-  CustomTextField.password({
+  const CustomTextField.password({
     super.key,
     required this.controller,
     required this.validator,
     required this.onSaved,
     this.hintText = 'رمز عبور',
+    // this.maxLength = 6,
     this.padding = 10,
     this.suffixIcon = const Icon(Icons.visibility_off),
     this.obscureText = true,
     this.keyboardType = TextInputType.number,
   });
 
-  CustomTextField.repeatPassword({
+  const CustomTextField.repeatPassword({
     super.key,
     required this.controller,
     required this.validator,
     required this.onSaved,
     this.hintText = 'تکرار رمز عبور',
+    // this.maxLength = 6,
     this.padding = 10,
     this.suffixIcon = const Icon(Icons.visibility_off),
     this.obscureText = true,
@@ -64,6 +68,7 @@ class CustomTextField extends StatelessWidget {
             textInputAction: TextInputAction.next,
             keyboardType: keyboardType,
             obscureText: obscureText,
+            // maxLength: maxLength,
             decoration: InputDecoration(
               errorStyle: const TextStyle(
                 color: Colors.red,
@@ -71,6 +76,7 @@ class CustomTextField extends StatelessWidget {
               ),
               suffixIcon: suffixIcon,
               hintText: hintText,
+              // counterText: '',
             ),
             validator: validator,
             onSaved: onSaved,

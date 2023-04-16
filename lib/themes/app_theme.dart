@@ -5,11 +5,23 @@ import '../constants/colors.dart';
 class AppTheme {
   AppTheme._();
 
-  static ThemeData themeData() {
+  static ThemeData lightTheme() {
     return ThemeData(
+      brightness: Brightness.light,
       fontFamily: 'iransans',
       scaffoldBackgroundColor: AppColors.scaffoldBackgroundColor,
       primaryColor: AppColors.primaryColor,
+      iconTheme: const IconThemeData(),
+      textTheme: textTheme(),
+      elevatedButtonTheme: elevatedButtonTheme(),
+      inputDecorationTheme: inputDecorationTheme(),
+    );
+  }
+
+  static ThemeData darkTheme() {
+    return ThemeData(
+      brightness: Brightness.dark,
+      fontFamily: 'iransans',
       iconTheme: const IconThemeData(),
       textTheme: textTheme(),
       elevatedButtonTheme: elevatedButtonTheme(),
