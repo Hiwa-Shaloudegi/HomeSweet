@@ -1,42 +1,49 @@
 import 'package:flutter/material.dart';
-import 'package:home_sweet/my_custom_icon_icons.dart';
-import 'package:home_sweet/utils/validators.dart';
+import 'package:get/get.dart';
+import 'package:home_sweet/controllers/password_controller.dart';
 
 class CustomTextField extends StatelessWidget {
+  final TextEditingController? controller;
   final String hintText;
   final double padding;
   final Widget suffixIcon;
   final bool obscureText;
   final TextInputType keyboardType;
-  // final String? validator;
-  // final String? Function(String?) validator;
+  final String? Function(String?)? validator;
+  final void Function(String?)? onSaved;
 
-  const CustomTextField({
+  CustomTextField({
     super.key,
+    required this.controller,
     required this.hintText,
-    // required this.validator,
+    required this.validator,
+    required this.onSaved,
     this.padding = 10,
     this.suffixIcon = const SizedBox.shrink(),
     this.obscureText = false,
     this.keyboardType = TextInputType.text,
   });
 
-  const CustomTextField.password({
+  CustomTextField.password({
     super.key,
-    // required this.validator,
+    required this.controller,
+    required this.validator,
+    required this.onSaved,
     this.hintText = 'رمز عبور',
     this.padding = 10,
-    this.suffixIcon = const Icon(Icons.remove_red_eye_outlined),
+    this.suffixIcon = const Icon(Icons.visibility_off),
     this.obscureText = true,
     this.keyboardType = TextInputType.number,
   });
 
-  const CustomTextField.repeatPassword({
+  CustomTextField.repeatPassword({
     super.key,
-    // required this.validator,
+    required this.controller,
+    required this.validator,
+    required this.onSaved,
     this.hintText = 'تکرار رمز عبور',
     this.padding = 10,
-    this.suffixIcon = const Icon(Icons.remove_red_eye_outlined),
+    this.suffixIcon = const Icon(Icons.visibility_off),
     this.obscureText = true,
     this.keyboardType = TextInputType.number,
   });
@@ -54,6 +61,7 @@ class CustomTextField extends StatelessWidget {
           ),
           const SizedBox(height: 14),
           TextFormField(
+            controller: controller,
             autovalidateMode: AutovalidateMode.onUserInteraction,
             textInputAction: TextInputAction.next,
             keyboardType: keyboardType,
@@ -61,13 +69,13 @@ class CustomTextField extends StatelessWidget {
             decoration: InputDecoration(
               errorStyle: const TextStyle(
                 color: Colors.red,
-                fontSize: 14,
+                fontSize: 13,
               ),
               suffixIcon: suffixIcon,
               hintText: hintText,
             ),
-            onSaved: (newValue) {},
-            validator: (value) => Validators.usernameValidator(value),
+            validator: validator,
+            onSaved: onSaved,
           ),
         ],
       ),

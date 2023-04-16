@@ -24,7 +24,7 @@ class MainApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       locale: const Locale('fa'),
       theme: AppTheme.themeData(),
-      initialRoute: AppRoutes.homeScreen,
+      initialRoute: AppRoutes.loginScreen,
       getPages: AppPages.getPages,
     );
   }

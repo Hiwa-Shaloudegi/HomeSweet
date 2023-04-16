@@ -2,20 +2,15 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:home_sweet/constants/colors.dart';
+import 'package:home_sweet/controllers/signup_controller.dart';
+import 'package:home_sweet/routes/routes.dart';
 import 'package:home_sweet/screens/auth/widgets/save_button.dart';
+import 'package:home_sweet/utils/validators.dart';
 
-import '../login/login_screen.dart';
 import '../widgets/custom_text_field.dart';
 
-class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({super.key});
-
-  @override
-  State<SignUpScreen> createState() => _SignUpScreenState();
-}
-
-class _SignUpScreenState extends State<SignUpScreen> {
-  final _formKey = GlobalKey<FormState>();
+class SignUpScreen extends StatelessWidget {
+  final signUpController = Get.put(SignUpController());
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +20,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Form(
-              key: _formKey,
+              key: signUpController.formKey,
               child: Container(
                 // color: Colors.amber,
                 child: Center(
@@ -47,21 +42,56 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                       const SizedBox(height: 24),
                       CustomTextField(
+                        controller: signUpController.usernameTextController,
                         hintText: 'نام کاربری',
+                        validator: (value) =>
+                            Validators.usernameValidator(value),
+                        onSaved: (newValue) =>
+                            signUpController.usernameOnSaved(newValue),
                       ),
-                      CustomTextField.password(),
-                      CustomTextField.repeatPassword(),
+                      GetBuilder<SignUpController>(builder: (signUpController) {
+                        return CustomTextField.password(
+                          controller: signUpController.passwordTextController,
+                          obscureText: !signUpController.isPasswordVisible,
+                          suffixIcon: GestureDetector(
+                            onTap: () =>
+                                signUpController.togglePasswordVisibility(),
+                            child: signUpController.isPasswordVisible
+                                ? const Icon(Icons.visibility)
+                                : const Icon(Icons.visibility_off),
+                          ),
+                          validator: (value) =>
+                              Validators.passwordValidator(value),
+                          onSaved: (newValue) =>
+                              signUpController.passwordOnSaved(newValue),
+                        );
+                      }),
+                      GetBuilder<SignUpController>(builder: (signUpController) {
+                        return CustomTextField.repeatPassword(
+                          controller:
+                              signUpController.repeatPasswordTextController,
+                          obscureText:
+                              !signUpController.isRepeatPasswordVisible,
+                          suffixIcon: GestureDetector(
+                            onTap: () => signUpController
+                                .toggleRepeatPasswordVisibility(),
+                            child: signUpController.isRepeatPasswordVisible
+                                ? const Icon(Icons.visibility)
+                                : const Icon(Icons.visibility_off),
+                          ),
+                          validator: (value) =>
+                              Validators.passwordValidator(value),
+                          onSaved: (newValue) {},
+                        );
+                      }),
                       const SizedBox(height: 8),
                       _goToLoginScreenSection(context),
                       const SizedBox(height: 60),
                       SaveButton(
-                        text: 'ثبت نام',
-                        onPressed: () {
-                          if (_formKey.currentState!.validate()) {
-                            _formKey.currentState!.save();
-                          }
-                        },
-                      ),
+                          text: 'ثبت نام',
+                          onPressed: () {
+                            signUpController.submitForm();
+                          }),
                     ],
                   ),
                 ),
@@ -97,7 +127,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 // !NEW
                 recognizer: TapGestureRecognizer()
                   ..onTap = () {
-                    Get.to(const LoginScreen());
+                    Get.offAndToNamed(AppRoutes.loginScreen);
                   },
                 text: ' ورود',
                 style: Theme.of(context).textTheme.bodySmall!.copyWith(

@@ -16,29 +16,33 @@ class HomeScreen extends StatelessWidget {
       appBar: const CustomAppBar(),
       drawer: SettingDrawer(),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 50),
-              Container(
-                // color: Colors.amber,
-                height: 400,
-                child: GridView.builder(
-                  itemCount: 4,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    mainAxisExtent: 180,
-                    crossAxisSpacing: 16,
-                    mainAxisSpacing: 16,
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 50),
+                Container(
+                  // color: Colors.amber,
+                  height: 400,
+                  child: GridView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: 4,
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      mainAxisExtent: 180,
+                      crossAxisSpacing: 16,
+                      mainAxisSpacing: 16,
+                    ),
+                    itemBuilder: (context, index) {
+                      return ManagementItem(index: index);
+                    },
                   ),
-                  itemBuilder: (context, index) {
-                    return ManagementItem(index: index);
-                  },
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

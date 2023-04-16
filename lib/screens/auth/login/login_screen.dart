@@ -1,21 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:home_sweet/constants/colors.dart';
-import 'package:home_sweet/screens/auth/singup/signup_screen.dart';
+import 'package:home_sweet/routes/routes.dart';
 import 'package:home_sweet/utils/validators.dart';
 
+import '../../../controllers/login_controller.dart';
 import '../widgets/custom_text_field.dart';
 import '../widgets/save_button.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
-
-  @override
-  State<LoginScreen> createState() => _LoginScreenState();
-}
-
-class _LoginScreenState extends State<LoginScreen> {
-  final _formKey = GlobalKey<FormState>();
+class LoginScreen extends StatelessWidget {
+  final loginController = Get.put(LoginController());
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +19,7 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Form(
-              key: _formKey,
+              key: loginController.formKey,
               child: Container(
                 // color: Colors.amber,
                 child: Column(
@@ -43,8 +37,30 @@ class _LoginScreenState extends State<LoginScreen> {
                           TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
                     ),
                     const SizedBox(height: 24),
-                    CustomTextField(hintText: 'نام کاربری'),
-                    CustomTextField.password(),
+                    CustomTextField(
+                      controller: loginController.usernameTextController,
+                      hintText: 'نام کاربری',
+                      validator: (value) => Validators.usernameValidator(value),
+                      onSaved: (newValue) =>
+                          loginController.usernameOnSaved(newValue),
+                    ),
+                    GetBuilder<LoginController>(builder: (loginController) {
+                      return CustomTextField.password(
+                        controller: loginController.passwordTextController,
+                        obscureText: !loginController.isPasswordVisible,
+                        suffixIcon: GestureDetector(
+                          onTap: () =>
+                              loginController.togglePasswordVisibility(),
+                          child: loginController.isPasswordVisible
+                              ? Icon(Icons.visibility)
+                              : Icon(Icons.visibility_off),
+                        ),
+                        validator: (value) =>
+                            Validators.passwordValidator(value),
+                        onSaved: (newValue) =>
+                            loginController.passwordOnSaved(newValue),
+                      );
+                    }),
                     const SizedBox(height: 8),
                     const Divider(
                       color: Color(0xffCACACF),
@@ -57,11 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     const SizedBox(height: 180),
                     SaveButton(
                       text: 'ورود',
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          _formKey.currentState!.save();
-                        }
-                      },
+                      onPressed: () => loginController.submitForm(),
                     ),
                   ],
                 ),
@@ -76,7 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget _goToSignUpScreen(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Get.to(const SignUpScreen());
+        Get.offAndToNamed(AppRoutes.signUpScreen);
       },
       child: Text(
         'ساخت حساب کاربری',

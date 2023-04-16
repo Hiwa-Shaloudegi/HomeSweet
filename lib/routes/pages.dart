@@ -8,7 +8,7 @@ class AppPages {
   AppPages._();
   static final List<GetPage> getPages = [
     GetPage(name: AppRoutes.homeScreen, page: () => const HomeScreen()),
-    GetPage(name: AppRoutes.loginScreen, page: () => const LoginScreen()),
-    GetPage(name: AppRoutes.signUpScreen, page: () => const SignUpScreen()),
+    GetPage(name: AppRoutes.loginScreen, page: () => LoginScreen()),
+    GetPage(name: AppRoutes.signUpScreen, page: () => SignUpScreen()),
   ];
 }
