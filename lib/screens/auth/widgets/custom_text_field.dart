@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:home_sweet/controllers/password_controller.dart';
 
 class CustomTextField extends StatelessWidget {
   final TextEditingController? controller;
