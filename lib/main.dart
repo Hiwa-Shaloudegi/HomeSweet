@@ -8,6 +8,8 @@ import 'package:home_sweet/themes/app_theme.dart';
 import 'controllers/theme_controller.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
@@ -35,7 +37,7 @@ class MainApp extends StatelessWidget {
       darkTheme: AppTheme.darkTheme(),
       themeMode:
           _themeController.switchValue ? ThemeMode.light : ThemeMode.dark,
-      initialRoute: AppRoutes.homeScreen,
+      initialRoute: AppRoutes.loginScreen,
       getPages: AppPages.getPages,
     );
   }

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:home_sweet/widgets/snackbar.dart';
 
+import '../database/db_helper.dart';
+import '../models/user.dart';
 import '../routes/routes.dart';
 
 class SignUpController extends GetxController {
@@ -13,8 +16,17 @@ class SignUpController extends GetxController {
   String username = '';
   String password = '';
   String repeatPassword = '';
+
   bool isPasswordVisible = false;
   bool isRepeatPasswordVisible = false;
+
+  late DatabaseHelper databaseHelper;
+  var db;
+  @override
+  void onInit() {
+    super.onInit();
+    databaseHelper = DatabaseHelper.instance;
+  }
 
   void togglePasswordVisibility() {
     isPasswordVisible = !isPasswordVisible;
@@ -28,37 +40,32 @@ class SignUpController extends GetxController {
 
   void usernameOnSaved(String? newValue) {
     username = usernameTextController.text;
-    print('USERNAME: $username');
   }
 
   void passwordOnSaved(String? newValue) {
     password = passwordTextController.text;
-    print('PASSWORD: $password');
   }
 
-  void submitForm() {
+  void signup() async {
     if (formKey.currentState!.validate()) {
       if (passwordTextController.text != repeatPasswordTextController.text) {
-        Get.snackbar(
-          'خطا!',
-          'رمز عبور مطابقت ندارد.',
-          backgroundColor: Colors.red.withAlpha(220),
-          colorText: Colors.white,
-          icon: const Icon(Icons.error, color: Colors.white),
-          shouldIconPulse: false,
-        );
+        AppSnackbar.errorSnackbar('رمز عبور مطابقت ندارد.');
       } else {
+        // input values will be saved in the specified variables.
         formKey.currentState!.save();
 
-        Get.offAndToNamed(AppRoutes.homeScreen);
-        Get.snackbar(
-          'تبریک!',
-          'شما با موفقیت وارد شدید.',
-          backgroundColor: Colors.green.withAlpha(220),
-          colorText: Colors.white,
-        );
+        // Save datas to Database
+        var user = User(username: username, password: password);
+        try {
+          await databaseHelper.createUser(user);
+
+          // Transition to the home page
+          Get.offAndToNamed(AppRoutes.loginScreen);
+          AppSnackbar.successSnackbar('حساب کاربری با موفقیت ساخته شد.');
+        } catch (e) {
+          print('CATCH ERROR: $e');
+        }
       }
-      print('SUBMIT FORM: $username, $password');
     }
   }
 }

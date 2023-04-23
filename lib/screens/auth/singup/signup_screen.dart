@@ -90,7 +90,7 @@ class SignUpScreen extends StatelessWidget {
                       SaveButton(
                           text: 'ثبت نام',
                           onPressed: () {
-                            signUpController.submitForm();
+                            signUpController.signup();
                           }),
                     ],
                   ),

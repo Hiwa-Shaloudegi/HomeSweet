@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:home_sweet/constants/colors.dart';
+import 'package:home_sweet/controllers/home_controller.dart';
 
 import '../../widgets/custom_appbar.dart';
 import '../../widgets/navbar.dart';
@@ -7,13 +9,13 @@ import 'widgets/app_drawer.dart';
 import 'widgets/management_item.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  var homeController = Get.put(HomeController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: const CustomAppBar(),
+      appBar: CustomAppBar(),
       drawer: SettingDrawer(),
       body: SafeArea(
         child: SingleChildScrollView(

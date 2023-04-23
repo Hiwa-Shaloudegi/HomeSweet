@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../constants/colors.dart';
+import '../controllers/home_controller.dart';
 import '../my_custom_icon_icons.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const CustomAppBar({
+  var homeController = Get.put(HomeController());
+
+  CustomAppBar({
     super.key,
   });
 
@@ -18,18 +22,20 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: Colors.transparent,
       elevation: 0,
       toolbarHeight: 150,
-      title: Row(
-        children: [
-          _menu(),
-          const Spacer(),
-          Padding(
-            padding: const EdgeInsets.only(top: 8),
-            child: username(),
-          ),
-          const SizedBox(width: 8),
-          _profilePicture(),
-        ],
-      ),
+      title: GetBuilder<HomeController>(builder: (homeController) {
+        return Row(
+          children: [
+            _menu(),
+            const Spacer(),
+            Padding(
+              padding: const EdgeInsets.only(top: 8),
+              child: username(),
+            ),
+            const SizedBox(width: 8),
+            _profilePicture(),
+          ],
+        );
+      }),
     );
   }
 
@@ -40,7 +46,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       return Column(
         children: [
           Text(
-            'کیان صداقتی',
+            homeController.user!.username ?? 'کیان صداقتی',
             style: textTheme.bodyLarge,
           ),
           const SizedBox(height: 8),

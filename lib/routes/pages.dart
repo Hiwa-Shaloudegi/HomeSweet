@@ -7,7 +7,7 @@ import 'package:home_sweet/screens/home/home_screen.dart';
 class AppPages {
   AppPages._();
   static final List<GetPage> getPages = [
-    GetPage(name: AppRoutes.homeScreen, page: () => const HomeScreen()),
+    GetPage(name: AppRoutes.homeScreen, page: () => HomeScreen()),
     GetPage(name: AppRoutes.loginScreen, page: () => LoginScreen()),
     GetPage(name: AppRoutes.signUpScreen, page: () => SignUpScreen()),
   ];

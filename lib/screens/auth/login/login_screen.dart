@@ -73,7 +73,7 @@ class LoginScreen extends StatelessWidget {
                     const SizedBox(height: 180),
                     SaveButton(
                       text: 'ورود',
-                      onPressed: () => loginController.submitForm(),
+                      onPressed: () => loginController.login(),
                     ),
                   ],
                 ),
