@@ -30,11 +30,11 @@ class LoginController extends GetxController {
   }
 
   void usernameOnSaved(String? newValue) {
-    username = usernameTextController.text;
+    username = usernameTextController.text.trim();
   }
 
   void passwordOnSaved(String? newValue) {
-    password = passwordTextController.text;
+    password = passwordTextController.text.trim();
   }
 
   void login() async {

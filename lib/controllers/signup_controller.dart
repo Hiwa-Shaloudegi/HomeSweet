@@ -39,16 +39,17 @@ class SignUpController extends GetxController {
   }
 
   void usernameOnSaved(String? newValue) {
-    username = usernameTextController.text;
+    username = usernameTextController.text.trim();
   }
 
   void passwordOnSaved(String? newValue) {
-    password = passwordTextController.text;
+    password = passwordTextController.text.trim();
   }
 
   void signup() async {
     if (formKey.currentState!.validate()) {
-      if (passwordTextController.text != repeatPasswordTextController.text) {
+      if (passwordTextController.text.trim() !=
+          repeatPasswordTextController.text.trim()) {
         AppSnackbar.errorSnackbar('رمز عبور مطابقت ندارد.');
       } else {
         // input values will be saved in the specified variables.

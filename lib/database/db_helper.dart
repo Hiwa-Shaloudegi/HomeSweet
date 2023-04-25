@@ -20,13 +20,15 @@ class DatabaseHelper {
       return _database!;
     } else {
       _database = await _initDB();
-      debugPrint("DB Has Created");
+      debugPrint(
+          "DB Has Created"); //  /data/user/0/com.example.home_sweet/databases
       return _database!;
     }
   }
 
   Future<Database> _initDB() async {
     final dbPath = await getDatabasesPath();
+    print("DB Location:-----> $dbPath");
     final path = join(dbPath, databaseName);
 
     debugPrint("Path Of DB: $path");

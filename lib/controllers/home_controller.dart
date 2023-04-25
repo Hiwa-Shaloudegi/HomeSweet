@@ -11,7 +11,7 @@ class HomeController extends GetxController {
     super.onInit();
     databaseHelper = DatabaseHelper.instance;
     // user = await databaseHelper.getUser(1);
-    user = await databaseHelper.getUserByUsername('قلی');
+    user = await databaseHelper.getUserByUsername('Hiwa Shaloudegi');
     update();
   }
 }
