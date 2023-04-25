@@ -1,3 +1,12 @@
+class UserTable {
+  static const String name = 'user';
+
+  // Fields (Columns)
+  static const String id = '_id';
+  static const String username = 'username';
+  static const String password = 'password';
+}
+
 class User {
   int? id;
   String? username;
@@ -10,26 +19,16 @@ class User {
   });
 
   User.fromMap(Map<String, dynamic> map) {
-    id = map[UserFields.id];
-    username = map[UserFields.username];
-    password = map[UserFields.password];
+    id = map[UserTable.id];
+    username = map[UserTable.username];
+    password = map[UserTable.password];
   }
 
   Map<String, dynamic> toMap() {
     return {
-      UserFields.id: id,
-      UserFields.username: username,
-      UserFields.password: password,
+      UserTable.id: id,
+      UserTable.username: username,
+      UserTable.password: password,
     };
   }
-}
-
-class UserFields {
-  // Table
-  static const String tableName = 'user';
-
-  // Fields (Columns)
-  static const String id = '_id';
-  static const String username = 'username';
-  static const String password = 'password';
 }

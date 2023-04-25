@@ -16,12 +16,9 @@ class DatabaseHelper {
   // DB Functions
   Future<Database> get database async {
     if (_database != null) {
-      debugPrint("DB Exist");
       return _database!;
     } else {
       _database = await _initDB();
-      debugPrint(
-          "DB Has Created"); //  /data/user/0/com.example.home_sweet/databases
       return _database!;
     }
   }
@@ -30,7 +27,6 @@ class DatabaseHelper {
     final dbPath = await getDatabasesPath();
     print("DB Location:-----> $dbPath");
     final path = join(dbPath, databaseName);
-
     debugPrint("Path Of DB: $path");
 
     return await openDatabase(
@@ -45,21 +41,20 @@ class DatabaseHelper {
     const textType = 'TEXT NOT NULL';
 
     await db.execute(""" 
-      CREATE TABLE ${UserFields.tableName} (
-      ${UserFields.id} $idType,
-      ${UserFields.username} $textType,
-      ${UserFields.password} $textType
+      CREATE TABLE ${UserTable.name} (
+      ${UserTable.id} $idType,
+      ${UserTable.username} $textType,
+      ${UserTable.password} $textType
       )
 """);
+
+    // TODO: Create other tables.
   }
 
   Future<User> createUser(User user) async {
     var db = await instance.database;
-    print('SaveUser Function: $db');
 
-    user.id = await db.insert(UserFields.tableName, user.toMap());
-    print('SaveUser Function: $db');
-
+    user.id = await db.insert(UserTable.name, user.toMap());
     return user;
   }
 
@@ -83,8 +78,8 @@ class DatabaseHelper {
 
     var maps = await db.rawQuery("""
         SELECT *
-        FROM ${UserFields.tableName}
-        WHERE ${UserFields.username} = "$username" AND ${UserFields.password} = "$password"
+        FROM ${UserTable.name}
+        WHERE ${UserTable.username} = "$username" AND ${UserTable.password} = "$password"
       """);
 
     if (maps.isNotEmpty) {
@@ -99,8 +94,8 @@ class DatabaseHelper {
 
     var maps = await db.rawQuery("""
         SELECT *
-        FROM ${UserFields.tableName}
-        WHERE ${UserFields.username} = "$username"
+        FROM ${UserTable.name}
+        WHERE ${UserTable.username} = "$username"
       """);
 
     if (maps.isNotEmpty) {
