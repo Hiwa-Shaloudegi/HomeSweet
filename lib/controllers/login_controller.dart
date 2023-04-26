@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:home_sweet/constants/storage_keys.dart';
 import 'package:home_sweet/widgets/snackbar.dart';
 
 import '../database/db_helper.dart';
@@ -44,6 +46,10 @@ class LoginController extends GetxController {
       try {
         User? user = await databaseHelper.getLoginUser(username, password);
         if (user != null) {
+          // Managing logged-in user session
+          var box = GetStorage();
+          await box.write(StorageKeys.user, user.toMap());
+
           // Transition to the home page
           Get.offAndToNamed(AppRoutes.homeScreen);
           AppSnackbar.successSnackbar('شما با موفقیت وارد شدید.');
@@ -54,5 +60,11 @@ class LoginController extends GetxController {
         print("ERROR: $e");
       }
     }
+  }
+
+  void logout() async {
+    var box = GetStorage();
+    await box.remove(StorageKeys.user);
+    Get.offNamed(AppRoutes.loginScreen);
   }
 }

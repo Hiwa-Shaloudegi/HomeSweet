@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:home_sweet/database/db_helper.dart';
-import 'package:home_sweet/database/user_queries.dart';
+import 'package:home_sweet/database/user_repository.dart';
 import 'package:home_sweet/models/user.dart';
 
 class HomeController extends GetxController {

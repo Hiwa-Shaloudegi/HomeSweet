@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:home_sweet/constants/colors.dart';
 import 'package:home_sweet/controllers/home_controller.dart';
+import 'package:home_sweet/controllers/login_controller.dart';
 
 import '../../widgets/custom_appbar.dart';
 import '../../widgets/navbar.dart';
@@ -10,6 +11,7 @@ import 'widgets/management_item.dart';
 
 class HomeScreen extends StatelessWidget {
   var homeController = Get.put(HomeController());
+  var loginController = Get.put(LoginController());
 
   @override
   Widget build(BuildContext context) {

@@ -3,27 +3,15 @@ import 'package:get/get.dart';
 import 'package:home_sweet/controllers/theme_controller.dart';
 
 import '../../../constants/colors.dart';
+import '../../../controllers/login_controller.dart';
 import '../../../my_custom_icon_icons.dart';
 import '../home_screen.dart';
 
 class SettingDrawer extends StatelessWidget {
   SettingDrawer({super.key});
 
-  static const Map<String, dynamic> settingItems = {
-    'حساب کاربری': Icon(MyCustomIcon.profile),
-    'تم اپلیکیشن': Icon(Icons.edit_outlined),
-    'حالت روز': Icon(Icons.wb_sunny_outlined),
-    'درباره ما': Icon(MyCustomIcon.aboutCircle),
-    'سوالات پرتکرار': Icon(
-        Icons.question_answer_outlined), //Icon(MyCustomIcon.messageQuestion),
-    'دفترچه راهنما': Icon(Icons.help_outline_rounded,
-        textDirection: TextDirection.ltr), //Icon(MyCustomIcon.help),
-    'خروج از حساب کاربری': Icon(Icons.logout_rounded),
-  };
-
-  var settingItemList = settingItems.entries.toList();
-
   final themeController = Get.put(ThemeController());
+  final loginController = Get.put(LoginController());
 
   @override
   Widget build(BuildContext context) {
@@ -40,52 +28,7 @@ class SettingDrawer extends StatelessWidget {
               const SizedBox(height: 30),
               _profileSection(textTheme),
               const SizedBox(height: 24),
-              Expanded(
-                // TODO: Come up with a better solution.
-                child: ListView.separated(
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: settingItemList.length,
-                  itemBuilder: (context, index) {
-                    late Widget? trailing;
-                    if (index == settingItemList.length - 1) {
-                      trailing = const SizedBox.shrink();
-                    } else if (index == 2) {
-                      trailing = GetBuilder<ThemeController>(
-                          builder: (themeController) {
-                        return Switch.adaptive(
-                          value: themeController.switchValue,
-                          onChanged: (value) =>
-                              themeController.onChanged(value),
-                        );
-                      });
-                    } else {
-                      trailing = null; // use default widget.
-                    }
-                    return SettingItem(
-                      title: settingItemList[index].key,
-                      icon: settingItemList[index].value,
-                      iconColor: index == settingItemList.length - 1
-                          ? Colors.red
-                          : null,
-                      textColor: index == settingItemList.length - 1
-                          ? Colors.red
-                          : null,
-                      trailing: trailing,
-                      onTap: () {},
-                    );
-                  },
-                  separatorBuilder: (context, index) {
-                    return index == 2
-                        ? const Divider(
-                            color: AppColors.dividerColor,
-                            thickness: 1,
-                            indent: 32,
-                            endIndent: 32,
-                          )
-                        : const SizedBox.shrink();
-                  },
-                ),
-              ),
+              ...itemsList(),
             ],
           ),
         ),
@@ -147,5 +90,60 @@ class SettingDrawer extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  List itemsList() {
+    return [
+      SettingItem(
+        title: 'حساب کاربری',
+        icon: const Icon(MyCustomIcon.profile),
+        onTap: () {},
+      ),
+      SettingItem(
+        title: 'تم اپلیکیشن',
+        icon: const Icon(Icons.edit_outlined),
+        onTap: () {},
+      ),
+      SettingItem(
+        title: 'حالت روز',
+        icon: const Icon(Icons.wb_sunny_outlined),
+        trailing: Switch.adaptive(
+          value: themeController.switchValue,
+          onChanged: (value) => themeController.onChanged(value),
+        ),
+        onTap: () {},
+      ),
+      const Divider(
+        color: AppColors.dividerColor,
+        thickness: 1,
+        indent: 32,
+        endIndent: 32,
+      ),
+      SettingItem(
+        title: 'درباره ما',
+        icon: const Icon(MyCustomIcon.aboutCircle),
+        onTap: () {},
+      ),
+      SettingItem(
+        title: 'سوالات پرتکرار',
+        icon: const Icon(Icons.question_answer_outlined),
+        onTap: () {},
+      ),
+      SettingItem(
+        title: 'دفترچه راهنما',
+        icon: const Icon(Icons.help_outline_rounded,
+            textDirection: TextDirection.ltr),
+        onTap: () {},
+      ),
+      SettingItem(
+        title: 'خروج از حساب کاربری',
+        icon: const Icon(Icons.logout_rounded, color: Colors.red),
+        textColor: Colors.red,
+        trailing: const SizedBox.shrink(),
+        onTap: () {
+          loginController.logout();
+        },
+      ),
+    ];
   }
 }

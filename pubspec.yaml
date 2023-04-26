@@ -11,6 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
   get: ^4.6.5
+  get_storage: ^2.1.1
   path: ^1.8.2
   path_provider: ^2.0.14
   sqflite: ^2.2.7

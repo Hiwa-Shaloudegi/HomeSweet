@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get.dart';
+import 'package:home_sweet/constants/storage_keys.dart';
+import 'package:home_sweet/models/user.dart';
 import 'package:home_sweet/routes/pages.dart';
 import 'package:home_sweet/routes/routes.dart';
 import 'package:home_sweet/themes/app_theme.dart';
-
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'controllers/theme_controller.dart';
 
 void main() async {
@@ -16,7 +18,7 @@ void main() async {
     ),
   );
 
-  // await GetStorage.init(); // Initialize GetStorage
+  await GetStorage.init();
   // bool isFirstTime = GetStorage().read<bool>('first_time') ?? true;
   // runApp(MyApp(isFirstTime: isFirstTime));
   runApp(MainApp());
@@ -29,6 +31,10 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var box = GetStorage();
+    var userMap = box.read(StorageKeys.user);
+    bool isUserLoggedIn = userMap == null ? false : true;
+
     return GetMaterialApp(
       title: 'AMS',
       debugShowCheckedModeBanner: false,
@@ -37,7 +43,8 @@ class MainApp extends StatelessWidget {
       darkTheme: AppTheme.darkTheme(),
       themeMode:
           _themeController.switchValue ? ThemeMode.light : ThemeMode.dark,
-      initialRoute: AppRoutes.signUpScreen,
+      initialRoute:
+          isUserLoggedIn ? AppRoutes.homeScreen : AppRoutes.signUpScreen,
       getPages: AppPages.getPages,
     );
   }
