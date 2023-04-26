@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:home_sweet/utils/extensions.dart';
 import 'package:home_sweet/widgets/snackbar.dart';
 
 import '../database/db_helper.dart';
@@ -43,13 +44,13 @@ class SignUpController extends GetxController {
   }
 
   void passwordOnSaved(String? newValue) {
-    password = passwordTextController.text.trim();
+    password = passwordTextController.text.trim().hash();
   }
 
   void signup() async {
     if (formKey.currentState!.validate()) {
-      if (passwordTextController.text.trim() !=
-          repeatPasswordTextController.text.trim()) {
+      if (passwordTextController.text.trim().hash() !=
+          repeatPasswordTextController.text.trim().hash()) {
         AppSnackbar.errorSnackbar('رمز عبور مطابقت ندارد.');
       } else {
         // input values will be saved in the specified variables.

@@ -37,7 +37,7 @@ class MainApp extends StatelessWidget {
       darkTheme: AppTheme.darkTheme(),
       themeMode:
           _themeController.switchValue ? ThemeMode.light : ThemeMode.dark,
-      initialRoute: AppRoutes.loginScreen,
+      initialRoute: AppRoutes.signUpScreen,
       getPages: AppPages.getPages,
     );
   }

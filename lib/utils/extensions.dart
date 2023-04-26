@@ -1,3 +1,7 @@
+import 'dart:convert';
+
+import 'package:crypto/crypto.dart';
+
 extension FarsiNumber on String {
   String get toFarsiNumber {
     final Map<String, String> numbers = {
@@ -21,5 +25,11 @@ extension FarsiNumber on String {
       }
     }
     return farsiNumber;
+  }
+
+  String hash() {
+    var bytes = utf8.encode(this);
+    var hashedPassword = sha256.convert(bytes);
+    return hashedPassword.toString();
   }
 }

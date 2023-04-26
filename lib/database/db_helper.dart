@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:home_sweet/utils/extensions.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -79,11 +80,11 @@ class DatabaseHelper {
     var maps = await db.rawQuery("""
         SELECT *
         FROM ${UserTable.name}
-        WHERE ${UserTable.username} = "$username" AND ${UserTable.password} = "$password"
+        WHERE ${UserTable.username} = "$username" AND ${UserTable.password} = "${password.hash()}"
       """);
 
     if (maps.isNotEmpty) {
-      debugPrint(User.fromMap(maps.first).toString());
+      print(User.fromMap(maps.first).toString());
       return User.fromMap(maps.first);
     }
     return null;
