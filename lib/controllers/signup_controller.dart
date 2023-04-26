@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:home_sweet/database/user_queries.dart';
 import 'package:home_sweet/utils/extensions.dart';
 import 'package:home_sweet/widgets/snackbar.dart';
 
@@ -59,7 +60,8 @@ class SignUpController extends GetxController {
         // Save datas to Database
         var user = User(username: username, password: password);
         try {
-          await databaseHelper.createUser(user);
+          // await databaseHelper.createUser(user);
+          await UserRepository.create(user);
 
           // Transition to the home page
           Get.offAndToNamed(AppRoutes.loginScreen);

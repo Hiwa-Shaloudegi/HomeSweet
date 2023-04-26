@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:home_sweet/database/db_helper.dart';
+import 'package:home_sweet/database/user_queries.dart';
 import 'package:home_sweet/models/user.dart';
 
 class HomeController extends GetxController {
@@ -11,7 +12,8 @@ class HomeController extends GetxController {
     super.onInit();
     databaseHelper = DatabaseHelper.instance;
     // user = await databaseHelper.getUser(1);
-    user = await databaseHelper.getUserByUsername('Hiwa Shaloudegi');
+    // user = await databaseHelper.getUserByUsername('Hiwa Shaloudegi');
+    user = await UserRepository.read(16);
     update();
   }
 }

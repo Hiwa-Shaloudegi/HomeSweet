@@ -52,26 +52,11 @@ class DatabaseHelper {
     // TODO: Create other tables.
   }
 
-  Future<User> createUser(User user) async {
-    var db = await instance.database;
+  // Future<User> createUser(User user) async {
+  //   var db = await instance.database;
 
-    user.id = await db.insert(UserTable.name, user.toMap());
-    return user;
-  }
-
-  // Future<User?> getUser(int id) async {
-  //   var db = _db;
-
-  //   List<Map<String, dynamic>> maps = await db!.query(
-  //     UserFields.tableName,
-  //     columns: [UserFields.id, UserFields.username, UserFields.password],
-  //     where: '${UserFields.id} = ?',
-  //     whereArgs: [id],
-  //   );
-  //   if (maps.length > 0) {
-  //     return User.fromMap(maps.first);
-  //   }
-  //   return null;
+  //   user.id = await db.insert(UserTable.name, user.toMap());
+  //   return user;
   // }
 
   Future<User?> getLoginUser(String username, String password) async {
@@ -84,7 +69,6 @@ class DatabaseHelper {
       """);
 
     if (maps.isNotEmpty) {
-      print(User.fromMap(maps.first).toString());
       return User.fromMap(maps.first);
     }
     return null;

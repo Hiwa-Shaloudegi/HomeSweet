@@ -5,6 +5,8 @@ class UserTable {
   static const String id = '_id';
   static const String username = 'username';
   static const String password = 'password';
+
+  static final List<String> allColumns = [id, username, password];
 }
 
 class User {
