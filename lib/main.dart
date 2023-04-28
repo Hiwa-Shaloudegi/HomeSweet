@@ -12,7 +12,7 @@ import 'routes/pages.dart';
 import 'routes/routes.dart';
 import 'themes/app_theme.dart';
 
-void main() async {
+Future<void> initApp() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   SystemChrome.setSystemUIOverlayStyle(
@@ -27,6 +27,10 @@ void main() async {
   Get.put(LoginFormController());
   Get.put(SignupFormController());
   Get.put(AuthController());
+}
+
+void main() async {
+  await initApp();
   runApp(TheApp());
 }
 
