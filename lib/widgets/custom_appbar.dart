@@ -6,7 +6,7 @@ import '../controllers/home_controller.dart';
 import '../my_custom_icon_icons.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  var homeController = Get.put(HomeController());
+  final homeController = Get.find<HomeController>();
 
   CustomAppBar({
     super.key,

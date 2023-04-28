@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:home_sweet/controllers/theme_controller.dart';
 
 import '../../../constants/colors.dart';
-import '../../../controllers/login_controller.dart';
+import '../../../controllers/auth_controller.dart';
+import '../../../controllers/home_controller.dart';
+import '../../../controllers/theme_controller.dart';
 import '../../../my_custom_icon_icons.dart';
-import '../home_screen.dart';
+import 'setting_item.dart';
 
 class SettingDrawer extends StatelessWidget {
   SettingDrawer({super.key});
 
+  // Controllers
   final themeController = Get.put(ThemeController());
-  final loginController = Get.put(LoginController());
+  final authController = Get.find<AuthController>();
+  final homeController = Get.find<HomeController>();
 
+  // UI
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
@@ -54,7 +58,7 @@ class SettingDrawer extends StatelessWidget {
         ),
         const SizedBox(height: 18),
         Text(
-          'کیان صداقتی',
+          homeController.user!.username ?? 'کیان صداقتی',
           style: textTheme.bodyLarge,
         ),
         const SizedBox(height: 8),
@@ -141,7 +145,7 @@ class SettingDrawer extends StatelessWidget {
         textColor: Colors.red,
         trailing: const SizedBox.shrink(),
         onTap: () {
-          loginController.logout();
+          authController.logout();
         },
       ),
     ];

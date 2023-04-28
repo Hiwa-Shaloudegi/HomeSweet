@@ -1,6 +1,5 @@
-import 'package:home_sweet/database/db_helper.dart';
-
 import '../models/user.dart';
+import 'db_helper.dart';
 
 class UserRepository {
   UserRepository._();

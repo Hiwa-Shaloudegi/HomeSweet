@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:home_sweet/constants/colors.dart';
-import 'package:home_sweet/controllers/home_controller.dart';
-import 'package:home_sweet/controllers/login_controller.dart';
 
+import '../../controllers/home_controller.dart';
 import '../../widgets/custom_appbar.dart';
 import '../../widgets/navbar.dart';
 import 'widgets/app_drawer.dart';
 import 'widgets/management_item.dart';
 
 class HomeScreen extends StatelessWidget {
-  var homeController = Get.put(HomeController());
-  var loginController = Get.put(LoginController());
+  final homeController = Get.put(HomeController());
 
   @override
   Widget build(BuildContext context) {
@@ -51,54 +48,6 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: const NavBar(),
-    );
-  }
-}
-
-class SettingItem extends StatelessWidget {
-  final String title;
-  final Icon icon;
-  final Color? iconColor;
-  final Color? textColor;
-  final Widget? trailing;
-  final VoidCallback onTap;
-
-  const SettingItem({
-    super.key,
-    required this.title,
-    required this.icon,
-    required this.onTap,
-    this.iconColor,
-    this.trailing,
-    this.textColor,
-    // const Icon(
-    //   Icons.arrow_back_ios_rounded,
-    //   size: 18,
-    //   color: AppColors.lightGrey,
-    //   textDirection: TextDirection.ltr,
-    // ),
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-
-    return ListTile(
-      textColor: textColor ?? AppColors.lightGrey,
-      iconColor: iconColor ?? AppColors.lightGrey,
-      leading: icon,
-      title: Text(
-        title,
-        style: textTheme.titleMedium?.copyWith(color: textColor),
-      ),
-      trailing: trailing ??
-          const Icon(
-            Icons.arrow_back_ios_rounded,
-            size: 20,
-            color: AppColors.lightGrey,
-            textDirection: TextDirection.ltr,
-          ),
-      onTap: onTap,
     );
   }
 }

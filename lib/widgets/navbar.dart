@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:home_sweet/constants/colors.dart';
 
+import '../constants/colors.dart';
 import '../my_custom_icon_icons.dart';
 
 class NavBar extends StatefulWidget {

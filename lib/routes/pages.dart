@@ -1,8 +1,9 @@
 import 'package:get/get.dart';
-import 'package:home_sweet/routes/routes.dart';
-import 'package:home_sweet/screens/auth/login/login_screen.dart';
-import 'package:home_sweet/screens/auth/singup/signup_screen.dart';
-import 'package:home_sweet/screens/home/home_screen.dart';
+
+import '../screens/auth/login/login_screen.dart';
+import '../screens/auth/singup/signup_screen.dart';
+import '../screens/home/home_screen.dart';
+import 'routes.dart';
 
 class AppPages {
   AppPages._();

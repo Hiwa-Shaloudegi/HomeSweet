@@ -1,17 +1,20 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:home_sweet/constants/colors.dart';
-import 'package:home_sweet/controllers/signup_controller.dart';
-import 'package:home_sweet/routes/routes.dart';
-import 'package:home_sweet/screens/auth/widgets/save_button.dart';
-import 'package:home_sweet/utils/validators.dart';
 
+import '../../../constants/colors.dart';
+import '../../../controllers/auth_controller.dart';
+import '../../../controllers/signup_form_controller.dart';
+import '../../../routes/routes.dart';
+import '../../../utils/validators.dart';
 import '../widgets/custom_text_field.dart';
+import '../widgets/save_button.dart';
 
 class SignUpScreen extends StatelessWidget {
-  final signUpController = Get.put(SignUpController());
+  // Controllers
+  final authController = Get.find<AuthController>();
 
+  // UI
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,7 +23,7 @@ class SignUpScreen extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Form(
-              key: signUpController.formKey,
+              key: authController.signupFormController.formKey,
               child: Container(
                 // color: Colors.amber,
                 child: Center(
@@ -42,40 +45,45 @@ class SignUpScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 24),
                       CustomTextField(
-                        controller: signUpController.usernameTextController,
+                        controller: authController
+                            .signupFormController.usernameTextController,
                         hintText: 'نام کاربری',
                         validator: (value) =>
                             Validators.usernameValidator(value),
-                        onSaved: (newValue) =>
-                            signUpController.usernameOnSaved(newValue),
+                        onSaved: (newValue) => authController
+                            .signupFormController
+                            .usernameOnSaved(newValue),
                       ),
-                      GetBuilder<SignUpController>(builder: (signUpController) {
+                      GetBuilder<SignupFormController>(
+                          builder: (signupFormController) {
                         return CustomTextField.password(
-                          controller: signUpController.passwordTextController,
-                          obscureText: !signUpController.isPasswordVisible,
+                          controller:
+                              signupFormController.passwordTextController,
+                          obscureText: !signupFormController.isPasswordVisible,
                           suffixIcon: GestureDetector(
                             onTap: () =>
-                                signUpController.togglePasswordVisibility(),
-                            child: signUpController.isPasswordVisible
+                                signupFormController.togglePasswordVisibility(),
+                            child: signupFormController.isPasswordVisible
                                 ? const Icon(Icons.visibility)
                                 : const Icon(Icons.visibility_off),
                           ),
                           validator: (value) =>
                               Validators.passwordValidator(value),
                           onSaved: (newValue) =>
-                              signUpController.passwordOnSaved(newValue),
+                              signupFormController.passwordOnSaved(newValue),
                         );
                       }),
-                      GetBuilder<SignUpController>(builder: (signUpController) {
+                      GetBuilder<SignupFormController>(
+                          builder: (signupFormController) {
                         return CustomTextField.repeatPassword(
                           controller:
-                              signUpController.repeatPasswordTextController,
+                              signupFormController.repeatPasswordTextController,
                           obscureText:
-                              !signUpController.isRepeatPasswordVisible,
+                              !signupFormController.isRepeatPasswordVisible,
                           suffixIcon: GestureDetector(
-                            onTap: () => signUpController
+                            onTap: () => signupFormController
                                 .toggleRepeatPasswordVisibility(),
-                            child: signUpController.isRepeatPasswordVisible
+                            child: signupFormController.isRepeatPasswordVisible
                                 ? const Icon(Icons.visibility)
                                 : const Icon(Icons.visibility_off),
                           ),
@@ -90,7 +98,7 @@ class SignUpScreen extends StatelessWidget {
                       SaveButton(
                           text: 'ثبت نام',
                           onPressed: () {
-                            signUpController.signup();
+                            authController.signup();
                           }),
                     ],
                   ),
