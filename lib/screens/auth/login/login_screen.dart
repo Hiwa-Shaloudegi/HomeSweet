@@ -10,6 +10,8 @@ import '../widgets/custom_text_field.dart';
 import '../widgets/save_button.dart';
 
 class LoginScreen extends StatelessWidget {
+  LoginScreen({super.key});
+
   // Controllers
   final authController = Get.find<AuthController>();
 

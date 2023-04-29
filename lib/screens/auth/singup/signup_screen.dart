@@ -11,6 +11,8 @@ import '../widgets/custom_text_field.dart';
 import '../widgets/save_button.dart';
 
 class SignUpScreen extends StatelessWidget {
+  SignUpScreen({super.key});
+
   // Controllers
   final authController = Get.find<AuthController>();
 

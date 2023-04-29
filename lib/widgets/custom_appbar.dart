@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../constants/colors.dart';
-import '../controllers/home_controller.dart';
+import '../controllers/main_controller.dart';
 import '../my_custom_icon_icons.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  final homeController = Get.find<HomeController>();
+  final homeController = Get.find<MainController>();
 
   CustomAppBar({
     super.key,
@@ -22,7 +22,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: Colors.transparent,
       elevation: 0,
       toolbarHeight: 150,
-      title: GetBuilder<HomeController>(builder: (homeController) {
+      title: GetBuilder<MainController>(builder: (homeController) {
         return Row(
           children: [
             _menu(),

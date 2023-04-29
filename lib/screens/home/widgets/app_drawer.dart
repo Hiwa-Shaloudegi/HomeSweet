@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 
 import '../../../constants/colors.dart';
 import '../../../controllers/auth_controller.dart';
-import '../../../controllers/home_controller.dart';
+import '../../../controllers/main_controller.dart';
 import '../../../controllers/theme_controller.dart';
 import '../../../my_custom_icon_icons.dart';
 import 'setting_item.dart';
@@ -14,7 +14,7 @@ class SettingDrawer extends StatelessWidget {
   // Controllers
   final themeController = Get.put(ThemeController());
   final authController = Get.find<AuthController>();
-  final homeController = Get.find<HomeController>();
+  final homeController = Get.find<MainController>();
 
   // UI
   @override

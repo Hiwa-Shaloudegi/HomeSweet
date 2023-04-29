@@ -15,11 +15,28 @@ class AuthController extends GetxController {
   final signupFormController = Get.find<SignupFormController>();
   final loginFormController = Get.find<LoginFormController>();
 
+  // States
+  bool isUserLoggedIn = false;
+  User? loggedInUser;
+
   late DatabaseHelper databaseHelper;
+  var box = GetStorage();
+
   @override
   void onInit() {
     super.onInit();
     databaseHelper = DatabaseHelper.instance;
+
+    var userMap = box.read(StorageKeys.user);
+
+    //! userMap != null
+    if (userMap != {}) {
+      loggedInUser = User.fromMap(userMap);
+      isUserLoggedIn = true;
+    }
+
+    // TODO: use 'ever' for changing [isUserLoggedIn] whenever [loggedInUser] changes.
+    // ever(loggedInUser, (callback) => );
   }
 
   void signup() async {
@@ -54,19 +71,22 @@ class AuthController extends GetxController {
       loginFormController.saveUserInputs();
 
       try {
-        User? user = await databaseHelper.getLoginUser(
+        loggedInUser = await databaseHelper.getLoginUser(
           loginFormController.username,
           loginFormController.password,
         );
+        //! using ever
+        isUserLoggedIn = true;
+
         loginFormController.resetForm();
 
-        if (user != null) {
+        if (loggedInUser != null) {
           // Managing logged-in user session
           var box = GetStorage();
-          await box.write(StorageKeys.user, user.toMap());
+          await box.write(StorageKeys.user, loggedInUser!.toMap());
 
           // Transition to the home page
-          Get.offAndToNamed(AppRoutes.homeScreen);
+          Get.offAndToNamed(AppRoutes.mainScreen);
           AppSnackbar.successSnackbar('شما با موفقیت وارد شدید.');
         } else {
           AppSnackbar.errorSnackbar('نام کاربری یا رمز عبور اشتباه می باشد.');
@@ -75,11 +95,18 @@ class AuthController extends GetxController {
         print("ERROR: $e");
       }
     }
+
+    update();
   }
 
   void logout() async {
     var box = GetStorage();
     await box.remove(StorageKeys.user);
+    loggedInUser = null;
+    //! using ever
+    isUserLoggedIn = false;
+    update();
+    //!
     Get.offNamed(AppRoutes.loginScreen);
   }
 }

@@ -16,12 +16,11 @@ Future<void> initApp() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   SystemChrome.setSystemUIOverlayStyle(
-    const SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent,
-    ),
+    const SystemUiOverlayStyle(statusBarColor: Colors.transparent),
   );
 
   await GetStorage.init();
+  // TODO: Checking if the app is launched for the first time. If yes then show the onBording screen.
   // bool isFirstTime = GetStorage().read<bool>('first_time') ?? true;
   // runApp(MyApp(isFirstTime: isFirstTime));
   Get.put(LoginFormController());
@@ -41,9 +40,10 @@ class TheApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var box = GetStorage();
-    var userMap = box.read(StorageKeys.user);
-    bool isUserLoggedIn = userMap == null ? false : true;
+    // var box = GetStorage();
+    // var userMap = box.read(StorageKeys.user);
+    // bool isUserLoggedIn = userMap == null ? false : true;
+    var authController = Get.find<AuthController>();
 
     return GetMaterialApp(
       title: 'AMS',
@@ -53,8 +53,9 @@ class TheApp extends StatelessWidget {
       darkTheme: AppTheme.darkTheme(),
       themeMode:
           _themeController.switchValue ? ThemeMode.light : ThemeMode.dark,
-      initialRoute:
-          isUserLoggedIn ? AppRoutes.homeScreen : AppRoutes.signUpScreen,
+      initialRoute: authController.isUserLoggedIn
+          ? AppRoutes.mainScreen
+          : AppRoutes.signUpScreen,
       getPages: AppPages.getPages,
     );
   }

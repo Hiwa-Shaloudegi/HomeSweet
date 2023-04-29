@@ -5,8 +5,9 @@ import '../constants/storage_keys.dart';
 import '../database/user_repository.dart';
 import '../models/user.dart';
 
-class HomeController extends GetxController {
+class MainController extends GetxController {
   User? user = User();
+  int currenIndex = 1;
 
   var box = GetStorage();
 
@@ -20,6 +21,11 @@ class HomeController extends GetxController {
     var loggedInUser = box.read(StorageKeys.user);
 
     user = await UserRepository.read(loggedInUser['_id']);
+    update();
+  }
+
+  void selectTab(int selectedIndex) {
+    currenIndex = selectedIndex;
     update();
   }
 }
