@@ -13,8 +13,8 @@ class SettingDrawer extends StatelessWidget {
 
   // Controllers
   final themeController = Get.put(ThemeController());
-  final authController = Get.find<AuthController>();
-  final homeController = Get.find<MainController>();
+  // final authController = Get.find<AuthController>();
+  final mainController = Get.find<MainController>();
 
   // UI
   @override
@@ -58,7 +58,7 @@ class SettingDrawer extends StatelessWidget {
         ),
         const SizedBox(height: 18),
         Text(
-          homeController.user!.username ?? 'کیان صداقتی',
+          mainController.authController.loggedInUser!.username ?? 'کیان صداقتی',
           style: textTheme.bodyLarge,
         ),
         const SizedBox(height: 8),
@@ -145,9 +145,38 @@ class SettingDrawer extends StatelessWidget {
         textColor: Colors.red,
         trailing: const SizedBox.shrink(),
         onTap: () {
-          authController.logout();
+          showAppDialog(
+            title: 'اطلاع',
+            message:
+                'آیا مطمئن هستید که می خواهید از حساب کاربری خود خارج شوید؟',
+            textConfirm: 'بلی',
+            textCancel: 'خیر',
+            onConfirm: () => mainController.authController.logout(),
+          );
         },
       ),
     ];
+  }
+
+  Future<dynamic> showAppDialog({
+    required String title,
+    required String message,
+    required String textConfirm,
+    required String textCancel,
+    required void Function()? onConfirm,
+  }) {
+    return Get.defaultDialog(
+      titlePadding: const EdgeInsets.only(top: 16, bottom: 8),
+      contentPadding: const EdgeInsets.only(bottom: 16),
+      title: title, //'هشدار!',
+      middleText: message,
+      textConfirm: textCancel,
+      textCancel: textConfirm,
+      confirmTextColor: Colors.white,
+      onCancel: onConfirm,
+      onConfirm: () => Get.back(),
+
+      // authController.logout();
+    );
   }
 }

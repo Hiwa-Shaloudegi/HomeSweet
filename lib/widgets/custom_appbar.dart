@@ -6,7 +6,7 @@ import '../controllers/main_controller.dart';
 import '../my_custom_icon_icons.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  final homeController = Get.find<MainController>();
+  final mainController = Get.find<MainController>();
 
   CustomAppBar({
     super.key,
@@ -22,7 +22,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: Colors.transparent,
       elevation: 0,
       toolbarHeight: 150,
-      title: GetBuilder<MainController>(builder: (homeController) {
+      title: GetBuilder<MainController>(builder: (mainController) {
         return Row(
           children: [
             _menu(),
@@ -46,7 +46,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       return Column(
         children: [
           Text(
-            homeController.user!.username ?? 'کیان صداقتی',
+            mainController.authController.loggedInUser!.username ??
+                'کیان صداقتی',
             style: textTheme.bodyLarge,
           ),
           const SizedBox(height: 8),

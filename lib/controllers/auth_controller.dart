@@ -80,9 +80,9 @@ class AuthController extends GetxController {
         //! using ever
         isUserLoggedIn = true;
 
-        loginFormController.resetForm();
-
         if (loggedInUser != null) {
+          loginFormController.resetForm();
+
           // Managing logged-in user session
           var box = GetStorage();
           await box.write(StorageKeys.user, loggedInUser!.toMap());
