@@ -29,10 +29,12 @@ class AuthController extends GetxController {
 
     var userMap = box.read(StorageKeys.user);
 
-    //! userMap != null
-    if (userMap != {}) {
+    if (userMap != null) {
       loggedInUser = User.fromMap(userMap);
       isUserLoggedIn = true;
+    } else {
+      loggedInUser = null;
+      isUserLoggedIn = false;
     }
 
     // TODO: use 'ever' for changing [isUserLoggedIn] whenever [loggedInUser] changes.
