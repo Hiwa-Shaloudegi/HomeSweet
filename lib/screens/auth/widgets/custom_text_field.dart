@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class CustomTextField extends StatelessWidget {
   final TextEditingController? controller;
@@ -8,8 +9,10 @@ class CustomTextField extends StatelessWidget {
   final bool obscureText;
   // final int maxLength;
   final TextInputType keyboardType;
+  final List<TextInputFormatter>? inputFormatters;
   final String? Function(String?)? validator;
   final void Function(String?)? onSaved;
+  final void Function(String?)? onChanged;
 
   const CustomTextField({
     super.key,
@@ -22,6 +25,8 @@ class CustomTextField extends StatelessWidget {
     this.suffixIcon = const SizedBox.shrink(),
     this.obscureText = false,
     this.keyboardType = TextInputType.text,
+    this.inputFormatters,
+    this.onChanged,
   });
 
   const CustomTextField.password({
@@ -35,6 +40,8 @@ class CustomTextField extends StatelessWidget {
     this.suffixIcon = const Icon(Icons.visibility_off),
     this.obscureText = true,
     this.keyboardType = TextInputType.number,
+    this.inputFormatters,
+    this.onChanged,
   });
 
   const CustomTextField.repeatPassword({
@@ -48,6 +55,8 @@ class CustomTextField extends StatelessWidget {
     this.suffixIcon = const Icon(Icons.visibility_off),
     this.obscureText = true,
     this.keyboardType = TextInputType.number,
+    this.inputFormatters,
+    this.onChanged,
   });
 
   @override
@@ -67,6 +76,9 @@ class CustomTextField extends StatelessWidget {
             autovalidateMode: AutovalidateMode.onUserInteraction,
             textInputAction: TextInputAction.next,
             keyboardType: keyboardType,
+            inputFormatters: keyboardType == TextInputType.number
+                ? [FilteringTextInputFormatter.allow(RegExp(r'[0-9]|\b'))]
+                : inputFormatters,
             obscureText: obscureText,
             // maxLength: maxLength,
             decoration: InputDecoration(
@@ -80,6 +92,7 @@ class CustomTextField extends StatelessWidget {
             ),
             validator: validator,
             onSaved: onSaved,
+            onChanged: onChanged,
           ),
         ],
       ),

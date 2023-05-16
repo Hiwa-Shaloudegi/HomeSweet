@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:home_sweet/models/apartment.dart';
 import 'package:home_sweet/utils/extensions.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -40,12 +41,27 @@ class DatabaseHelper {
   Future<void> _onDbCreate(Database db, int version) async {
     const idType = 'INTEGER PRIMARY KEY AUTOINCREMENT';
     const textType = 'TEXT NOT NULL';
+    const integerType = 'INTEGER NOT NULL';
+    const doubleType = 'REAL NOT NULL';
 
+    // User Table
     await db.execute(""" 
       CREATE TABLE ${UserTable.name} (
       ${UserTable.id} $idType,
       ${UserTable.username} $textType,
       ${UserTable.password} $textType
+      )
+""");
+
+    // Apartment Table
+    await db.execute(""" 
+      CREATE TABLE ${ApartmentTable.name} (
+      ${ApartmentTable.id} $idType,
+      ${ApartmentTable.apartmentName} $textType,
+      ${ApartmentTable.unitCharge} $doubleType
+      ${ApartmentTable.storyNumber} $integerType
+      ${ApartmentTable.unitNumber} $integerType
+      ${ApartmentTable.budget} $doubleType
       )
 """);
 

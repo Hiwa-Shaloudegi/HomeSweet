@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:home_sweet/database/apartment_repository.dart';
 
 import '../constants/storage_keys.dart';
 import '../database/user_repository.dart';
@@ -88,8 +89,13 @@ class AuthController extends GetxController {
           await box.write(StorageKeys.user, loggedInUser!.toMap());
 
           // Transition to the home page
-          Get.offAndToNamed(AppRoutes.mainScreen);
-          AppSnackbar.successSnackbar('شما با موفقیت وارد شدید.');
+          var apartment = ApartmentRepository.read(1);
+          if (apartment != null) {
+            Get.offAndToNamed(AppRoutes.apartmentFormPage);
+          } else {
+            Get.offAndToNamed(AppRoutes.mainScreen);
+            AppSnackbar.successSnackbar('شما با موفقیت وارد شدید.');
+          }
         } else {
           AppSnackbar.errorSnackbar('نام کاربری یا رمز عبور اشتباه می باشد.');
         }

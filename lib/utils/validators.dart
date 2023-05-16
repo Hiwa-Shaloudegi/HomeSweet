@@ -29,4 +29,22 @@ class Validators {
     }
     return null;
   }
+
+  static String? textInputValidator(String? value) {
+    if (value == null || value.isEmpty) {
+      return '* این فیلد الزامی است';
+    } else if (value.length > 20) {
+      return 'حداکثر طول نام کاربری 20 است.'.toFarsiNumber;
+    }
+    return null;
+  }
+
+  static String? amountInputValidator(String? value) {
+    if (value == null || value.isEmpty) {
+      return '* این فیلد الزامی است';
+    } else if (value.length > 20) {
+      return 'حداکثر طول مقدار 20 است.'.toFarsiNumber;
+    }
+    return null;
+  }
 }

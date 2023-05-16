@@ -2,25 +2,35 @@ import 'package:flutter/material.dart';
 
 import '../../../constants/colors.dart';
 
-class CounteIconButton extends StatelessWidget {
+class CountIconButton extends StatelessWidget {
   final Icon icon;
-  const CounteIconButton({
+  final VoidCallback onPressed;
+
+  const CountIconButton({
     super.key,
     required this.icon,
+    required this.onPressed,
   });
 
-  const CounteIconButton.add({super.key, this.icon = const Icon(Icons.add)});
-  const CounteIconButton.minus(
-      {super.key, this.icon = const Icon(Icons.minimize_outlined)});
+  const CountIconButton.add({
+    super.key,
+    required this.onPressed,
+    this.icon = const Icon(Icons.add),
+  });
+  const CountIconButton.minus({
+    super.key,
+    required this.onPressed,
+    this.icon = const Icon(Icons.remove),
+  });
 
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      onPressed: () {},
+      onPressed: onPressed,
       color: AppColors.primaryColor,
       iconSize: 18,
       splashRadius: 15,
-      padding: const EdgeInsets.all(10),
+      padding: EdgeInsets.zero,
       constraints: const BoxConstraints(),
       icon: icon,
     );

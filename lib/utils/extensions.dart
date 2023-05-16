@@ -32,4 +32,20 @@ extension FarsiNumber on String {
     var hashedPassword = sha256.convert(bytes);
     return hashedPassword.toString();
   }
+
+  String toTooman() {
+    String res = '';
+    int numberCounter = 0;
+
+    for (int index = length - 1; index >= 0; index--) {
+      numberCounter++;
+      res = this[index] + res;
+
+      if (numberCounter % 3 == 0 && index != 0) {
+        res = ',$res';
+      }
+    }
+
+    return res.toFarsiNumber;
+  }
 }

@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:home_sweet/screens/apartment/apartment_form_page.dart';
 import 'package:home_sweet/screens/home/main_screen.dart';
 
 import '../screens/auth/login/login_screen.dart';
@@ -11,5 +12,6 @@ class AppPages {
     GetPage(name: AppRoutes.mainScreen, page: () => MainScreen()),
     GetPage(name: AppRoutes.loginScreen, page: () => LoginScreen()),
     GetPage(name: AppRoutes.signUpScreen, page: () => SignUpScreen()),
+    GetPage(name: AppRoutes.apartmentFormPage, page: () => ApartmentFormPage()),
   ];
 }
