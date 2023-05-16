@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:home_sweet/screens/apartment/apartment_form_page.dart';
 
 import '../../controllers/main_controller.dart';
 import '../../widgets/custom_appbar.dart';
@@ -12,30 +13,42 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: CustomAppBar(),
-      drawer: SettingDrawer(),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: GetBuilder<MainController>(
-              builder: (mainController) {
-                return IndexedStack(
-                  index: mainController.currenIndex,
-                  children: [
-                    Text('PROFILE'),
-                    HomeNavItem(),
-                    Text('Apartment'),
-                  ],
-                );
-              },
-            ),
-          ),
-        ),
+    return GetBuilder<MainController>(
+      builder: (mainController) => Scaffold(
+        extendBodyBehindAppBar: true,
+        appBar: mainController.currenIndex == 2 ? null : CustomAppBar(),
+        drawer: SettingDrawer(),
+        body: _buildPageBody(mainController.currenIndex),
+        // SafeArea(
+        //   child: SingleChildScrollView(
+        //     child: Padding(
+        //       padding: const EdgeInsets.symmetric(horizontal: 20),
+        //       child: IndexedStack(
+        //         index: mainController.currenIndex,
+        //         children: [
+        //           Text('PROFILE'),
+        //           HomeNavItem(),
+        //           ApartmentFormPage(),
+        //         ],
+        //       ),
+        //     ),
+        //   ),
+        // ),
+        bottomNavigationBar: NavBar(),
       ),
-      bottomNavigationBar: NavBar(),
     );
+  }
+
+  Widget _buildPageBody(int index) {
+    switch (index) {
+      case 0:
+        return Container();
+      case 1:
+        return HomeNavItem();
+      case 2:
+        return ApartmentFormPage();
+      default:
+        return Container();
+    }
   }
 }

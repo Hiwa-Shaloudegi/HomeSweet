@@ -13,7 +13,8 @@ class HomeNavItem extends StatelessWidget {
         const SizedBox(height: 50),
         Container(
           // color: Colors.amber,
-          height: 400,
+          height: 650,
+          margin: const EdgeInsets.symmetric(horizontal: 20),
           child: GridView.builder(
             physics: const NeverScrollableScrollPhysics(),
             itemCount: 4,
