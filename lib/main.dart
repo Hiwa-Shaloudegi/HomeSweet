@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:home_sweet/controllers/login_form_controller.dart';
+import 'package:home_sweet/controllers/main_controller.dart';
 import 'package:home_sweet/controllers/signup_form_controller.dart';
 
 import 'constants/storage_keys.dart';
@@ -26,6 +27,7 @@ Future<void> initApp() async {
   Get.put(LoginFormController());
   Get.put(SignupFormController());
   Get.put(AuthController());
+  Get.put(MainController());
 }
 
 void main() async {

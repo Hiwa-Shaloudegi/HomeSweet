@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:home_sweet/controllers/main_controller.dart';
+import 'package:home_sweet/database/apartment_repository.dart';
+import 'package:home_sweet/models/apartment.dart';
+
+import '../routes/routes.dart';
+import '../widgets/snackbar.dart';
 
 class ApartmentFormController extends GetxController {
   final formKey = GlobalKey<FormState>();
@@ -15,6 +21,25 @@ class ApartmentFormController extends GetxController {
   String budget = '';
   int storyNumber = 0;
   int unitNumber = 0;
+
+  Apartment? apartment = null;
+
+  @override
+  void onInit() {
+    loadApartmentData();
+    super.onInit();
+  }
+
+  void loadApartmentData() {
+    if (apartment != null) {
+      apartmentNameTextController.text = apartment!.apartmentName!;
+      address = apartment!.address!;
+      chargeAmount = apartment!.unitCharge.toString();
+      budget = apartment!.budget.toString();
+      storyNumber = apartment!.storyNumber!;
+      unitNumber = apartment!.unitNumber!;
+    }
+  }
 
   void apartmentNameOnSaved(String? newValue) {
     apartmentName = apartmentNameTextController.text.trim();
@@ -68,26 +93,59 @@ class ApartmentFormController extends GetxController {
     formKey.currentState!.reset();
   }
 
-  void saveApartmentInfo() {
+  void saveApartmentInfo() async {
     if (validate()) {
       saveApartmentInputs();
 
-      // Save datas to Database
-      // var user = User(
-      //   username: signupFormController.username,
-      //   password: signupFormController.password,
-      // );
-      // signupFormController.resetForm();
+      // Create
+      if (apartment == null) {
+        // Save datas to Database
+        var newApartment = Apartment(
+          apartmentName: apartmentName,
+          address: address,
+          storyNumber: storyNumber,
+          unitNumber: unitNumber,
+          unitCharge: double.parse(chargeAmount),
+          budget: double.parse(budget),
+        );
 
-      // try {
-      //   await UserRepository.create(user);
+        resetForm();
 
-      //   // Transition to the home page
-      //   Get.offAndToNamed(AppRoutes.loginScreen);
-      //   AppSnackbar.successSnackbar('حساب کاربری با موفقیت ساخته شد.');
-      // } catch (e) {
-      //   print('CATCH ERROR: $e');
-      // }
+        try {
+          apartment = await ApartmentRepository.create(newApartment);
+
+          // Transition to the home page
+          Get.offAndToNamed(AppRoutes.mainScreen);
+          AppSnackbar.successSnackbar('اطلاعات آپارتمان با موفقیت ثبت شد.');
+        } catch (e) {
+          print('CATCH ERROR: $e');
+        }
+
+        //Update
+      } else {
+        // Save datas to Database
+        var updatedApartment = Apartment(
+          id: 1, //apartment!.id,
+          apartmentName: apartmentName,
+          address: address,
+          storyNumber: storyNumber,
+          unitNumber: unitNumber,
+          unitCharge: double.parse(chargeAmount),
+          budget: double.parse(budget),
+        );
+
+        try {
+          await ApartmentRepository.update(updatedApartment);
+          apartment = updatedApartment;
+
+          // Transition to the home page
+          Get.find<MainController>().currenIndex = 2;
+          AppSnackbar.successSnackbar('اطلاعات با موفقیت بروز رسانی شد.');
+        } catch (e) {
+          print('CATCH ERROR: $e');
+        }
+      }
     }
+    update();
   }
 }

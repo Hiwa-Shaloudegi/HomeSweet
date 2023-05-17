@@ -1,6 +1,5 @@
 import 'package:home_sweet/models/apartment.dart';
 
-import '../models/user.dart';
 import 'db_helper.dart';
 
 class ApartmentRepository {
@@ -40,7 +39,7 @@ class ApartmentRepository {
     return db.update(
       ApartmentTable.name,
       apartment.toMap(),
-      where: '${UserTable.id} = ?',
+      where: '${ApartmentTable.id} = ?',
       whereArgs: [apartment.id], //TODO: 1
     );
   }

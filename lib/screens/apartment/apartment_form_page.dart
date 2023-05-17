@@ -140,13 +140,6 @@ class ApartmentFormPage extends StatelessWidget {
                           text: 'ثبت اطلاعات',
                           onPressed: () {
                             apartmentFormController.saveApartmentInfo();
-                            //! Remove snackBar
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(
-                                    '${apartmentFormController.apartmentName}'),
-                              ),
-                            );
                           },
                         ),
                       ),
