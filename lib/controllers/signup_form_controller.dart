@@ -31,7 +31,7 @@ class SignupFormController extends GetxController {
   }
 
   void passwordOnSaved(String? newValue) {
-    password = passwordTextController.text.trim().hash();
+    password = passwordTextController.text.trim().hash;
   }
 
   bool validate() {
@@ -39,8 +39,8 @@ class SignupFormController extends GetxController {
   }
 
   bool repeatPasswordNotMatch() {
-    return passwordTextController.text.trim().hash() !=
-        repeatPasswordTextController.text.trim().hash();
+    return passwordTextController.text.trim().hash !=
+        repeatPasswordTextController.text.trim().hash;
   }
 
   void saveUserInputs() {

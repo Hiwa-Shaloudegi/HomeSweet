@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:home_sweet/models/apartment.dart';
-import 'package:home_sweet/utils/extensions.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -58,50 +57,14 @@ class DatabaseHelper {
       CREATE TABLE ${ApartmentTable.name} (
       ${ApartmentTable.id} $idType,
       ${ApartmentTable.apartmentName} $textType,
-      ${ApartmentTable.unitCharge} $doubleType
-      ${ApartmentTable.storyNumber} $integerType
-      ${ApartmentTable.unitNumber} $integerType
+      ${ApartmentTable.address} $textType,
+      ${ApartmentTable.unitCharge} $doubleType,
+      ${ApartmentTable.storyNumber} $integerType,
+      ${ApartmentTable.unitNumber} $integerType,
       ${ApartmentTable.budget} $doubleType
       )
 """);
 
     // TODO: Create other tables.
-  }
-
-  // Future<User> createUser(User user) async {
-  //   var db = await instance.database;
-
-  //   user.id = await db.insert(UserTable.name, user.toMap());
-  //   return user;
-  // }
-
-  Future<User?> getLoginUser(String username, String password) async {
-    var db = await instance.database;
-
-    var maps = await db.rawQuery("""
-        SELECT *
-        FROM ${UserTable.name}
-        WHERE ${UserTable.username} = "$username" AND ${UserTable.password} = "${password.hash()}"
-      """);
-
-    if (maps.isNotEmpty) {
-      return User.fromMap(maps.first);
-    }
-    return null;
-  }
-
-  Future<User?> getUserByUsername(String username) async {
-    var db = await instance.database;
-
-    var maps = await db.rawQuery("""
-        SELECT *
-        FROM ${UserTable.name}
-        WHERE ${UserTable.username} = "$username"
-      """);
-
-    if (maps.isNotEmpty) {
-      return User.fromMap(maps.first);
-    }
-    return null;
   }
 }

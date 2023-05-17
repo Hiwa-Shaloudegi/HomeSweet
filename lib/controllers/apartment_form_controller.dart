@@ -60,7 +60,7 @@ class ApartmentFormController extends GetxController {
     return formKey.currentState!.validate();
   }
 
-  void saveUserInputs() {
+  void saveApartmentInputs() {
     formKey.currentState!.save();
   }
 
@@ -70,7 +70,7 @@ class ApartmentFormController extends GetxController {
 
   void saveApartmentInfo() {
     if (validate()) {
-      saveUserInputs();
+      saveApartmentInputs();
 
       // Save datas to Database
       // var user = User(

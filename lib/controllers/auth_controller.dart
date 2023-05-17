@@ -74,7 +74,7 @@ class AuthController extends GetxController {
       loginFormController.saveUserInputs();
 
       try {
-        loggedInUser = await databaseHelper.getLoginUser(
+        loggedInUser = await UserRepository.getLoginUser(
           loginFormController.username,
           loginFormController.password,
         );
@@ -89,12 +89,12 @@ class AuthController extends GetxController {
           await box.write(StorageKeys.user, loggedInUser!.toMap());
 
           // Transition to the home page
-          var apartment = ApartmentRepository.read(1);
+          var apartment = await ApartmentRepository.read(1);
           if (apartment != null) {
-            Get.offAndToNamed(AppRoutes.apartmentFormPage);
-          } else {
             Get.offAndToNamed(AppRoutes.mainScreen);
             AppSnackbar.successSnackbar('شما با موفقیت وارد شدید.');
+          } else {
+            Get.offAndToNamed(AppRoutes.apartmentFormPage);
           }
         } else {
           AppSnackbar.errorSnackbar('نام کاربری یا رمز عبور اشتباه می باشد.');

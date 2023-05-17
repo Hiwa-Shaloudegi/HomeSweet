@@ -27,7 +27,7 @@ extension FarsiNumber on String {
     return farsiNumber;
   }
 
-  String hash() {
+  String get hash {
     var bytes = utf8.encode(this);
     var hashedPassword = sha256.convert(bytes);
     return hashedPassword.toString();

@@ -15,7 +15,7 @@ class ApartmentRepository {
     return apartment;
   }
 
-  static Future<Apartment> read(int id) async {
+  static Future<Apartment?> read(int id) async {
     var db = await _databaseHelper.database;
 
     final maps = await db.query(
@@ -28,7 +28,9 @@ class ApartmentRepository {
     if (maps.isNotEmpty) {
       return Apartment.fromMap(maps.first);
     } else {
-      throw Exception('ID $id not found');
+      //TODO: should return null OR throw exception ?
+      // throw Exception('ID $id not found');
+      return null;
     }
   }
 

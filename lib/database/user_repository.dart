@@ -1,3 +1,5 @@
+import 'package:home_sweet/utils/extensions.dart';
+
 import '../models/user.dart';
 import 'db_helper.dart';
 
@@ -59,4 +61,34 @@ class UserRepository {
       whereArgs: [id],
     );
   }
+
+  static Future<User?> getLoginUser(String username, String password) async {
+    var db = await _databaseHelper.database;
+
+    var maps = await db.rawQuery("""
+        SELECT *
+        FROM ${UserTable.name}
+        WHERE ${UserTable.username} = "$username" AND ${UserTable.password} = "${password.hash}"
+      """);
+
+    if (maps.isNotEmpty) {
+      return User.fromMap(maps.first);
+    }
+    return null;
+  }
+
+  // static Future<User?> getUserByUsername(String username) async {
+  //   var db = await _databaseHelper.database;
+
+  //   var maps = await db.rawQuery("""
+  //       SELECT *
+  //       FROM ${UserTable.name}
+  //       WHERE ${UserTable.username} = "$username"
+  //     """);
+
+  //   if (maps.isNotEmpty) {
+  //     return User.fromMap(maps.first);
+  //   }
+  //   return null;
+  // }
 }
