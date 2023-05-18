@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+enum ConstructorType {
+  simple,
+  search,
+  password,
+  repeatPassword,
+}
+
 class CustomTextField extends StatelessWidget {
   final TextEditingController? controller;
   final String hintText;
@@ -14,6 +21,7 @@ class CustomTextField extends StatelessWidget {
   final String? Function(String?)? validator;
   final void Function(String?)? onSaved;
   final void Function(String?)? onChanged;
+  final ConstructorType constructorType;
 
   const CustomTextField({
     super.key,
@@ -29,6 +37,7 @@ class CustomTextField extends StatelessWidget {
     this.keyboardType = TextInputType.text,
     this.inputFormatters,
     this.onChanged,
+    this.constructorType = ConstructorType.simple,
   });
 
   const CustomTextField.password({
@@ -45,6 +54,7 @@ class CustomTextField extends StatelessWidget {
     this.keyboardType = TextInputType.number,
     this.inputFormatters,
     this.onChanged,
+    this.constructorType = ConstructorType.password,
   });
 
   const CustomTextField.repeatPassword({
@@ -61,6 +71,7 @@ class CustomTextField extends StatelessWidget {
     this.keyboardType = TextInputType.number,
     this.inputFormatters,
     this.onChanged,
+    this.constructorType = ConstructorType.repeatPassword,
   });
 
   const CustomTextField.search({
@@ -76,6 +87,7 @@ class CustomTextField extends StatelessWidget {
     this.keyboardType = TextInputType.text,
     this.inputFormatters,
     this.onChanged,
+    this.constructorType = ConstructorType.search,
   });
 
   @override
@@ -106,12 +118,7 @@ class CustomTextField extends StatelessWidget {
     );
     return Padding(
       padding: EdgeInsets.symmetric(vertical: padding),
-      child: runtimeType ==
-              CustomTextField.search(
-                controller: controller,
-                validator: validator,
-                onSaved: onSaved,
-              ).runtimeType
+      child: constructorType == ConstructorType.search
           ? textFormField
           : Column(
               crossAxisAlignment: CrossAxisAlignment.start,
