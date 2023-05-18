@@ -17,7 +17,7 @@ class NavBar extends StatelessWidget {
       return SizedBox(
         height: 80,
         child: BottomNavigationBar(
-          currentIndex: mainController.currenIndex,
+          currentIndex: mainController.currentIndex,
           iconSize: 34,
           elevation: 12,
           selectedFontSize: 17,

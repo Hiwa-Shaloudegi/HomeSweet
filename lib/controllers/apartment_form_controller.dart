@@ -22,7 +22,7 @@ class ApartmentFormController extends GetxController {
   int storyNumber = 0;
   int unitNumber = 0;
 
-  Apartment? apartment = null;
+  Apartment? apartment;
 
   @override
   void onInit() {
@@ -30,15 +30,28 @@ class ApartmentFormController extends GetxController {
     super.onInit();
   }
 
-  void loadApartmentData() {
+  @override
+  void onClose() {
+    super.onClose();
+    apartmentNameTextController.clear();
+    addressTextController.clear();
+    chargeAmountTextController.clear();
+    budgetTextController.clear();
+  }
+
+  void loadApartmentData() async {
+    apartment = await ApartmentRepository.read(1);
     if (apartment != null) {
       apartmentNameTextController.text = apartment!.apartmentName!;
-      address = apartment!.address!;
-      chargeAmount = apartment!.unitCharge.toString();
-      budget = apartment!.budget.toString();
+      addressTextController.text = apartment!.address!;
+      chargeAmountTextController.text = apartment!.unitCharge.toString();
+      budgetTextController.text = apartment!.budget.toString();
       storyNumber = apartment!.storyNumber!;
       unitNumber = apartment!.unitNumber!;
+
     }
+
+    update();
   }
 
   void apartmentNameOnSaved(String? newValue) {
@@ -109,7 +122,6 @@ class ApartmentFormController extends GetxController {
           budget: double.parse(budget),
         );
 
-        resetForm();
 
         try {
           apartment = await ApartmentRepository.create(newApartment);
@@ -138,8 +150,6 @@ class ApartmentFormController extends GetxController {
           await ApartmentRepository.update(updatedApartment);
           apartment = updatedApartment;
 
-          // Transition to the home page
-          Get.find<MainController>().currenIndex = 2;
           AppSnackbar.successSnackbar('اطلاعات با موفقیت بروز رسانی شد.');
         } catch (e) {
           print('CATCH ERROR: $e');

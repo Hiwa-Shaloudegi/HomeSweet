@@ -6,10 +6,10 @@ class MainController extends GetxController {
   var authController = Get.find<AuthController>();
 
   // States
-  int currenIndex = 1;
+  int currentIndex = 1;
 
   void selectTab(int selectedIndex) {
-    currenIndex = selectedIndex;
+    currentIndex = selectedIndex;
     update();
   }
 }

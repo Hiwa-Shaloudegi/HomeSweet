@@ -10,32 +10,21 @@ import 'home_nav_item.dart';
 import 'widgets/app_drawer.dart';
 
 class MainScreen extends StatelessWidget {
+  MainScreen({super.key});
+
+
   final mainController = Get.put(MainController());
   final apartmentFormController = Get.put(ApartmentFormController());
+
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<MainController>(
       builder: (mainController) => Scaffold(
         extendBodyBehindAppBar: true,
-        appBar: mainController.currenIndex == 2 ? null : CustomAppBar(),
+        appBar: mainController.currentIndex == 2 ? null : CustomAppBar(),
         drawer: SettingDrawer(),
-        body: _buildPageBody(mainController.currenIndex),
-        // SafeArea(
-        //   child: SingleChildScrollView(
-        //     child: Padding(
-        //       padding: const EdgeInsets.symmetric(horizontal: 20),
-        //       child: IndexedStack(
-        //         index: mainController.currenIndex,
-        //         children: [
-        //           Text('PROFILE'),
-        //           HomeNavItem(),
-        //           ApartmentFormPage(),
-        //         ],
-        //       ),
-        //     ),
-        //   ),
-        // ),
+        body: _buildPageBody(mainController.currentIndex),
         bottomNavigationBar: NavBar(),
       ),
     );
@@ -46,9 +35,9 @@ class MainScreen extends StatelessWidget {
       case 0:
         return Container();
       case 1:
-        return HomeNavItem();
+        return const HomeNavItem();
       case 2:
-        return ApartmentFormPage();
+        return apartmentFormBody(); //ApartmentFormPage();
       default:
         return Container();
     }

@@ -88,7 +88,7 @@ class AuthController extends GetxController {
           var box = GetStorage();
           await box.write(StorageKeys.user, loggedInUser!.toMap());
 
-          // Transition to the home page
+          // Transition to the homePage OR apartmentFormPage
           var apartment = await ApartmentRepository.read(1);
           if (apartment != null) {
             Get.offAndToNamed(AppRoutes.mainScreen);
