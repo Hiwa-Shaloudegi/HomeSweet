@@ -100,6 +100,11 @@ class AppTheme {
         color: AppColors.lightGrey,
         fontSize: 16,
       ),
+      headlineLarge: TextStyle(
+        color: AppColors.primaryColor,
+        fontSize: 20,
+        fontWeight: FontWeight.w500,
+      ),
     );
   }
 }

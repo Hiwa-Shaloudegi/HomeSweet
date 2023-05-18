@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:home_sweet/routes/routes.dart';
 
 class ManagementItem extends StatelessWidget {
   final int index;
@@ -22,7 +24,20 @@ class ManagementItem extends StatelessWidget {
     var textTheme = Theme.of(context).textTheme;
 
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        switch (index) {
+          case 0:
+            break;
+          case 1:
+            break;
+          case 2:
+            Get.toNamed(AppRoutes.costsPage);
+            break;
+          case 3:
+            break;
+          default:
+        }
+      },
       child: Container(
         alignment: Alignment.center,
         decoration: BoxDecoration(

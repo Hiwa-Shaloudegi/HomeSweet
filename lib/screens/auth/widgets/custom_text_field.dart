@@ -6,6 +6,7 @@ class CustomTextField extends StatelessWidget {
   final String hintText;
   final double padding;
   final Widget suffixIcon;
+  final Widget? prefixIcon;
   final bool obscureText;
   // final int maxLength;
   final TextInputType keyboardType;
@@ -23,6 +24,7 @@ class CustomTextField extends StatelessWidget {
     // this.maxLength = 20,
     this.padding = 10,
     this.suffixIcon = const SizedBox.shrink(),
+    this.prefixIcon,
     this.obscureText = false,
     this.keyboardType = TextInputType.text,
     this.inputFormatters,
@@ -38,6 +40,7 @@ class CustomTextField extends StatelessWidget {
     // this.maxLength = 6,
     this.padding = 10,
     this.suffixIcon = const Icon(Icons.visibility_off),
+    this.prefixIcon,
     this.obscureText = true,
     this.keyboardType = TextInputType.number,
     this.inputFormatters,
@@ -53,49 +56,74 @@ class CustomTextField extends StatelessWidget {
     // this.maxLength = 6,
     this.padding = 10,
     this.suffixIcon = const Icon(Icons.visibility_off),
+    this.prefixIcon,
     this.obscureText = true,
     this.keyboardType = TextInputType.number,
     this.inputFormatters,
     this.onChanged,
   });
 
+  const CustomTextField.search({
+    super.key,
+    required this.controller,
+    required this.validator,
+    required this.onSaved,
+    this.hintText = 'جستجو',
+    this.padding = 10,
+    this.suffixIcon = const SizedBox.shrink(),
+    this.prefixIcon = const Icon(Icons.search),
+    this.obscureText = false,
+    this.keyboardType = TextInputType.text,
+    this.inputFormatters,
+    this.onChanged,
+  });
+
   @override
   Widget build(BuildContext context) {
+    var textFormField = TextFormField(
+      controller: controller,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      textInputAction: TextInputAction.next,
+      keyboardType: keyboardType,
+      inputFormatters: keyboardType == TextInputType.number
+          ? [FilteringTextInputFormatter.allow(RegExp(r'[0-9]|\b'))]
+          : inputFormatters,
+      obscureText: obscureText,
+      // maxLength: maxLength,
+      decoration: InputDecoration(
+        errorStyle: const TextStyle(
+          color: Colors.red,
+          fontSize: 13,
+        ),
+        suffixIcon: suffixIcon,
+        prefixIcon: prefixIcon,
+        hintText: hintText,
+        // counterText: '',
+      ),
+      validator: validator,
+      onSaved: onSaved,
+      onChanged: onChanged,
+    );
     return Padding(
       padding: EdgeInsets.symmetric(vertical: padding),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            hintText,
-            style: Theme.of(context).textTheme.bodyMedium,
-          ),
-          const SizedBox(height: 14),
-          TextFormField(
-            controller: controller,
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            textInputAction: TextInputAction.next,
-            keyboardType: keyboardType,
-            inputFormatters: keyboardType == TextInputType.number
-                ? [FilteringTextInputFormatter.allow(RegExp(r'[0-9]|\b'))]
-                : inputFormatters,
-            obscureText: obscureText,
-            // maxLength: maxLength,
-            decoration: InputDecoration(
-              errorStyle: const TextStyle(
-                color: Colors.red,
-                fontSize: 13,
-              ),
-              suffixIcon: suffixIcon,
-              hintText: hintText,
-              // counterText: '',
+      child: runtimeType ==
+              CustomTextField.search(
+                controller: controller,
+                validator: validator,
+                onSaved: onSaved,
+              ).runtimeType
+          ? textFormField
+          : Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  hintText,
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+                const SizedBox(height: 14),
+                textFormField,
+              ],
             ),
-            validator: validator,
-            onSaved: onSaved,
-            onChanged: onChanged,
-          ),
-        ],
-      ),
     );
   }
 }

@@ -7,9 +7,10 @@ environment:
   sdk: '>=2.19.4 <3.0.0'
 
 dependencies:
-  crypto: ^3.0.2
   flutter:
     sdk: flutter
+  flutter_svg: ^2.0.5
+  crypto: ^3.0.2
   get: ^4.6.5
   get_storage: ^2.1.1
   path: ^1.8.2
