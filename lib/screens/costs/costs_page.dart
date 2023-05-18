@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:home_sweet/constants/colors.dart';
 import 'package:home_sweet/screens/auth/widgets/custom_text_field.dart';
+import 'package:home_sweet/themes/app_theme.dart';
+import 'package:home_sweet/utils/extensions.dart';
 
 import '../../controllers/costs_controller.dart';
 import '../../widgets/empty_state.dart';
 import '../../widgets/fab.dart';
+import 'widgets/cost_item.dart';
 
 class CostsPage extends StatelessWidget {
   CostsPage({super.key});
@@ -27,15 +31,16 @@ class CostsPage extends StatelessWidget {
                       ),
                       child: Column(
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: 24, bottom: 24),
-                            child: const CustomTextField.search(
+                          const Padding(
+                            padding: EdgeInsets.only(top: 24, bottom: 24),
+                            child: CustomTextField.search(
                               controller: null,
                               validator: null,
                               onSaved: null,
                             ),
                           ),
-                          Container(),
+                          CostItem(
+                              title: 'نظافت ساختمان', items: costItems), //TODO:
                         ],
                       ),
                     );
