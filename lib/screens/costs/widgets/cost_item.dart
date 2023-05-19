@@ -4,43 +4,6 @@ import 'package:home_sweet/utils/extensions.dart';
 import '../../../constants/colors.dart';
 import '../../../themes/app_theme.dart';
 
-var costItems = [
-  Row(
-    children: [
-      Icon(
-        Icons.attach_money_rounded,
-        color: AppColors.primaryColor,
-      ),
-      SizedBox(width: 12),
-      Text('هزینه کل :  '),
-      Text('800000'.toTooman()),
-      Text('  تومان'),
-    ],
-  ),
-  Row(
-    children: [
-      Icon(
-        Icons.calendar_month_rounded,
-        color: AppColors.primaryColor,
-      ),
-      SizedBox(width: 12),
-      Text('تاریخ :'),
-      Text(' 12 اریبهشت 1402'.toFarsiNumber),
-    ],
-  ),
-  Row(
-    children: [
-      Icon(
-        Icons.edit_document,
-        color: AppColors.primaryColor,
-      ),
-      SizedBox(width: 12),
-      Text('توضیحات :'),
-      Text('بابت نظافت کامل، راه پله ها و ... '),
-    ],
-  ),
-];
-
 class CostItem extends StatelessWidget {
   final String title;
   final double totalHeight;
@@ -51,7 +14,7 @@ class CostItem extends StatelessWidget {
     super.key,
     required this.title,
     required this.items,
-    this.totalHeight = 200,
+    this.totalHeight = 210,
     this.bodyHeight = 60,
   });
 
@@ -60,6 +23,7 @@ class CostItem extends StatelessWidget {
     return Container(
       width: double.infinity,
       height: totalHeight, //200,
+      // margin: EdgeInsets.symmetric(vertical: 24),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
@@ -67,18 +31,22 @@ class CostItem extends StatelessWidget {
           BoxShadow(
             color: Color(0xffF6F7F9),
             offset: Offset(0, -1),
+            blurRadius: 3,
           ),
           BoxShadow(
-            color: Color(0xffF6F7F9),
+            color: Color.fromARGB(255, 230, 230, 230),
             offset: Offset(0, 5),
+            blurRadius: 3,
           ),
           BoxShadow(
-            color: Color(0xffF6F7F9),
+            color: Color.fromARGB(255, 230, 230, 230),
             offset: Offset(3, 0),
+            blurRadius: 3,
           ),
           BoxShadow(
             color: Color(0xffF6F7F9),
             offset: Offset(-3, 0),
+            blurRadius: 3,
           ),
         ],
       ),

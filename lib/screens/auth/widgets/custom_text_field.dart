@@ -15,6 +15,7 @@ class CustomTextField extends StatelessWidget {
   final Widget suffixIcon;
   final Widget? prefixIcon;
   final bool obscureText;
+  final int? maxLines;
   // final int maxLength;
   final TextInputType keyboardType;
   final List<TextInputFormatter>? inputFormatters;
@@ -29,6 +30,7 @@ class CustomTextField extends StatelessWidget {
     required this.hintText,
     required this.validator,
     required this.onSaved,
+    this.maxLines = 1,
     // this.maxLength = 20,
     this.padding = 10,
     this.suffixIcon = const SizedBox.shrink(),
@@ -46,6 +48,7 @@ class CustomTextField extends StatelessWidget {
     required this.validator,
     required this.onSaved,
     this.hintText = 'رمز عبور',
+    this.maxLines = 1,
     // this.maxLength = 6,
     this.padding = 10,
     this.suffixIcon = const Icon(Icons.visibility_off),
@@ -63,6 +66,7 @@ class CustomTextField extends StatelessWidget {
     required this.validator,
     required this.onSaved,
     this.hintText = 'تکرار رمز عبور',
+    this.maxLines = 1,
     // this.maxLength = 6,
     this.padding = 10,
     this.suffixIcon = const Icon(Icons.visibility_off),
@@ -81,6 +85,7 @@ class CustomTextField extends StatelessWidget {
     required this.onSaved,
     this.hintText = 'جستجو',
     this.padding = 10,
+    this.maxLines = 1,
     this.suffixIcon = const SizedBox.shrink(),
     this.prefixIcon = const Icon(Icons.search),
     this.obscureText = false,
@@ -93,6 +98,7 @@ class CustomTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var textFormField = TextFormField(
+      maxLines: maxLines,
       controller: controller,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       textInputAction: TextInputAction.next,

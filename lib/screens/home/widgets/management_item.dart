@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:home_sweet/routes/routes.dart';
+import 'package:home_sweet/utils/extensions.dart';
+import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 
 class ManagementItem extends StatelessWidget {
   final int index;
@@ -24,9 +26,20 @@ class ManagementItem extends StatelessWidget {
     var textTheme = Theme.of(context).textTheme;
 
     return GestureDetector(
-      onTap: () {
+      onTap: () async {
         switch (index) {
           case 0:
+            Jalali? pickedDate = await showPersianDatePicker(
+              context: context,
+              initialDate: Jalali.now(),
+              firstDate: Jalali(1381, 5),
+              lastDate: Jalali(1450, 12),
+              helpText: 'انتخاب تاریخ 📆',
+              fieldHintText: 'مثال  1381/5/10'.toFarsiNumber,
+              errorFormatText: 'تاریخ به صورت درستی وارد نشده است',
+              errorInvalidText: 'تاریخ خارج از محدوده مجاز است',
+            );
+            var label = pickedDate!.formatFullDate();
             break;
           case 1:
             break;

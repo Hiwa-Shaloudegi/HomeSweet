@@ -3,6 +3,7 @@ import 'package:home_sweet/models/apartment.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
+import '../models/cost.dart';
 import '../models/user.dart';
 
 class DatabaseHelper {
@@ -42,6 +43,8 @@ class DatabaseHelper {
     const textType = 'TEXT NOT NULL';
     const integerType = 'INTEGER NOT NULL';
     const doubleType = 'REAL NOT NULL';
+    const boolType = 'BOOLEAN NOT NULL';
+    // const dateType = 'Date NOT NULL' //!
 
     // User Table
     await db.execute(""" 
@@ -62,6 +65,18 @@ class DatabaseHelper {
       ${ApartmentTable.storyNumber} $integerType,
       ${ApartmentTable.unitNumber} $integerType,
       ${ApartmentTable.budget} $doubleType
+      )
+""");
+
+    // Cost Table
+    await db.execute(""" 
+      CREATE TABLE ${CostTable.name} (
+      ${CostTable.id} $idType,
+      ${CostTable.title} $textType,
+      ${CostTable.description} $textType,
+      ${CostTable.date} $textType,
+      ${CostTable.amount} $doubleType,
+      ${CostTable.receiptImage} $textType,
       )
 """);
 
