@@ -75,8 +75,8 @@ class DatabaseHelper {
       ${CostTable.title} $textType,
       ${CostTable.description} $textType,
       ${CostTable.date} $textType,
-      ${CostTable.amount} $doubleType,
-      ${CostTable.receiptImage} $textType,
+      ${CostTable.amount} $integerType,
+      ${CostTable.receiptImage} $textType
       )
 """);
 

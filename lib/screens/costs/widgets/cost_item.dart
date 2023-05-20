@@ -6,14 +6,18 @@ import '../../../themes/app_theme.dart';
 
 class CostItem extends StatelessWidget {
   final String title;
+  final int amount;
+  final String date;
+  final String description;
   final double totalHeight;
   final double bodyHeight;
-  final List<Widget> items;
 
   const CostItem({
     super.key,
     required this.title,
-    required this.items,
+    required this.amount,
+    required this.date,
+    required this.description,
     this.totalHeight = 210,
     this.bodyHeight = 60,
   });
@@ -67,17 +71,17 @@ class CostItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  title, //'نظافت ساختمان',
+                  title,
                   style: AppTheme.textTheme().labelLarge,
                 ),
-                Spacer(),
-                Icon(
+                const Spacer(),
+                const Icon(
                   Icons.edit,
                   color: Colors.white,
                   size: 22,
                 ),
-                SizedBox(width: 14),
-                Icon(
+                const SizedBox(width: 14),
+                const Icon(
                   Icons.delete_rounded,
                   color: Colors.red,
                 ),
@@ -94,7 +98,48 @@ class CostItem extends StatelessWidget {
               height: totalHeight - bodyHeight, //firstContainer - second
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: items,
+                children: [
+                  Row(
+                    children: [
+                      const Icon(
+                        Icons.attach_money_rounded,
+                        color: AppColors.primaryColor,
+                      ),
+                      const SizedBox(width: 12),
+                      const Text('هزینه کل :  '),
+                      Text(amount.toString().toTooman()),
+                      const Text('  تومان'),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      const Icon(
+                        Icons.calendar_month_rounded,
+                        color: AppColors.primaryColor,
+                      ),
+                      const SizedBox(width: 12),
+                      const Text('تاریخ : '),
+                      Text(date.toString().toFarsiNumber),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      const Icon(
+                        Icons.edit_document,
+                        color: AppColors.primaryColor,
+                      ),
+                      const SizedBox(width: 12),
+                      const Text('توضیحات : '),
+                      Expanded(
+                        child: Text(
+                          description,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
           ),

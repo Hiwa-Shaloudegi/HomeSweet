@@ -18,10 +18,12 @@ class CustomTextField extends StatelessWidget {
   final int? maxLines;
   // final int maxLength;
   final TextInputType keyboardType;
+  final bool readOnly;
   final List<TextInputFormatter>? inputFormatters;
   final String? Function(String?)? validator;
   final void Function(String?)? onSaved;
   final void Function(String?)? onChanged;
+  final void Function()? onTap;
   final ConstructorType constructorType;
 
   const CustomTextField({
@@ -36,9 +38,11 @@ class CustomTextField extends StatelessWidget {
     this.suffixIcon = const SizedBox.shrink(),
     this.prefixIcon,
     this.obscureText = false,
+    this.readOnly = false,
     this.keyboardType = TextInputType.text,
     this.inputFormatters,
     this.onChanged,
+    this.onTap,
     this.constructorType = ConstructorType.simple,
   });
 
@@ -54,9 +58,11 @@ class CustomTextField extends StatelessWidget {
     this.suffixIcon = const Icon(Icons.visibility_off),
     this.prefixIcon,
     this.obscureText = true,
+    this.readOnly = false,
     this.keyboardType = TextInputType.number,
     this.inputFormatters,
     this.onChanged,
+    this.onTap,
     this.constructorType = ConstructorType.password,
   });
 
@@ -72,9 +78,11 @@ class CustomTextField extends StatelessWidget {
     this.suffixIcon = const Icon(Icons.visibility_off),
     this.prefixIcon,
     this.obscureText = true,
+    this.readOnly = false,
     this.keyboardType = TextInputType.number,
     this.inputFormatters,
     this.onChanged,
+    this.onTap,
     this.constructorType = ConstructorType.repeatPassword,
   });
 
@@ -89,15 +97,37 @@ class CustomTextField extends StatelessWidget {
     this.suffixIcon = const SizedBox.shrink(),
     this.prefixIcon = const Icon(Icons.search),
     this.obscureText = false,
+    this.readOnly = false,
     this.keyboardType = TextInputType.text,
     this.inputFormatters,
     this.onChanged,
+    this.onTap,
+    this.constructorType = ConstructorType.search,
+  });
+
+  const CustomTextField.datePicker({
+    super.key,
+    required this.controller,
+    required this.validator,
+    required this.onSaved,
+    this.hintText = 'تاریخ',
+    this.padding = 10,
+    this.maxLines = 1,
+    this.suffixIcon = const SizedBox.shrink(),
+    this.prefixIcon,
+    this.obscureText = false,
+    this.readOnly = false,
+    this.keyboardType = TextInputType.text,
+    this.inputFormatters,
+    this.onChanged,
+    this.onTap,
     this.constructorType = ConstructorType.search,
   });
 
   @override
   Widget build(BuildContext context) {
     var textFormField = TextFormField(
+      readOnly: readOnly,
       maxLines: maxLines,
       controller: controller,
       autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -121,6 +151,7 @@ class CustomTextField extends StatelessWidget {
       validator: validator,
       onSaved: onSaved,
       onChanged: onChanged,
+      onTap: onTap,
     );
     return Padding(
       padding: EdgeInsets.symmetric(vertical: padding),

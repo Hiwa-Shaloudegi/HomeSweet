@@ -8,43 +8,6 @@ import '../models/cost.dart';
 import '../widgets/snackbar.dart';
 
 class CostsController extends GetxController {
-  var costItems = [
-    Row(
-      children: [
-        Icon(
-          Icons.attach_money_rounded,
-          color: AppColors.primaryColor,
-        ),
-        SizedBox(width: 12),
-        Text('هزینه کل :  '),
-        Text('800000'.toTooman()),
-        Text('  تومان'),
-      ],
-    ),
-    Row(
-      children: [
-        Icon(
-          Icons.calendar_month_rounded,
-          color: AppColors.primaryColor,
-        ),
-        SizedBox(width: 12),
-        Text('تاریخ :'),
-        Text(' 12 اریبهشت 1402'.toFarsiNumber),
-      ],
-    ),
-    Row(
-      children: [
-        Icon(
-          Icons.edit_document,
-          color: AppColors.primaryColor,
-        ),
-        SizedBox(width: 12),
-        Text('توضیحات :'),
-        Text('بابت نظافت کامل، راه پله ها و ... '),
-      ],
-    ),
-  ];
-
   final formKey = GlobalKey<FormState>();
 
   final titleTextController = TextEditingController();
@@ -56,11 +19,11 @@ class CostsController extends GetxController {
   String title = '';
   String description = '';
   String date = '';
-  double amount = 0;
+  int amount = 0;
 
   int numberOfUnits = 0;
   Cost? cost;
-  List allCosts = [1];
+  List<Cost> allCosts = [];
 
   @override
   void onInit() {
@@ -90,7 +53,7 @@ class CostsController extends GetxController {
   }
 
   void amountOnSaved(String? newValue) {
-    amount = double.parse(amountTextController.text.trim());
+    amount = int.parse(amountTextController.text.trim());
   }
 
   void addnumberOfUnits() {
@@ -120,6 +83,10 @@ class CostsController extends GetxController {
   void resetForm() {
     formKey.currentState!.reset();
     //TODO: Is this a write thing to do?
+    titleTextController.clear();
+    descriptionTextController.clear();
+    dateTextController.clear();
+    amountTextController.clear();
     title = '';
     description = '';
     date = '';
@@ -130,8 +97,11 @@ class CostsController extends GetxController {
   bool isLoading = false;
   void getAllCosts() async {
     isLoading = true;
-    allCosts.addAll(await CostRepository.readAll());
+    allCosts.clear();
 
+    allCosts.addAll(await CostRepository.readAll());
+    //TODO: delay
+    await Future.delayed(const Duration(milliseconds: 650));
     isLoading = false;
     update();
   }
@@ -146,17 +116,18 @@ class CostsController extends GetxController {
       var newCost = Cost(
         title: title,
         description: description,
-        date: DateTime.parse(date),
+        date: date,
         amount: amount,
         receiptImage: '',
       );
 
       try {
         cost = await CostRepository.create(newCost);
+        allCosts.insert(0, cost!);
 
         Get.back();
-        resetForm();
         AppSnackbar.successSnackbar('اطلاعات هزینه با موفقیت ثبت شد.');
+        resetForm();
       } catch (e) {
         print('CATCH ERROR: $e');
       }

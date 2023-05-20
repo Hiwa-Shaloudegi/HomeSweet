@@ -23,8 +23,8 @@ class Cost {
   int? id;
   String? title;
   String? description;
-  DateTime? date;
-  double? amount;
+  String? date;
+  int? amount;
   String? receiptImage;
 
   Cost({

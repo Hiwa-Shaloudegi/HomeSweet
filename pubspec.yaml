@@ -17,6 +17,7 @@ dependencies:
   path_provider: ^2.0.14
   sqflite: ^2.2.7
   persian_datetime_picker: ^2.6.0
+  flutter_spinkit: ^5.2.0
 
 dev_dependencies:
   flutter_test:

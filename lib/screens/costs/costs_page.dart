@@ -66,43 +66,46 @@ class CostsPage extends StatelessWidget {
                         CustomTextField(
                           controller: costsController.titleTextController,
                           hintText: 'عنوان هزینه',
-                          validator: null,
+                          validator: (value) =>
+                              Validators.textInputValidator(value),
                           onSaved: (newValue) =>
                               costsController.titleOnSaved(newValue),
                         ),
                         CustomTextField(
                           controller: costsController.descriptionTextController,
                           hintText: 'توضیحات',
-                          validator: null,
+                          validator: (value) =>
+                              Validators.descriptionInputValidator(value),
                           onSaved: (newValue) =>
                               costsController.descriptionOnSaved(newValue),
                           maxLines: 2,
                         ),
-                        CustomTextField(
-                          // TODO: onTap --> open datePicker
+                        CustomTextField.datePicker(
                           controller: costsController.dateTextController,
+                          onTap: () async {
+                            FocusScope.of(context).requestFocus(FocusNode());
+
+                            Jalali? pickedDate = await showPersianDatePicker(
+                              context: context,
+                              initialDate: Jalali.now(),
+                              firstDate: Jalali(1381, 5),
+                              lastDate: Jalali(1450, 12),
+                              helpText: 'انتخاب تاریخ 📆',
+                              fieldHintText: 'مثال  1381/5/10'.toFarsiNumber,
+                              errorFormatText:
+                                  'تاریخ به صورت درستی وارد نشده است.',
+                              errorInvalidText:
+                                  'تاریخ خارج از محدوده مجاز است.',
+                            );
+                            String label = pickedDate!.formatFullDate();
+                            costsController.dateTextController.text = label;
+                          },
                           hintText: 'تاریخ',
-                          validator: null,
+                          validator: (value) =>
+                              Validators.dateInputValidator(value),
                           onSaved: (newValue) =>
                               costsController.dateOnSaved(newValue),
-                          suffixIcon: GestureDetector(
-                            onTap: () async {
-                              Jalali? pickedDate = await showPersianDatePicker(
-                                context: context,
-                                initialDate: Jalali.now(),
-                                firstDate: Jalali(1381, 5),
-                                lastDate: Jalali(1450, 12),
-                                helpText: 'انتخاب تاریخ 📆',
-                                fieldHintText: 'مثال  1381/5/10'.toFarsiNumber,
-                                errorFormatText:
-                                    'تاریخ به صورت درستی وارد نشده است',
-                                errorInvalidText:
-                                    'تاریخ خارج از محدوده مجاز است',
-                              );
-                              var label = pickedDate!.formatFullDate();
-                            },
-                            child: const Icon(Icons.calendar_month_rounded),
-                          ),
+                          suffixIcon: const Icon(Icons.calendar_month_rounded),
                         ),
                         CustomTextField(
                           controller: costsController.amountTextController,
@@ -134,7 +137,7 @@ class CostsPage extends StatelessWidget {
                         SaveButton(
                             text: 'ثبت اطلاعات',
                             onPressed: () {
-                              // costsController.createCost();
+                              costsController.createCost();
                             })
                       ],
                     );
@@ -150,39 +153,48 @@ class CostsPage extends StatelessWidget {
         body: SafeArea(
           child: GetBuilder<CostsController>(
             builder: (costsController) {
-              return costsController.allCosts.isEmpty
-                  ? const EmptyState(message: 'هنوز هیچ هزینه ای ثبت نشده است')
-                  : Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                      ),
-                      child: Column(
-                        children: [
-                          const Padding(
-                            padding: EdgeInsets.only(top: 24, bottom: 24),
-                            child: CustomTextField.search(
-                              controller: null,
-                              validator: null,
-                              onSaved: null,
-                            ),
-                          ),
-                          Container(
-                            // color: Colors.amber,
-                            height: Get.height * 0.79, //!
-                            child: ListView.separated(
-                              physics: const BouncingScrollPhysics(),
-                              itemCount: 8,
-                              itemBuilder: (context, index) => CostItem(
-                                title: 'نظافت ساختمان',
-                                items: costsController.costItems,
+              if (costsController.isLoading) {
+                return Center(child: CircularProgressIndicator());
+              } else {
+                return costsController.allCosts.isEmpty
+                    ? const EmptyState(
+                        message: 'هنوز هیچ هزینه ای ثبت نشده است.')
+                    : Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                        ),
+                        child: Column(
+                          children: [
+                            const Padding(
+                              padding: EdgeInsets.only(top: 24, bottom: 24),
+                              child: CustomTextField.search(
+                                controller: null,
+                                validator: null,
+                                onSaved: null,
                               ),
-                              separatorBuilder: (context, index) =>
-                                  const SizedBox(height: 24),
                             ),
-                          ),
-                        ],
-                      ),
-                    );
+                            Container(
+                              // color: Colors.amber,
+                              height: Get.height * 0.79, //!
+                              child: ListView.separated(
+                                physics: const BouncingScrollPhysics(),
+                                itemCount: costsController.allCosts.length,
+                                itemBuilder: (context, index) => CostItem(
+                                  title: costsController.allCosts[index].title!,
+                                  amount:
+                                      costsController.allCosts[index].amount!,
+                                  date: costsController.allCosts[index].date!,
+                                  description: costsController
+                                      .allCosts[index].description!,
+                                ),
+                                separatorBuilder: (context, index) =>
+                                    const SizedBox(height: 24),
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+              }
             },
           ),
         ));
