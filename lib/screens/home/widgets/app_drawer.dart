@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../constants/colors.dart';
-import '../../../controllers/auth_controller.dart';
 import '../../../controllers/main_controller.dart';
 import '../../../controllers/theme_controller.dart';
 import '../../../my_custom_icon_icons.dart';
+import '../../../widgets/app_dialog.dart';
 import 'setting_item.dart';
 
 class SettingDrawer extends StatelessWidget {
@@ -156,27 +156,5 @@ class SettingDrawer extends StatelessWidget {
         },
       ),
     ];
-  }
-
-  Future<dynamic> showAppDialog({
-    required String title,
-    required String message,
-    required String textConfirm,
-    required String textCancel,
-    required void Function()? onConfirm,
-  }) {
-    return Get.defaultDialog(
-      titlePadding: const EdgeInsets.only(top: 16, bottom: 8),
-      contentPadding: const EdgeInsets.only(bottom: 16),
-      title: title, //'هشدار!',
-      middleText: message,
-      textConfirm: textCancel,
-      textCancel: textConfirm,
-      confirmTextColor: Colors.white,
-      onCancel: onConfirm,
-      onConfirm: () => Get.back(),
-
-      // authController.logout();
-    );
   }
 }

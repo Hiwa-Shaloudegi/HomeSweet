@@ -42,6 +42,32 @@ class CostRepository {
     return result;
   }
 
+  static Future<int?> getId(Cost cost) async {
+    var db = await _databaseHelper.database;
+
+    final maps = await db.query(
+      CostTable.name,
+      columns: [CostTable.id],
+      where:
+          '${CostTable.title} = ? AND ${CostTable.description} = ? AND ${CostTable.date} = ? AND ${CostTable.amount} = ?AND ${CostTable.receiptImage} = ?',
+      whereArgs: [
+        cost.title,
+        cost.description,
+        cost.date,
+        cost.amount,
+        cost.receiptImage,
+      ],
+    );
+
+    print(maps);
+
+    if (maps.isNotEmpty) {
+      return maps.first[CostTable.id] as int;
+    } else {
+      return null;
+    }
+  }
+
   static Future<int> update(Cost cost) async {
     var db = await _databaseHelper.database;
 

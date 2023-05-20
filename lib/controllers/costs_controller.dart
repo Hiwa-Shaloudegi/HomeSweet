@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:home_sweet/database/cost_repository.dart';
 import 'package:home_sweet/utils/extensions.dart';
+import 'package:home_sweet/widgets/app_dialog.dart';
 
 import '../constants/colors.dart';
 import '../models/cost.dart';
@@ -134,5 +135,25 @@ class CostsController extends GetxController {
     }
 
     update();
+  }
+
+  // void getIdbyCost(Cost cost)async{
+  //   int id
+  // }
+
+  void deleteCost(int id) async {
+    await showAppDialog(
+      title: 'هشدار',
+      message: 'آیا مطمئن هستید که می خواهید این مورد را حذف کنید؟',
+      textConfirm: 'بلی',
+      textCancel: 'خیر',
+      onConfirm: () async {
+        await CostRepository.delete(id);
+        //!
+        allCosts.clear();
+        getAllCosts();
+        //!
+      },
+    );
   }
 }

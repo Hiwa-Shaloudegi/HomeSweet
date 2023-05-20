@@ -1,26 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:home_sweet/controllers/costs_controller.dart';
+import 'package:home_sweet/database/cost_repository.dart';
 import 'package:home_sweet/utils/extensions.dart';
 
 import '../../../constants/colors.dart';
+import '../../../models/cost.dart';
 import '../../../themes/app_theme.dart';
 
 class CostItem extends StatelessWidget {
-  final String title;
-  final int amount;
-  final String date;
-  final String description;
+  final Cost cost;
+
   final double totalHeight;
   final double bodyHeight;
 
-  const CostItem({
+  CostItem({
     super.key,
-    required this.title,
-    required this.amount,
-    required this.date,
-    required this.description,
+    required this.cost,
     this.totalHeight = 210,
     this.bodyHeight = 60,
   });
+
+  final costsController = Get.find<CostsController>();
 
   @override
   Widget build(BuildContext context) {
@@ -70,20 +71,45 @@ class CostItem extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  title,
-                  style: AppTheme.textTheme().labelLarge,
+                Expanded(
+                  child: Text(
+                    cost.title!,
+                    style: AppTheme.textTheme().labelLarge,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
-                const Spacer(),
-                const Icon(
-                  Icons.edit,
-                  color: Colors.white,
-                  size: 22,
+                // const Spacer(),
+                Padding(
+                  padding: const EdgeInsets.only(right: 14),
+                  child: IconButton(
+                    onPressed: () {},
+                    splashColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    visualDensity: VisualDensity.compact,
+                    icon: const Icon(
+                      Icons.edit,
+                      color: Colors.white,
+                      size: 22,
+                    ),
+                  ),
                 ),
-                const SizedBox(width: 14),
-                const Icon(
-                  Icons.delete_rounded,
-                  color: Colors.red,
+                IconButton(
+                  onPressed: () async {
+                    int? id = await CostRepository.getId(cost);
+                    if (id != null) {
+                      costsController.deleteCost(id);
+                    } else {
+                      print('---------------->  ID was null');
+                    }
+                  },
+                  splashColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                  visualDensity: VisualDensity.compact,
+                  icon: const Icon(
+                    Icons.delete_rounded,
+                    color: Colors.red,
+                  ),
                 ),
               ],
             ),
@@ -107,7 +133,7 @@ class CostItem extends StatelessWidget {
                       ),
                       const SizedBox(width: 12),
                       const Text('هزینه کل :  '),
-                      Text(amount.toString().toTooman()),
+                      Text(cost.amount.toString().toTooman()),
                       const Text('  تومان'),
                     ],
                   ),
@@ -119,7 +145,7 @@ class CostItem extends StatelessWidget {
                       ),
                       const SizedBox(width: 12),
                       const Text('تاریخ : '),
-                      Text(date.toString().toFarsiNumber),
+                      Text(cost.date.toString().toFarsiNumber),
                     ],
                   ),
                   Row(
@@ -132,7 +158,7 @@ class CostItem extends StatelessWidget {
                       const Text('توضیحات : '),
                       Expanded(
                         child: Text(
-                          description,
+                          cost.description!,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),

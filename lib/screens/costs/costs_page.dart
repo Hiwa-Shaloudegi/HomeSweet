@@ -74,12 +74,13 @@ class CostsPage extends StatelessWidget {
                                 physics: const BouncingScrollPhysics(),
                                 itemCount: costsController.allCosts.length,
                                 itemBuilder: (context, index) => CostItem(
-                                  title: costsController.allCosts[index].title!,
-                                  amount:
-                                      costsController.allCosts[index].amount!,
-                                  date: costsController.allCosts[index].date!,
-                                  description: costsController
-                                      .allCosts[index].description!,
+                                  cost: costsController.allCosts[index],
+                                  // title: costsController.allCosts[index].id,//costsController.allCosts[index].title!,
+                                  // amount:
+                                  //     costsController.allCosts[index].amount!,
+                                  // date: costsController.allCosts[index].date!,
+                                  // description: costsController
+                                  //     .allCosts[index].description!,
                                 ),
                                 separatorBuilder: (context, index) =>
                                     const SizedBox(height: 24),
