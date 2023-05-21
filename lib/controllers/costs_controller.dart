@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:home_sweet/database/cost_repository.dart';
+import 'package:home_sweet/routes/routes.dart';
 import 'package:home_sweet/utils/extensions.dart';
 import 'package:home_sweet/widgets/app_dialog.dart';
 
@@ -101,16 +102,19 @@ class CostsController extends GetxController {
     allCosts.clear();
 
     allCosts.addAll(await CostRepository.readAll());
+
+    //Reversing the list to get the recent added items first.
+    allCosts = List.from(allCosts.reversed);
+
     //TODO: delay
     await Future.delayed(const Duration(milliseconds: 650));
     isLoading = false;
     update();
   }
 
-  // isLoading = false;
   void createCost() async {
     if (validate()) {
-      // isLoading = false;
+      isLoading = true;
 
       saveCostInputs();
 
@@ -134,14 +138,12 @@ class CostsController extends GetxController {
       }
     }
 
+    isLoading = false;
     update();
   }
 
-  // void getIdbyCost(Cost cost)async{
-  //   int id
-  // }
-
   void deleteCost(int id) async {
+    isLoading = true;
     await showAppDialog(
       title: 'هشدار',
       message: 'آیا مطمئن هستید که می خواهید این مورد را حذف کنید؟',
@@ -149,11 +151,17 @@ class CostsController extends GetxController {
       textCancel: 'خیر',
       onConfirm: () async {
         await CostRepository.delete(id);
-        //!
-        allCosts.clear();
-        getAllCosts();
-        //!
+
+        // Removes any snackbar or dialog on the stack until it gets to the actual screen.
+        Navigator.of(Get.overlayContext!)
+            .popUntil(ModalRoute.withName(AppRoutes.costsPage));
+
+        // Also removes the cost from list of costs state.
+        allCosts.removeWhere((cost) => cost.id == id);
       },
     );
+
+    isLoading = false;
+    update();
   }
 }

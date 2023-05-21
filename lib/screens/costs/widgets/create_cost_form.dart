@@ -73,6 +73,7 @@ class CreateCostForm extends StatelessWidget {
               CustomTextField(
                 controller: costsController.amountTextController,
                 hintText: 'مقدار هزینه',
+                keyboardType: TextInputType.number,
                 validator: (value) => Validators.amountInputValidator(value),
                 onSaved: (newValue) => costsController.amountOnSaved(newValue),
               ),
