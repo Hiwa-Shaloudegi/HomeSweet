@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:home_sweet/controllers/main_controller.dart';
 import 'package:home_sweet/database/apartment_repository.dart';
 import 'package:home_sweet/models/apartment.dart';
 
@@ -48,7 +47,6 @@ class ApartmentFormController extends GetxController {
       budgetTextController.text = apartment!.budget.toString();
       storyNumber = apartment!.storyNumber!;
       unitNumber = apartment!.unitNumber!;
-
     }
 
     update();
@@ -122,7 +120,6 @@ class ApartmentFormController extends GetxController {
           budget: double.parse(budget),
         );
 
-
         try {
           apartment = await ApartmentRepository.create(newApartment);
 
@@ -130,7 +127,7 @@ class ApartmentFormController extends GetxController {
           Get.offAndToNamed(AppRoutes.mainScreen);
           AppSnackbar.successSnackbar('اطلاعات آپارتمان با موفقیت ثبت شد.');
         } catch (e) {
-          print('CATCH ERROR: $e');
+          throw Exception('CATCH ERROR: $e');
         }
 
         //Update
@@ -152,7 +149,7 @@ class ApartmentFormController extends GetxController {
 
           AppSnackbar.successSnackbar('اطلاعات با موفقیت بروز رسانی شد.');
         } catch (e) {
-          print('CATCH ERROR: $e');
+          throw Exception('CATCH ERROR: $e');
         }
       }
     }

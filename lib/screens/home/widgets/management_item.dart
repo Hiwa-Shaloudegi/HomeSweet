@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:home_sweet/routes/routes.dart';
-import 'package:home_sweet/utils/extensions.dart';
-import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 
+// ignore: must_be_immutable
 class ManagementItem extends StatelessWidget {
   final int index;
 

@@ -10,13 +10,12 @@ import '../../apartment/widgets/counter_icon_button.dart';
 import '../../auth/widgets/custom_text_field.dart';
 import '../../auth/widgets/save_button.dart';
 
-class CreateCostForm extends StatelessWidget {
-  const CreateCostForm({
+class CostForm extends StatelessWidget {
+  CostForm({
     super.key,
-    required this.costsController,
   });
 
-  final CostsController costsController;
+  final costsController = Get.find<CostsController>();
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +29,7 @@ class CreateCostForm extends StatelessWidget {
           ),
           child: Wrap(
             children: [
-              FormBottomSheetHeader(title: 'ثبت هزینه'),
+              const FormBottomSheetHeader(title: 'ثبت هزینه'),
               Container(height: 8),
               CustomTextField(
                 controller: costsController.titleTextController,

@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:home_sweet/database/cost_repository.dart';
 import 'package:home_sweet/routes/routes.dart';
-import 'package:home_sweet/utils/extensions.dart';
 import 'package:home_sweet/widgets/app_dialog.dart';
 
-import '../constants/colors.dart';
 import '../models/cost.dart';
 import '../widgets/snackbar.dart';
 
@@ -23,8 +21,10 @@ class CostsController extends GetxController {
   String date = '';
   int amount = 0;
 
+  bool isBottomSheetOpen = false;
+
   int numberOfUnits = 0;
-  Cost? cost;
+  Cost? costToUpdate;
   List<Cost> allCosts = [];
 
   @override
@@ -94,8 +94,11 @@ class CostsController extends GetxController {
     date = '';
     amount = 0;
     numberOfUnits = 0;
+    //!
+    costToUpdate = null;
   }
 
+  // CRUD
   bool isLoading = false;
   void getAllCosts() async {
     isLoading = true;
@@ -107,10 +110,15 @@ class CostsController extends GetxController {
     allCosts = List.from(allCosts.reversed);
 
     //TODO: delay
-    await Future.delayed(const Duration(milliseconds: 650));
+    await Future.delayed(const Duration(milliseconds: 500));
     isLoading = false;
     update();
   }
+
+  // //!
+  // void getId(Cost cost) async {
+  //   var id = CostRepository.getId(cost);
+  // }
 
   void createCost() async {
     if (validate()) {
@@ -118,27 +126,77 @@ class CostsController extends GetxController {
 
       saveCostInputs();
 
-      var newCost = Cost(
-        title: title,
-        description: description,
-        date: date,
-        amount: amount,
-        receiptImage: '',
-      );
+      if (costToUpdate == null) {
+        var newCost = Cost(
+          title: title,
+          description: description,
+          date: date,
+          amount: amount,
+          receiptImage: '',
+        );
 
-      try {
-        cost = await CostRepository.create(newCost);
-        allCosts.insert(0, cost!);
+        try {
+          var cost = await CostRepository.create(newCost);
+          allCosts.insert(0, cost);
 
-        Get.back();
-        AppSnackbar.successSnackbar('اطلاعات هزینه با موفقیت ثبت شد.');
-        resetForm();
-      } catch (e) {
-        print('CATCH ERROR: $e');
+          Get.back();
+          AppSnackbar.successSnackbar('اطلاعات هزینه با موفقیت ثبت شد.');
+          resetForm();
+        } catch (e) {
+          throw Exception('CATCH ERROR: $e');
+        }
+      } else {
+        updateCost();
       }
     }
 
     isLoading = false;
+    update();
+  }
+
+  void loadSelectedCostData() async {
+    if (costToUpdate != null) {
+      titleTextController.text = costToUpdate!.title!;
+      descriptionTextController.text = costToUpdate!.description!;
+      dateTextController.text = costToUpdate!.date!;
+      amountTextController.text = costToUpdate!.amount.toString();
+    }
+    update();
+  }
+
+  void updateCost() async {
+    if (validate()) {
+      isLoading = true;
+
+      saveCostInputs();
+
+      var updatedCost = Cost(
+        id: costToUpdate!.id,
+        title: title,
+        description: description,
+        date: date,
+        amount: amount,
+        receiptImage: '', //receiptImage,
+      );
+
+      try {
+        await CostRepository.update(updatedCost);
+
+        int index = allCosts.indexWhere((cost) => cost.id == costToUpdate!.id);
+        if (index != -1) {
+          allCosts[index] = updatedCost;
+        }
+
+        Get.back();
+        AppSnackbar.successSnackbar('اطلاعات با موفقیت بروز رسانی شد.');
+      } catch (e) {
+        throw Exception('CATCH ERROR: $e');
+      }
+    }
+
+    isLoading = false;
+    costToUpdate = null;
+
     update();
   }
 

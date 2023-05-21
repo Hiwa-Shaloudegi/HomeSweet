@@ -7,6 +7,7 @@ import 'package:home_sweet/utils/extensions.dart';
 import '../../../constants/colors.dart';
 import '../../../models/cost.dart';
 import '../../../themes/app_theme.dart';
+import 'cost_bottomsheet.dart';
 
 class CostItem extends StatelessWidget {
   final Cost cost;
@@ -83,7 +84,35 @@ class CostItem extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(right: 14),
                   child: IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      //! selected Cost model.
+                      costsController.costToUpdate = cost;
+                      costsController.loadSelectedCostData();
+                      //!
+                      // showModalBottomSheet(
+                      //     context: context,
+                      //     isScrollControlled: true,
+                      //     backgroundColor: Colors.white,
+                      //     shape: const RoundedRectangleBorder(
+                      //       borderRadius: BorderRadiusDirectional.only(
+                      //         topEnd: Radius.circular(25),
+                      //         topStart: Radius.circular(25),
+                      //       ),
+                      //     ),
+                      //     builder: (context) {
+                      //       return SingleChildScrollView(
+                      //         padding: const EdgeInsetsDirectional.symmetric(
+                      //           horizontal: 20,
+                      //           vertical: 8,
+                      //         ),
+                      //         child: CostForm(),
+                      //       );
+                      //     })
+
+                      showCostFormBottomSheet(context).then(
+                        (value) => costsController.resetForm(),
+                      ); //! when the bottomShett closes
+                    },
                     splashColor: Colors.transparent,
                     highlightColor: Colors.transparent,
                     visualDensity: VisualDensity.compact,
@@ -99,8 +128,6 @@ class CostItem extends StatelessWidget {
                     int? id = await CostRepository.getId(cost);
                     if (id != null) {
                       costsController.deleteCost(id);
-                    } else {
-                      print('---------------->  ID was null');
                     }
                   },
                   splashColor: Colors.transparent,
@@ -119,8 +146,7 @@ class CostItem extends StatelessWidget {
               horizontal: 8,
               vertical: 0,
             ),
-            child: Container(
-              // color: Colors.amber,
+            child: SizedBox(
               height: totalHeight - bodyHeight, //firstContainer - second
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,

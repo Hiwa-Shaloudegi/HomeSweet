@@ -53,39 +53,36 @@ Widget apartmentFormBody() {
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 18),
-                    child: Container(
-                      // color: Colors.amber,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          const Text('تعداد طبقات:'),
-                          CountIconButton.add(
-                            onPressed: () =>
-                                apartmentFormController.addStoryNumber(),
-                          ),
-                          // TODO: Fix the input number by keyboard.
-                          Text('${apartmentFormController.storyNumber}'),
-                          CountIconButton.minus(
-                            onPressed: () =>
-                                apartmentFormController.removeStoryNumber(),
-                          ),
-                          Container(
-                            width: 1,
-                            height: 24,
-                            color: const Color(0xffCACACF),
-                          ),
-                          const Text('تعداد واحدها:'),
-                          CountIconButton.add(
-                            onPressed: () =>
-                                apartmentFormController.addUnitNumber(),
-                          ),
-                          Text('${apartmentFormController.unitNumber}'),
-                          CountIconButton.minus(
-                            onPressed: () =>
-                                apartmentFormController.removeUnitNumber(),
-                          ),
-                        ],
-                      ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        const Text('تعداد طبقات:'),
+                        CountIconButton.add(
+                          onPressed: () =>
+                              apartmentFormController.addStoryNumber(),
+                        ),
+                        // TODO: Fix the input number by keyboard.
+                        Text('${apartmentFormController.storyNumber}'),
+                        CountIconButton.minus(
+                          onPressed: () =>
+                              apartmentFormController.removeStoryNumber(),
+                        ),
+                        Container(
+                          width: 1,
+                          height: 24,
+                          color: const Color(0xffCACACF),
+                        ),
+                        const Text('تعداد واحدها:'),
+                        CountIconButton.add(
+                          onPressed: () =>
+                              apartmentFormController.addUnitNumber(),
+                        ),
+                        Text('${apartmentFormController.unitNumber}'),
+                        CountIconButton.minus(
+                          onPressed: () =>
+                              apartmentFormController.removeUnitNumber(),
+                        ),
+                      ],
                     ),
                   ),
                   CustomTextField(

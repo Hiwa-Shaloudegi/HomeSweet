@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import '../themes/app_theme.dart';
 
 class FormBottomSheetHeader extends StatelessWidget {
-  FormBottomSheetHeader({
+  const FormBottomSheetHeader({
     super.key,
     required this.title,
   });

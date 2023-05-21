@@ -43,8 +43,8 @@ class DatabaseHelper {
     const textType = 'TEXT NOT NULL';
     const integerType = 'INTEGER NOT NULL';
     const doubleType = 'REAL NOT NULL';
-    const boolType = 'BOOLEAN NOT NULL';
-    // const dateType = 'Date NOT NULL' //!
+    // const boolType = 'BOOLEAN NOT NULL';
+    // const dateType = 'Date NOT NULL'
 
     // User Table
     await db.execute(""" 

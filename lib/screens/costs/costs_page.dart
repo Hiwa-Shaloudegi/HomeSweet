@@ -5,8 +5,8 @@ import 'package:home_sweet/screens/auth/widgets/custom_text_field.dart';
 import '../../controllers/costs_controller.dart';
 import '../../widgets/empty_state.dart';
 import '../../widgets/fab.dart';
+import 'widgets/cost_bottomsheet.dart';
 import 'widgets/cost_item.dart';
-import 'widgets/create_cost_form.dart';
 
 class CostsPage extends StatelessWidget {
   CostsPage({super.key});
@@ -19,24 +19,7 @@ class CostsPage extends StatelessWidget {
         resizeToAvoidBottomInset: false,
         floatingActionButton: Fab(
           onPressed: () {
-            showModalBottomSheet(
-              context: context,
-              isScrollControlled: true,
-              backgroundColor: Colors.white,
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadiusDirectional.only(
-                  topEnd: Radius.circular(25),
-                  topStart: Radius.circular(25),
-                ),
-              ),
-              builder: (context) => SingleChildScrollView(
-                padding: const EdgeInsetsDirectional.symmetric(
-                  horizontal: 20,
-                  vertical: 8,
-                ),
-                child: CreateCostForm(costsController: costsController),
-              ),
-            ).then(
+            showCostFormBottomSheet(context).then(
               (value) => costsController.resetForm(),
             ); //! when the bottomShett closes
           },
@@ -48,7 +31,7 @@ class CostsPage extends StatelessWidget {
             builder: (costsController) {
               if (costsController.isLoading) {
                 //TODO: create a beautiful loading widget
-                return Center(child: CircularProgressIndicator());
+                return const Center(child: CircularProgressIndicator());
               } else {
                 return costsController.allCosts.isEmpty
                     ? const EmptyState(
@@ -67,8 +50,7 @@ class CostsPage extends StatelessWidget {
                                 onSaved: null,
                               ),
                             ),
-                            Container(
-                              // color: Colors.amber,
+                            SizedBox(
                               height: Get.height * 0.79, //!
                               child: ListView.separated(
                                 physics: const BouncingScrollPhysics(),

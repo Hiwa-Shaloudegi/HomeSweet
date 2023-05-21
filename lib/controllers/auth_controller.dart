@@ -63,7 +63,7 @@ class AuthController extends GetxController {
           Get.offAndToNamed(AppRoutes.loginScreen);
           AppSnackbar.successSnackbar('حساب کاربری با موفقیت ساخته شد.');
         } catch (e) {
-          print('CATCH ERROR: $e');
+          throw Exception('CATCH ERROR: $e');
         }
       }
     }
@@ -100,7 +100,7 @@ class AuthController extends GetxController {
           AppSnackbar.errorSnackbar('نام کاربری یا رمز عبور اشتباه می باشد.');
         }
       } catch (e) {
-        print("ERROR: $e");
+        throw Exception("ERROR: $e");
       }
     }
 

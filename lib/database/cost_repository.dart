@@ -59,8 +59,6 @@ class CostRepository {
       ],
     );
 
-    print(maps);
-
     if (maps.isNotEmpty) {
       return maps.first[CostTable.id] as int;
     } else {
@@ -71,12 +69,14 @@ class CostRepository {
   static Future<int> update(Cost cost) async {
     var db = await _databaseHelper.database;
 
-    return db.update(
+    var a = await db.update(
       CostTable.name,
       cost.toMap(),
       where: '${CostTable.id} = ?',
       whereArgs: [cost.id],
     );
+
+    return a;
   }
 
   static Future<int> delete(int id) async {

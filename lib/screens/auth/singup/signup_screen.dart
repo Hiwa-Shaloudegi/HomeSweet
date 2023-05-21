@@ -26,84 +26,78 @@ class SignUpScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Form(
               key: authController.signupFormController.formKey,
-              child: Container(
-                // color: Colors.amber,
-                child: Center(
-                  child: Column(
-                    children: [
-                      const SizedBox(height: 60),
-                      Image.asset(
-                        'assets/images/app_icon.png',
-                        width: 120,
-                        height: 110,
+              child: Center(
+                child: Column(
+                  children: [
+                    const SizedBox(height: 60),
+                    Image.asset(
+                      'assets/images/app_icon.png',
+                      width: 120,
+                      height: 110,
+                    ),
+                    const SizedBox(height: 16),
+                    const Text(
+                      'ساخت حساب کاربری',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.w500,
                       ),
-                      const SizedBox(height: 16),
-                      const Text(
-                        'ساخت حساب کاربری',
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.w500,
+                    ),
+                    const SizedBox(height: 24),
+                    CustomTextField(
+                      controller: authController
+                          .signupFormController.usernameTextController,
+                      hintText: 'نام کاربری',
+                      validator: (value) => Validators.usernameValidator(value),
+                      onSaved: (newValue) => authController.signupFormController
+                          .usernameOnSaved(newValue),
+                    ),
+                    GetBuilder<SignupFormController>(
+                        builder: (signupFormController) {
+                      return CustomTextField.password(
+                        controller: signupFormController.passwordTextController,
+                        obscureText: !signupFormController.isPasswordVisible,
+                        suffixIcon: GestureDetector(
+                          onTap: () =>
+                              signupFormController.togglePasswordVisibility(),
+                          child: signupFormController.isPasswordVisible
+                              ? const Icon(Icons.visibility)
+                              : const Icon(Icons.visibility_off),
                         ),
-                      ),
-                      const SizedBox(height: 24),
-                      CustomTextField(
-                        controller: authController
-                            .signupFormController.usernameTextController,
-                        hintText: 'نام کاربری',
                         validator: (value) =>
-                            Validators.usernameValidator(value),
-                        onSaved: (newValue) => authController
-                            .signupFormController
-                            .usernameOnSaved(newValue),
-                      ),
-                      GetBuilder<SignupFormController>(
-                          builder: (signupFormController) {
-                        return CustomTextField.password(
-                          controller:
-                              signupFormController.passwordTextController,
-                          obscureText: !signupFormController.isPasswordVisible,
-                          suffixIcon: GestureDetector(
-                            onTap: () =>
-                                signupFormController.togglePasswordVisibility(),
-                            child: signupFormController.isPasswordVisible
-                                ? const Icon(Icons.visibility)
-                                : const Icon(Icons.visibility_off),
-                          ),
-                          validator: (value) =>
-                              Validators.passwordValidator(value),
-                          onSaved: (newValue) =>
-                              signupFormController.passwordOnSaved(newValue),
-                        );
-                      }),
-                      GetBuilder<SignupFormController>(
-                          builder: (signupFormController) {
-                        return CustomTextField.repeatPassword(
-                          controller:
-                              signupFormController.repeatPasswordTextController,
-                          obscureText:
-                              !signupFormController.isRepeatPasswordVisible,
-                          suffixIcon: GestureDetector(
-                            onTap: () => signupFormController
-                                .toggleRepeatPasswordVisibility(),
-                            child: signupFormController.isRepeatPasswordVisible
-                                ? const Icon(Icons.visibility)
-                                : const Icon(Icons.visibility_off),
-                          ),
-                          validator: (value) =>
-                              Validators.passwordValidator(value),
-                          onSaved: (newValue) {},
-                        );
-                      }),
-                      const SizedBox(height: 8),
-                      _goToLoginScreenSection(context),
-                      const SizedBox(height: 60),
-                      SaveButton(
-                          text: 'ثبت نام',
-                          onPressed: () {
-                            authController.signup();
-                          }),
-                    ],
-                  ),
+                            Validators.passwordValidator(value),
+                        onSaved: (newValue) =>
+                            signupFormController.passwordOnSaved(newValue),
+                      );
+                    }),
+                    GetBuilder<SignupFormController>(
+                        builder: (signupFormController) {
+                      return CustomTextField.repeatPassword(
+                        controller:
+                            signupFormController.repeatPasswordTextController,
+                        obscureText:
+                            !signupFormController.isRepeatPasswordVisible,
+                        suffixIcon: GestureDetector(
+                          onTap: () => signupFormController
+                              .toggleRepeatPasswordVisibility(),
+                          child: signupFormController.isRepeatPasswordVisible
+                              ? const Icon(Icons.visibility)
+                              : const Icon(Icons.visibility_off),
+                        ),
+                        validator: (value) =>
+                            Validators.passwordValidator(value),
+                        onSaved: (newValue) {},
+                      );
+                    }),
+                    const SizedBox(height: 8),
+                    _goToLoginScreenSection(context),
+                    const SizedBox(height: 60),
+                    SaveButton(
+                        text: 'ثبت نام',
+                        onPressed: () {
+                          authController.signup();
+                        }),
+                  ],
                 ),
               ),
             ),
