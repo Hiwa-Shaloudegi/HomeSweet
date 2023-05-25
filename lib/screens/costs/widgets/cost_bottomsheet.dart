@@ -6,6 +6,7 @@ Future<dynamic> showCostFormBottomSheet(BuildContext context) {
   return showModalBottomSheet(
     context: context,
     isScrollControlled: true,
+    isDismissible: false,
     backgroundColor: Colors.white,
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadiusDirectional.only(
