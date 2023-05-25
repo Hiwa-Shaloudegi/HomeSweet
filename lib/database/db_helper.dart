@@ -4,6 +4,7 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../models/cost.dart';
+import '../models/unit.dart';
 import '../models/user.dart';
 
 class DatabaseHelper {
@@ -77,6 +78,17 @@ class DatabaseHelper {
       ${CostTable.date} $textType,
       ${CostTable.amount} $integerType,
       ${CostTable.receiptImage} $textType
+      )
+""");
+
+    // Unit Table
+    await db.execute(""" 
+      CREATE TABLE ${UnitTable.name} (
+      ${UnitTable.id} $idType,
+      ${UnitTable.floor} $integerType,
+      ${UnitTable.number} $integerType,
+      ${UnitTable.phoneNumber} $textType,
+      ${UnitTable.unitStatus} $textType
       )
 """);
 

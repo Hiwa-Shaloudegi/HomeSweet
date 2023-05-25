@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 
 class SaveButton extends StatelessWidget {
   final String text;
+  final double bottomMargin;
   final VoidCallback onPressed;
 
   const SaveButton({
     super.key,
     required this.text,
     required this.onPressed,
+    this.bottomMargin = 8,
   });
 
   @override
@@ -15,7 +17,7 @@ class SaveButton extends StatelessWidget {
     return Container(
       width: double.infinity,
       height: 64,
-      margin: const EdgeInsets.only(bottom: 8),
+      margin: EdgeInsets.only(bottom: bottomMargin),
       child: ElevatedButton(
         onPressed: onPressed,
         child: Text(text),

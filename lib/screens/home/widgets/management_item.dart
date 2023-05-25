@@ -28,6 +28,7 @@ class ManagementItem extends StatelessWidget {
       onTap: () async {
         switch (index) {
           case 0:
+            Get.toNamed(AppRoutes.unitPage);
             break;
           case 1:
             break;

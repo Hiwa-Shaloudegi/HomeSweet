@@ -5,4 +5,5 @@ class AppRoutes {
   static const signUpScreen = '/signup-screen';
   static const apartmentFormPage = '/apartment-form-page';
   static const costsPage = '/costs-page';
+  static const unitPage = '/unit-page';
 }
