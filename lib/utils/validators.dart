@@ -62,4 +62,22 @@ class Validators {
     }
     return null;
   }
+
+  static String? phoneHomeNumberInputValidator(String? value) {
+    if (value == null || value.isEmpty) {
+      return '* این فیلد الزامی است';
+    } else if (value.length != 8) {
+      return 'شماره وارد شده معتبر نیست.'; // 'شماره تلفن باید 8 رقم باشد.'
+    }
+    return null;
+  }
+
+  static String? phoneNumberInputValidator(String? value) {
+    if (value == null || value.isEmpty) {
+      return '* این فیلد الزامی است';
+    } else if (value.length != 11) {
+      return 'شماره تلفن باید 11 رقم باشد.';
+    }
+    return null;
+  }
 }

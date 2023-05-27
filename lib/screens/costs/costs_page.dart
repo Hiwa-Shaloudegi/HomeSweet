@@ -43,6 +43,7 @@ class CostsPage extends StatelessWidget {
                         children: [
                           const Padding(
                             padding: EdgeInsets.only(top: 24, bottom: 24),
+                            //TODO: search functionality
                             child: CustomTextField.search(
                               controller: null,
                               validator: null,

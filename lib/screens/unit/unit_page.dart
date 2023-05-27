@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:home_sweet/widgets/empty_state.dart';
 
+import '../../controllers/unit_controller.dart';
 import '../../widgets/fab.dart';
 import 'widgets/unit_form.dart';
 
 class UnitPage extends StatelessWidget {
-  const UnitPage({super.key});
+  UnitPage({super.key});
+
+  final unitFormController = Get.put(UnitFormController());
 
   @override
   Widget build(BuildContext context) {
@@ -28,13 +32,13 @@ class UnitPage extends StatelessWidget {
               return UnitForm();
             },
           ).then(
-            (value) {},
-          ); //! .then() --> when the bottomShett closes
+            (value) => unitFormController.resetForm(),
+          );
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
-      body: Builder(
-        builder: (context) {
+      body: GetBuilder<UnitFormController>(
+        builder: (_) {
           if (true) {
             return const EmptyState(message: 'هنوز هیچ واحدی ثبت نشده است.');
           } else {
