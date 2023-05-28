@@ -1,3 +1,5 @@
+import '../models/owner.dart';
+import '../models/tenant.dart';
 import '../models/unit.dart';
 import 'db_helper.dart';
 
@@ -33,10 +35,28 @@ class UnitRepository {
   static Future<List<Unit>> readAll() async {
     var db = await _databaseHelper.database;
 
+    //! start
     final maps = await db.query(UnitTable.name, orderBy: '${UnitTable.id} ASC');
 
     List<Unit> result = maps.map((unitMap) => Unit.fromMap(unitMap)).toList();
     return result;
+    //! end
+    // final maps = await db.rawQuery('''
+    //   SELECT ${UnitTable.allColumns}, ${OwnerTable.allColumns}, ${TenantTable.allColumns}
+    //   FROM ${UnitTable.name}
+    //   LEFT JOIN ${OwnerTable.name} ON ${UnitTable.ownerId} = ${OwnerTable.id}
+    //   LEFT JOIN ${TenantTable.name} ON ${UnitTable.tenantId} = ${TenantTable.id}
+    //   ORDER BY ${UnitTable.id} ASC
+    // ''');
+
+    // List<Unit> result = maps.map((unitMap) {
+    //   final unit = Unit.fromMap(unitMap);
+    //   unit.owner = Owner.fromMap(unitMap);
+    //   unit.tenant = Tenant.fromMap(unitMap);
+    //   return unit;
+    // }).toList();
+
+    // return result;
   }
 
   static Future<int?> getId(Unit unit) async {

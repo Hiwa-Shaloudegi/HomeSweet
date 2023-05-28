@@ -1,3 +1,6 @@
+import 'tenant.dart';
+import 'owner.dart';
+
 class UnitTable {
   static const String name = 'unit';
 
@@ -35,6 +38,8 @@ class Unit {
   String? unitStatus;
   int? ownerId;
   int? tenantId;
+  Owner? owner;
+  Tenant? tenant;
 
   Unit({
     this.id,
@@ -44,6 +49,8 @@ class Unit {
     this.unitStatus,
     this.ownerId,
     this.tenantId,
+    this.owner,
+    this.tenant,
   });
 
   Unit.fromMap(Map<String, dynamic> map) {
@@ -54,6 +61,8 @@ class Unit {
     unitStatus = map[UnitTable.unitStatus];
     ownerId = map[UnitTable.ownerId];
     tenantId = map[UnitTable.tenantId];
+    owner = ownerId != null ? Owner.fromMap(map) : null;
+    tenant = tenantId != null ? Tenant.fromMap(map) : null;
   }
 
   Map<String, dynamic> toMap() {

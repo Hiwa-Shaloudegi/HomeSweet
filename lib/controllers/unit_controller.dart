@@ -12,7 +12,7 @@ import '../widgets/snackbar.dart';
 class UnitFormController extends GetxController {
   final formKey = GlobalKey<FormState>();
 
-  // Apartment
+  // Apartment Form
   var floorDropdownButtonValue = 1;
   var unitNumberDropdownButtonValue = 1;
   final unitPhoneNumberTextController = TextEditingController();
@@ -23,7 +23,8 @@ class UnitFormController extends GetxController {
   UnitStatus unitStatus = UnitStatus.owner;
   int floorNumber = 1;
   int unitNumber = 1;
-  // Owner
+
+  // Owner Form
   final ownerNameTextController = TextEditingController();
   final ownerLastNameTextController = TextEditingController();
   final ownerPhoneNumberTextController = TextEditingController();
@@ -32,7 +33,7 @@ class UnitFormController extends GetxController {
   String ownerLastName = '';
   String ownerPhoneNumber = '';
 
-  // Tenat
+  // Tenat Form
   final tenantNameTextController = TextEditingController();
   final tenantLastNameTextController = TextEditingController();
   final tenantPhoneNumberTextController = TextEditingController();
@@ -41,10 +42,13 @@ class UnitFormController extends GetxController {
   String tenantLastName = '';
   String tenantPhoneNumber = '';
 
+  // states
+  List<Unit> allUnits = [];
+
   // methods
   @override
   void onInit() {
-    // TODO: implement onInit
+    loadData();
     super.onInit();
   }
 
@@ -174,11 +178,25 @@ class UnitFormController extends GetxController {
         tenantId: unitStatus == UnitStatus.tenant ? newTenant!.id : 0,
       );
       await UnitRepository.create(newUnit);
+      allUnits.insert(0, newUnit);
 
       Get.back();
       AppSnackbar.successSnackbar('اطلاعات واحد با موفقیت ثبت شد.');
       resetForm();
       update();
     }
+  }
+
+  bool isLoading = false;
+  loadData() async {
+    isLoading = true;
+    allUnits.clear();
+
+    allUnits.addAll(await UnitRepository.readAll());
+    allUnits = List.from(allUnits.reversed);
+
+    await Future.delayed(const Duration(milliseconds: 300));
+    isLoading = false;
+    update();
   }
 }
