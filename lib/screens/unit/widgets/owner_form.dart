@@ -25,20 +25,22 @@ class OwnerForm extends StatelessWidget {
           controller: unitFormController.ownerNameTextController,
           hintText: 'نام',
           validator: (value) => Validators.textInputValidator(value),
-          onSaved: null,
+          onSaved: (newValue) => unitFormController.ownerNameOnSaved(newValue),
         ),
         CustomTextField(
           controller: unitFormController.ownerLastNameTextController,
           hintText: 'نام خانوادگی',
           validator: (value) => Validators.textInputValidator(value),
-          onSaved: null,
+          onSaved: (newValue) =>
+              unitFormController.ownerLastNameOnSaved(newValue),
         ),
         CustomTextField(
           controller: unitFormController.ownerPhoneNumberTextController,
           hintText: 'شماره تلفن',
           keyboardType: TextInputType.number,
           validator: Validators.phoneNumberInputValidator,
-          onSaved: null,
+          onSaved: (newValue) =>
+              unitFormController.ownerPhoneNumberOnSaved(newValue),
         ),
       ],
     );

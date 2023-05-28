@@ -1,5 +1,3 @@
-import 'package:home_sweet/models/cost.dart';
-
 import '../models/unit.dart';
 import 'db_helper.dart';
 
@@ -11,7 +9,7 @@ class UnitRepository {
   static Future<Unit> create(Unit unit) async {
     var db = await _databaseHelper.database;
 
-    unit.id = await db.insert(CostTable.name, unit.toMap());
+    unit.id = await db.insert(UnitTable.name, unit.toMap());
     return unit;
   }
 

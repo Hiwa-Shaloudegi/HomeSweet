@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:home_sweet/database/owner_repository.dart';
+import 'package:home_sweet/database/tenant_repository.dart';
+import 'package:home_sweet/database/unit_repository.dart';
+import 'package:home_sweet/models/owner.dart';
+import 'package:home_sweet/models/tenant.dart';
 import 'package:home_sweet/models/unit.dart';
+
+import '../widgets/snackbar.dart';
 
 class UnitFormController extends GetxController {
   final formKey = GlobalKey<FormState>();
@@ -137,4 +144,41 @@ class UnitFormController extends GetxController {
   }
 
   // Database
+  saveData() async {
+    if (validate()) {
+      saveUnitInputs();
+
+      var newOwner = Owner(
+        firstName: ownerName,
+        lastName: ownerLastName,
+        phoneNumber: ownerPhoneNumber,
+      );
+      newOwner = await OwnerRepository.create(newOwner);
+
+      late Tenant? newTenant;
+      if (unitStatus == UnitStatus.tenant) {
+        newTenant = Tenant(
+          firstName: tenantName,
+          lastName: tenantLastName,
+          phoneNumber: tenantPhoneNumber,
+        );
+        newTenant = await TenantRepository.create(newTenant);
+      }
+
+      var newUnit = Unit(
+        floor: floorNumber,
+        number: unitNumber,
+        phoneNumber: unitPhoneNumber,
+        unitStatus: unitStatus.toString(),
+        ownerId: newOwner.id,
+        tenantId: unitStatus == UnitStatus.tenant ? newTenant!.id : 0,
+      );
+      await UnitRepository.create(newUnit);
+
+      Get.back();
+      AppSnackbar.successSnackbar('اطلاعات واحد با موفقیت ثبت شد.');
+      resetForm();
+      update();
+    }
+  }
 }

@@ -33,6 +33,7 @@ class UnitForm extends StatelessWidget {
               bottom: MediaQuery.of(context).viewInsets.bottom + 16.0,
             ),
             child: Form(
+              key: unitFormController.formKey,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -101,7 +102,8 @@ class UnitForm extends StatelessWidget {
                     hintText: 'شماره ثابت',
                     keyboardType: TextInputType.number,
                     validator: Validators.phoneNumberInputValidator,
-                    onSaved: (newValue) {},
+                    onSaved: (newValue) =>
+                        unitFormController.unitPhoneNumberOnSaved(newValue),
                     // onChanged: (String? p0) {
                     //   if (p0 != null) {
                     //     print(p0.toFarsiNumber);
@@ -165,7 +167,9 @@ class UnitForm extends StatelessWidget {
                   SaveButton(
                     text: 'ثبت اطلاعات',
                     bottomMargin: 0,
-                    onPressed: () {},
+                    onPressed: () {
+                      unitFormController.saveData();
+                    },
                   ),
                 ],
               ),

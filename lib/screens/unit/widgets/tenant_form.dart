@@ -33,20 +33,22 @@ class TenantForm extends StatelessWidget {
           controller: unitFormController.tenantNameTextController,
           hintText: 'نام',
           validator: (value) => Validators.textInputValidator(value),
-          onSaved: null,
+          onSaved: (newValue) => unitFormController.tenantNameOnSaved(newValue),
         ),
         CustomTextField(
           controller: unitFormController.tenantLastNameTextController,
           hintText: 'نام خانوادگی',
           validator: (value) => Validators.textInputValidator(value),
-          onSaved: null,
+          onSaved: (newValue) =>
+              unitFormController.tenantLastNameOnSaved(newValue),
         ),
         CustomTextField(
           controller: unitFormController.tenantPhoneNumberTextController,
           hintText: 'شماره تلفن',
           keyboardType: TextInputType.number,
           validator: Validators.phoneNumberInputValidator,
-          onSaved: null,
+          onSaved: (newValue) =>
+              unitFormController.tenantPhoneNumberOnSaved(newValue),
         ),
       ],
     );
