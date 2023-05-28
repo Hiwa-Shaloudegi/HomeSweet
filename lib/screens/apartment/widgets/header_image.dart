@@ -12,7 +12,7 @@ class HeaderImage extends StatelessWidget {
       width: double.infinity,
       height: Get.height / 2.5,
       decoration: const BoxDecoration(
-        color: Colors.amber,
+        // color: Colors.amber,
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(22),
           bottomRight: Radius.circular(22),

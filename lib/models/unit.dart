@@ -7,6 +7,8 @@ class UnitTable {
   static const String number = 'number';
   static const String phoneNumber = 'phoneNumber';
   static const String unitStatus = 'unitStatus';
+  static const String ownerId = 'ownerId';
+  static const String tenantId = 'tenantId';
 
   static final List<String> allColumns = [
     id,
@@ -14,6 +16,8 @@ class UnitTable {
     number,
     phoneNumber,
     unitStatus,
+    ownerId,
+    tenantId,
   ];
 }
 
@@ -29,6 +33,8 @@ class Unit {
   int? number;
   String? phoneNumber;
   String? unitStatus;
+  int? ownerId;
+  int? tenantId;
 
   Unit({
     this.id,
@@ -36,6 +42,8 @@ class Unit {
     this.number,
     this.phoneNumber,
     this.unitStatus,
+    this.ownerId,
+    this.tenantId,
   });
 
   Unit.fromMap(Map<String, dynamic> map) {
@@ -44,6 +52,8 @@ class Unit {
     number = map[UnitTable.number];
     phoneNumber = map[UnitTable.phoneNumber];
     unitStatus = map[UnitTable.unitStatus];
+    ownerId = map[UnitTable.ownerId];
+    tenantId = map[UnitTable.tenantId];
   }
 
   Map<String, dynamic> toMap() {
@@ -53,6 +63,8 @@ class Unit {
       UnitTable.number: number,
       UnitTable.phoneNumber: phoneNumber,
       UnitTable.unitStatus: unitStatus,
+      UnitTable.ownerId: ownerId,
+      UnitTable.tenantId: tenantId,
     };
   }
 }

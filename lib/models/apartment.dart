@@ -35,8 +35,8 @@ class Apartment {
     this.apartmentName,
     this.address,
     this.unitCharge,
-    this.storyNumber,
-    this.unitNumber,
+    this.storyNumber = 0,
+    this.unitNumber = 0,
     this.budget,
   });
 

@@ -4,6 +4,8 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../models/cost.dart';
+import '../models/owner.dart';
+import '../models/tenant.dart';
 import '../models/unit.dart';
 import '../models/user.dart';
 
@@ -44,6 +46,7 @@ class DatabaseHelper {
     const textType = 'TEXT NOT NULL';
     const integerType = 'INTEGER NOT NULL';
     const doubleType = 'REAL NOT NULL';
+    const foreignKeyType = 'INTEGER UNIQUE NOT NULL';
     // const boolType = 'BOOLEAN NOT NULL';
     // const dateType = 'Date NOT NULL'
 
@@ -81,6 +84,26 @@ class DatabaseHelper {
       )
 """);
 
+    // Owner Table
+    await db.execute(""" 
+      CREATE TABLE ${OwnerTable.name} (
+      ${OwnerTable.id} $idType,
+      ${OwnerTable.firstName} $textType,
+      ${OwnerTable.lastName} $textType,
+      ${OwnerTable.phoneNumber} $textType
+      )
+""");
+
+    // Tenant Table
+    await db.execute(""" 
+      CREATE TABLE ${TenantTable.name} (
+      ${TenantTable.id} $idType,
+      ${TenantTable.firstName} $textType,
+      ${TenantTable.lastName} $textType,
+      ${TenantTable.phoneNumber} $textType
+      )
+""");
+
     // Unit Table
     await db.execute(""" 
       CREATE TABLE ${UnitTable.name} (
@@ -88,7 +111,11 @@ class DatabaseHelper {
       ${UnitTable.floor} $integerType,
       ${UnitTable.number} $integerType,
       ${UnitTable.phoneNumber} $textType,
-      ${UnitTable.unitStatus} $textType
+      ${UnitTable.unitStatus} $textType,
+      ${UnitTable.ownerId} $foreignKeyType,
+      ${UnitTable.tenantId} $foreignKeyType,
+      FOREIGN KEY (${UnitTable.ownerId}) REFERENCES ${OwnerTable.name} (${OwnerTable.id}),
+      FOREIGN KEY (${UnitTable.tenantId}) REFERENCES ${TenantTable.name} (${TenantTable.id})
       )
 """);
 

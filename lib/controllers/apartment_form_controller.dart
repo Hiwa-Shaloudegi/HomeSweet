@@ -45,8 +45,8 @@ class ApartmentFormController extends GetxController {
       addressTextController.text = apartment!.address!;
       chargeAmountTextController.text = apartment!.unitCharge.toString();
       budgetTextController.text = apartment!.budget.toString();
-      storyNumber = apartment!.storyNumber!;
-      unitNumber = apartment!.unitNumber!;
+      storyNumber = apartment!.storyNumber ?? 0;
+      unitNumber = apartment!.unitNumber ?? 0;
     }
 
     update();
