@@ -6,6 +6,7 @@ import 'package:home_sweet/database/unit_repository.dart';
 import 'package:home_sweet/models/owner.dart';
 import 'package:home_sweet/models/tenant.dart';
 import 'package:home_sweet/models/unit.dart';
+import 'package:sqflite/sqflite.dart';
 
 import '../widgets/snackbar.dart';
 
@@ -65,6 +66,7 @@ class UnitFormController extends GetxController {
 
   void resetForm() {
     formKey.currentState!.reset();
+
     unitPhoneNumberTextController.clear();
     ownerNameTextController.clear();
     ownerLastNameTextController.clear();
@@ -83,6 +85,8 @@ class UnitFormController extends GetxController {
 
     floorDropdownButtonValue = 1;
     unitNumberDropdownButtonValue = 1;
+    floorNumber = 1;
+    unitNumber = 1;
     radioGroupValue = 1;
     isTenantFormVisible = false;
   }
@@ -169,20 +173,34 @@ class UnitFormController extends GetxController {
         newTenant = await TenantRepository.create(newTenant);
       }
 
-      var newUnit = Unit(
-        floor: floorNumber,
-        number: unitNumber,
-        phoneNumber: unitPhoneNumber,
-        unitStatus: unitStatus.toString(),
-        ownerId: newOwner.id,
-        tenantId: unitStatus == UnitStatus.tenant ? newTenant!.id : 0,
-      );
-      await UnitRepository.create(newUnit);
-      allUnits.insert(0, newUnit);
+      try {
+        var newUnit = Unit(
+          floor: floorNumber,
+          number: unitNumber,
+          phoneNumber: unitPhoneNumber,
+          unitStatus: unitStatus.toString(),
+          ownerId: newOwner.id,
+          tenantId: unitStatus == UnitStatus.tenant ? newTenant!.id : null,
+          owner: newOwner,
+          tenant: unitStatus == UnitStatus.tenant ? newTenant : null,
+        );
+        await UnitRepository.create(newUnit);
+        allUnits.insert(0, newUnit);
 
-      Get.back();
-      AppSnackbar.successSnackbar('اطلاعات واحد با موفقیت ثبت شد.');
-      resetForm();
+        Get.back();
+        AppSnackbar.successSnackbar('اطلاعات واحد با موفقیت ثبت شد.');
+        resetForm();
+      } catch (e) {
+        if (e is DatabaseException && e.isUniqueConstraintError()) {
+          AppSnackbar.errorSnackbar(
+              'اطلاعات این مستاجر قبلا برای واحد دیگری ثبت شده است.');
+          throw Exception(
+              'The tenant ID is already in use. Please choose a different tenant ID.');
+        } else {
+          rethrow;
+        }
+      }
+
       update();
     }
   }

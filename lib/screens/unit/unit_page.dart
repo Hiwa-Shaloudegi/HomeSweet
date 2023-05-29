@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:home_sweet/models/unit.dart';
 import 'package:home_sweet/utils/extensions.dart';
 import 'package:home_sweet/widgets/empty_state.dart';
 
@@ -64,22 +65,23 @@ class UnitPage extends StatelessWidget {
                           ),
                         ),
                         SizedBox(
-                          height: Get.height * 0.79,
+                          height: Get.height * 0.8,
                           child: ListView.separated(
                               physics: const BouncingScrollPhysics(),
                               itemCount: unitFormController.allUnits.length,
                               separatorBuilder: (_, __) =>
-                                  const SizedBox(height: 24),
+                                  const SizedBox(height: 32),
                               itemBuilder: (_, index) {
                                 final unit = unitFormController.allUnits[index];
-                                // final owner = unit.owner; //! Owner? Null
-                                // final tenant = unit.tenant; //! Tenant? Null
+                                final owner = unit.owner;
+                                final tenant = unit.tenant;
 
                                 return Container(
                                   width: double.infinity,
-                                  height: 200, //! 200,
+                                  height: 210, //! 200,
                                   // margin: EdgeInsets.symmetric(vertical: 24),
                                   decoration: BoxDecoration(
+                                    color: Colors.white,
                                     borderRadius: BorderRadius.circular(16),
                                     boxShadow: const [
                                       BoxShadow(
@@ -147,7 +149,11 @@ class UnitPage extends StatelessWidget {
                                                         const SizedBox(
                                                             width: 10),
                                                         Text(
-                                                          '(${unit.unitStatus})', //!
+                                                          unit.unitStatus?.split(
+                                                                      '.')[1] ==
+                                                                  'tenant'
+                                                              ? '(مستاجر)'
+                                                              : '(مالک)',
                                                           style: AppTheme
                                                                   .textTheme()
                                                               .labelLarge!
@@ -243,9 +249,14 @@ class UnitPage extends StatelessWidget {
                                                   ),
                                                   const SizedBox(width: 12),
                                                   const Text('ساکن :  '),
-                                                  // Text(
-                                                  //     '${owner!.firstName}'), //! Join tables
-                                                  Text('sdasdasdasda'),
+                                                  unit.unitStatus ==
+                                                          UnitStatus.tenant
+                                                              .toString()
+                                                      ? Text(
+                                                          '${tenant!.firstName} ${tenant.lastName}')
+                                                      : Text(
+                                                          '${owner!.firstName} ${owner.lastName}',
+                                                        ),
                                                 ],
                                               ),
                                               Row(
@@ -257,9 +268,13 @@ class UnitPage extends StatelessWidget {
                                                   ),
                                                   const SizedBox(width: 12),
                                                   const Text('شماره تماس : '),
-                                                  // Text('${owner.phoneNumber}'
-                                                  //     .toFarsiNumber), //!
-                                                  Text('sdasdasdasda'),
+                                                  Text(
+                                                    '${owner!.phoneNumber}'
+                                                        .toFarsiNumber,
+                                                    style: const TextStyle(
+                                                      letterSpacing: 1,
+                                                    ),
+                                                  ),
                                                 ],
                                               ),
                                               Row(
@@ -273,8 +288,12 @@ class UnitPage extends StatelessWidget {
                                                   const Text('شماره منزل : '),
                                                   Expanded(
                                                     child: Text(
-                                                        '${unit.phoneNumber}'
-                                                            .toFarsiNumber),
+                                                      '${unit.phoneNumber}'
+                                                          .toFarsiNumber,
+                                                      style: const TextStyle(
+                                                        letterSpacing: 1,
+                                                      ),
+                                                    ),
                                                   ),
                                                 ],
                                               ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:home_sweet/controllers/apartment_form_controller.dart';
 import 'package:home_sweet/controllers/login_form_controller.dart';
 import 'package:home_sweet/controllers/main_controller.dart';
 import 'package:home_sweet/controllers/signup_form_controller.dart';
@@ -23,6 +24,7 @@ Future<void> initApp() async {
   // TODO: Checking if the app is launched for the first time. If yes then show the onBording screen.
   // bool isFirstTime = GetStorage().read<bool>('first_time') ?? true;
   // runApp(MyApp(isFirstTime: isFirstTime));
+  Get.put(ApartmentFormController());
   Get.put(LoginFormController());
   Get.put(SignupFormController());
   Get.put(AuthController());

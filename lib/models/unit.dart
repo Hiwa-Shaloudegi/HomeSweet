@@ -61,7 +61,7 @@ class Unit {
     unitStatus = map[UnitTable.unitStatus];
     ownerId = map[UnitTable.ownerId];
     tenantId = map[UnitTable.tenantId];
-    owner = ownerId != null ? Owner.fromMap(map) : null;
+    owner = Owner.fromMap(map);
     tenant = tenantId != null ? Tenant.fromMap(map) : null;
   }
 
