@@ -2,16 +2,17 @@ class OwnerTable {
   static const String name = 'owner';
 
   // Fields (Columns)
-  static const String id = '_id';
-  static const String firstName = 'firstName';
-  static const String lastName = 'lastName';
-  static const String phoneNumber = 'phoneNumber';
+  static const String id = '_id'; //TODO
+  static const String firstName =
+      'firstName'; //TODO: ownerFirstName --> it should be like the map.
+  static const String lastName = 'lastName'; //TODO
+  static const String ownerPhoneNumber = 'ownerPhoneNumber';
 
   static final List<String> allColumns = [
     id,
     firstName,
     lastName,
-    phoneNumber,
+    ownerPhoneNumber,
   ];
 }
 
@@ -19,20 +20,20 @@ class Owner {
   int? id;
   String? firstName;
   String? lastName;
-  String? phoneNumber;
+  String? ownerPhoneNumber;
 
   Owner({
     this.id,
     this.firstName,
     this.lastName,
-    this.phoneNumber,
+    this.ownerPhoneNumber,
   });
 
   Owner.fromMap(Map<String, dynamic> map) {
     id = map[OwnerTable.id];
     firstName = map[OwnerTable.firstName];
     lastName = map[OwnerTable.lastName];
-    phoneNumber = map[OwnerTable.phoneNumber];
+    ownerPhoneNumber = map[OwnerTable.ownerPhoneNumber];
   }
 
   Map<String, dynamic> toMap() {
@@ -40,7 +41,7 @@ class Owner {
       OwnerTable.id: id,
       OwnerTable.firstName: firstName,
       OwnerTable.lastName: lastName,
-      OwnerTable.phoneNumber: phoneNumber,
+      OwnerTable.ownerPhoneNumber: ownerPhoneNumber,
     };
   }
 }

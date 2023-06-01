@@ -5,13 +5,13 @@ class TenantTable {
   static const String id = '_id';
   static const String firstName = 'firstName';
   static const String lastName = 'lastName';
-  static const String phoneNumber = 'phoneNumber';
+  static const String tenantPhoneNumber = 'tenantPhoneNumber';
 
   static final List<String> allColumns = [
     id,
     firstName,
     lastName,
-    phoneNumber,
+    tenantPhoneNumber,
   ];
 }
 
@@ -19,20 +19,20 @@ class Tenant {
   int? id;
   String? firstName;
   String? lastName;
-  String? phoneNumber;
+  String? tenantPhoneNumber;
 
   Tenant({
     this.id,
     this.firstName,
     this.lastName,
-    this.phoneNumber,
+    this.tenantPhoneNumber,
   });
 
   Tenant.fromMap(Map<String, dynamic> map) {
     id = map[TenantTable.id];
     firstName = map[TenantTable.firstName];
     lastName = map[TenantTable.lastName];
-    phoneNumber = map[TenantTable.phoneNumber];
+    tenantPhoneNumber = map[TenantTable.tenantPhoneNumber];
   }
 
   Map<String, dynamic> toMap() {
@@ -40,7 +40,7 @@ class Tenant {
       TenantTable.id: id,
       TenantTable.firstName: firstName,
       TenantTable.lastName: lastName,
-      TenantTable.phoneNumber: phoneNumber,
+      TenantTable.tenantPhoneNumber: tenantPhoneNumber,
     };
   }
 }

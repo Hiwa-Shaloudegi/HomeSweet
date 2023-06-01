@@ -52,11 +52,11 @@ class OwnerRepository {
       OwnerTable.name,
       columns: [OwnerTable.id],
       where:
-          '${OwnerTable.firstName} = ? AND ${OwnerTable.lastName} = ? AND ${OwnerTable.phoneNumber} = ?',
+          '${OwnerTable.firstName} = ? AND ${OwnerTable.lastName} = ? AND ${OwnerTable.ownerPhoneNumber} = ?',
       whereArgs: [
         owner.firstName,
         owner.lastName,
-        owner.phoneNumber,
+        owner.ownerPhoneNumber,
       ],
     );
 

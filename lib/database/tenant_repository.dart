@@ -49,11 +49,11 @@ class TenantRepository {
       TenantTable.name,
       columns: [TenantTable.id],
       where:
-          '${TenantTable.firstName} = ? AND ${TenantTable.lastName} = ? AND ${TenantTable.phoneNumber} = ?',
+          '${TenantTable.firstName} = ? AND ${TenantTable.lastName} = ? AND ${TenantTable.tenantPhoneNumber} = ?',
       whereArgs: [
         tenant.firstName,
         tenant.lastName,
-        tenant.phoneNumber,
+        tenant.tenantPhoneNumber,
       ],
     );
 

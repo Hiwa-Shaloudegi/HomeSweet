@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:home_sweet/models/tenant.dart';
 import 'package:home_sweet/models/unit.dart';
 import 'package:home_sweet/utils/extensions.dart';
 import 'package:home_sweet/widgets/empty_state.dart';
@@ -72,9 +75,23 @@ class UnitPage extends StatelessWidget {
                               separatorBuilder: (_, __) =>
                                   const SizedBox(height: 32),
                               itemBuilder: (_, index) {
-                                final unit = unitFormController.allUnits[index];
-                                final owner = unit.owner;
-                                final tenant = unit.tenant;
+                                var unit = unitFormController.allUnits[index];
+
+                                var owner = unit.owner;
+                                var tenant = unit.tenant;
+
+                                log('Unit: ${unit.toString()}\n');
+                                if (unit.tenantId != null) {
+                                  //!unit.tenant != null    //!unit.unitStatus == UnitStatus.tenant.toString()
+
+                                  // log('unitStatus: ${unit.unitStatus}');
+                                  // log('unit.tenant: ${tenant!.firstName}');
+                                  // log('unit.tenant: ${tenant.lastName}');
+                                  // log('unit.tenant: ${tenant.tenantPhoneNumber}');
+                                  // log('unit.owner: ${owner!.firstName}');
+                                  // log('unit.owner: ${owner.lastName}');
+                                  // log('unit.owner: ${owner.ownerPhoneNumber}');
+                                }
 
                                 return Container(
                                   width: double.infinity,
@@ -249,13 +266,11 @@ class UnitPage extends StatelessWidget {
                                                   ),
                                                   const SizedBox(width: 12),
                                                   const Text('ساکن :  '),
-                                                  unit.unitStatus ==
-                                                          UnitStatus.tenant
-                                                              .toString()
+                                                  unit.tenantId != null
                                                       ? Text(
                                                           '${tenant!.firstName} ${tenant.lastName}')
                                                       : Text(
-                                                          '${owner!.firstName} ${owner.lastName}',
+                                                          '${owner?.firstName} ${owner?.lastName}',
                                                         ),
                                                 ],
                                               ),
@@ -268,13 +283,26 @@ class UnitPage extends StatelessWidget {
                                                   ),
                                                   const SizedBox(width: 12),
                                                   const Text('شماره تماس : '),
-                                                  Text(
-                                                    '${owner!.phoneNumber}'
-                                                        .toFarsiNumber,
-                                                    style: const TextStyle(
-                                                      letterSpacing: 1,
-                                                    ),
-                                                  ),
+                                                  // unit.unitStatus !=
+                                                  //         UnitStatus.tenant
+                                                  //             .toString()
+                                                  unit.tenantId != null
+                                                      ? Text(
+                                                          '${tenant!.tenantPhoneNumber}'
+                                                              .toFarsiNumber,
+                                                          style:
+                                                              const TextStyle(
+                                                            letterSpacing: 1,
+                                                          ),
+                                                        )
+                                                      : Text(
+                                                          '${owner!.ownerPhoneNumber}'
+                                                              .toFarsiNumber,
+                                                          style:
+                                                              const TextStyle(
+                                                            letterSpacing: 1,
+                                                          ),
+                                                        )
                                                 ],
                                               ),
                                               Row(

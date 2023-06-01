@@ -25,8 +25,9 @@ class ApartmentFormPage extends StatelessWidget {
 }
 
 Widget apartmentFormBody() {
-  return GetBuilder<ApartmentFormController>(
-      builder: (apartmentFormController) {
+  final apartmentFormController = Get.put(ApartmentFormController());
+
+  return GetBuilder<ApartmentFormController>(builder: (_) {
     return SingleChildScrollView(
       child: Column(
         children: [

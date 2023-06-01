@@ -55,7 +55,7 @@ class UnitFormController extends GetxController {
 
   @override
   void onClose() {
-    resetForm();
+    // resetForm();
     super.onClose();
   }
 
@@ -159,7 +159,7 @@ class UnitFormController extends GetxController {
       var newOwner = Owner(
         firstName: ownerName,
         lastName: ownerLastName,
-        phoneNumber: ownerPhoneNumber,
+        ownerPhoneNumber: ownerPhoneNumber,
       );
       newOwner = await OwnerRepository.create(newOwner);
 
@@ -168,7 +168,7 @@ class UnitFormController extends GetxController {
         newTenant = Tenant(
           firstName: tenantName,
           lastName: tenantLastName,
-          phoneNumber: tenantPhoneNumber,
+          tenantPhoneNumber: tenantPhoneNumber,
         );
         newTenant = await TenantRepository.create(newTenant);
       }
@@ -182,7 +182,7 @@ class UnitFormController extends GetxController {
           ownerId: newOwner.id,
           tenantId: unitStatus == UnitStatus.tenant ? newTenant!.id : null,
           owner: newOwner,
-          tenant: unitStatus == UnitStatus.tenant ? newTenant : null,
+          tenant: unitStatus == UnitStatus.tenant ? newTenant! : null,
         );
         await UnitRepository.create(newUnit);
         allUnits.insert(0, newUnit);

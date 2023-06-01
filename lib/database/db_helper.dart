@@ -91,7 +91,7 @@ class DatabaseHelper {
       ${OwnerTable.id} $idType,
       ${OwnerTable.firstName} $textType,
       ${OwnerTable.lastName} $textType,
-      ${OwnerTable.phoneNumber} $textType
+      ${OwnerTable.ownerPhoneNumber} $textType
       )
 """);
 
@@ -101,7 +101,7 @@ class DatabaseHelper {
       ${TenantTable.id} $idType,
       ${TenantTable.firstName} $textType,
       ${TenantTable.lastName} $textType,
-      ${TenantTable.phoneNumber} $textType
+      ${TenantTable.tenantPhoneNumber} $textType
       )
 """);
 
@@ -111,7 +111,7 @@ class DatabaseHelper {
       ${UnitTable.id} $idType,
       ${UnitTable.floor} $integerType,
       ${UnitTable.number} $integerType,
-      ${UnitTable.phoneNumber} $textType,
+      ${UnitTable.unitPhoneNumber} $textType,
       ${UnitTable.unitStatus} $textType,
       ${UnitTable.ownerId} $foreignKeyType,
       ${UnitTable.tenantId} $foreignKeyNullableType,

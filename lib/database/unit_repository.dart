@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import '../models/owner.dart';
 import '../models/tenant.dart';
 import '../models/unit.dart';
@@ -35,19 +37,35 @@ class UnitRepository {
   static Future<List<Unit>> readAll() async {
     var db = await _databaseHelper.database;
 
-    //! start
-    final maps = await db.query(UnitTable.name, orderBy: '${UnitTable.id} ASC');
+    // final maps = await db.query(UnitTable.name, orderBy: '${UnitTable.id} ASC');
+    final maps = await db.rawQuery('''
+  SELECT 
+    ${UnitTable.name}.*,
+    ${OwnerTable.name}.${OwnerTable.firstName} AS ownerFirstName,
+    ${OwnerTable.name}.${OwnerTable.lastName} AS ownerLastName,
+    ${OwnerTable.name}.${OwnerTable.ownerPhoneNumber} AS ownerPhoneNumber,
+    ${TenantTable.name}.${TenantTable.firstName} AS tenantFirstName,
+    ${TenantTable.name}.${TenantTable.lastName} AS tenantLastName,
+    ${TenantTable.name}.${TenantTable.tenantPhoneNumber} AS tenantPhoneNumber
+  FROM ${UnitTable.name}
+  INNER JOIN ${OwnerTable.name} ON ${UnitTable.name}.${UnitTable.ownerId} = ${OwnerTable.name}.${OwnerTable.id}
+  LEFT JOIN ${TenantTable.name} ON ${UnitTable.name}.${UnitTable.tenantId} = ${TenantTable.name}.${TenantTable.id}
+  ORDER BY ${UnitTable.name}.${UnitTable.id} ASC
+''');
+
+    maps.forEach((element) {
+      log(element.toString());
+    });
 
     List<Unit> result = maps.map((unitMap) => Unit.fromMap(unitMap)).toList();
+    if (result.isNotEmpty) {
+      result.forEach((element) {
+        log('****************************');
+        element.toString();
+        log('****************************');
+      });
+    }
     return result;
-    //! end
-    // final maps = await db.rawQuery('''
-    //   SELECT ${UnitTable.allColumns}, ${OwnerTable.allColumns}, ${TenantTable.allColumns}
-    //   FROM ${UnitTable.name}
-    //   LEFT JOIN ${OwnerTable.name} ON ${UnitTable.ownerId} = ${OwnerTable.id}
-    //   LEFT JOIN ${TenantTable.name} ON ${UnitTable.tenantId} = ${TenantTable.id}
-    //   ORDER BY ${UnitTable.id} ASC
-    // ''');
 
     // List<Unit> result = maps.map((unitMap) {
     //   final unit = Unit.fromMap(unitMap);
@@ -66,7 +84,7 @@ class UnitRepository {
       UnitTable.name,
       columns: [UnitTable.id],
       where:
-          '${UnitTable.floor} = ? AND ${UnitTable.number} = ? AND ${UnitTable.phoneNumber} = ? AND ${UnitTable.unitStatus} = ?',
+          '${UnitTable.floor} = ? AND ${UnitTable.number} = ? AND ${UnitTable.unitPhoneNumber} = ? AND ${UnitTable.unitStatus} = ?',
       whereArgs: [
         unit.floor,
         unit.number,
