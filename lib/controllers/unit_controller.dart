@@ -191,7 +191,6 @@ class UnitFormController extends GetxController {
 
         Get.back();
         AppSnackbar.successSnackbar('اطلاعات واحد با موفقیت ثبت شد.');
-        resetForm();
       } catch (e) {
         if (e is DatabaseException && e.isUniqueConstraintError()) {
           AppSnackbar.errorSnackbar(
@@ -220,7 +219,7 @@ class UnitFormController extends GetxController {
     update();
   }
 
-  void deleteUnit(int id) async {
+  deleteUnit(int id) async {
     isLoading = true;
     await showAppDialog(
       title: 'هشدار',
