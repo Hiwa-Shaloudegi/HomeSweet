@@ -103,7 +103,7 @@ class Unit {
 
   @override
   String toString() {
-    log('''
+    return '''
       id$id,\t
       phoneNumber: $phoneNumber,\t
       unitStatus: $unitStatus,\n
@@ -113,8 +113,6 @@ class Unit {
       tenantId: $tenantId,\t
       tenant: ${tenant?.firstName} ${tenant?.lastName},\t
       tenantPhone: ${tenant?.tenantPhoneNumber}, \n
-
-    ''');
-    return super.toString();
+    ''';
   }
 }

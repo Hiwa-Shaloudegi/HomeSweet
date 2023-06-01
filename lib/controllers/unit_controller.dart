@@ -8,6 +8,8 @@ import 'package:home_sweet/models/tenant.dart';
 import 'package:home_sweet/models/unit.dart';
 import 'package:sqflite/sqflite.dart';
 
+import '../routes/routes.dart';
+import '../widgets/app_dialog.dart';
 import '../widgets/snackbar.dart';
 
 class UnitFormController extends GetxController {
@@ -216,5 +218,29 @@ class UnitFormController extends GetxController {
     await Future.delayed(const Duration(milliseconds: 300));
     isLoading = false;
     update();
+  }
+
+  void deleteUnit(int id) async {
+    isLoading = true;
+    await showAppDialog(
+      title: 'هشدار',
+      message: 'آیا مطمئن هستید که می خواهید این واحد را حذف کنید؟',
+      textConfirm: 'بلی',
+      textCancel: 'خیر',
+      onConfirm: () async {
+        await UnitRepository.delete(id);
+
+        // Removes any snackbar or dialog on the stack until it gets to the actual screen.
+        Navigator.of(Get.overlayContext!)
+            .popUntil(ModalRoute.withName(AppRoutes.unitPage));
+
+        // Also removes the cost from list of costs state.
+        allUnits.removeWhere((unit) => unit.id == id);
+        AppSnackbar.successSnackbar('اطلاعلات واحد با موفقیت حذف شد.');
+        update();
+      },
+    );
+
+    isLoading = false;
   }
 }

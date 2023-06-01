@@ -53,28 +53,9 @@ class UnitRepository {
   ORDER BY ${UnitTable.name}.${UnitTable.id} ASC
 ''');
 
-    maps.forEach((element) {
-      log(element.toString());
-    });
-
     List<Unit> result = maps.map((unitMap) => Unit.fromMap(unitMap)).toList();
-    if (result.isNotEmpty) {
-      result.forEach((element) {
-        log('****************************');
-        element.toString();
-        log('****************************');
-      });
-    }
+
     return result;
-
-    // List<Unit> result = maps.map((unitMap) {
-    //   final unit = Unit.fromMap(unitMap);
-    //   unit.owner = Owner.fromMap(unitMap);
-    //   unit.tenant = Tenant.fromMap(unitMap);
-    //   return unit;
-    // }).toList();
-
-    // return result;
   }
 
   static Future<int?> getId(Unit unit) async {
