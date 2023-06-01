@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:home_sweet/database/owner_repository.dart';
@@ -47,6 +49,7 @@ class UnitFormController extends GetxController {
 
   // states
   List<Unit> allUnits = [];
+  Unit? unitToUpdate;
 
   // methods
   @override
@@ -91,6 +94,8 @@ class UnitFormController extends GetxController {
     unitNumber = 1;
     radioGroupValue = 1;
     isTenantFormVisible = false;
+    //!
+    unitToUpdate = null;
   }
 
   // OnSaved
@@ -158,39 +163,170 @@ class UnitFormController extends GetxController {
     if (validate()) {
       saveUnitInputs();
 
-      var newOwner = Owner(
-        firstName: ownerName,
-        lastName: ownerLastName,
-        ownerPhoneNumber: ownerPhoneNumber,
-      );
-      newOwner = await OwnerRepository.create(newOwner);
-
-      late Tenant? newTenant;
-      if (unitStatus == UnitStatus.tenant) {
-        newTenant = Tenant(
-          firstName: tenantName,
-          lastName: tenantLastName,
-          tenantPhoneNumber: tenantPhoneNumber,
+      if (unitToUpdate == null) {
+        var newOwner = Owner(
+          firstName: ownerName,
+          lastName: ownerLastName,
+          ownerPhoneNumber: ownerPhoneNumber,
         );
-        newTenant = await TenantRepository.create(newTenant);
+        newOwner = await OwnerRepository.create(newOwner);
+
+        late Tenant? newTenant;
+        if (unitStatus == UnitStatus.tenant) {
+          newTenant = Tenant(
+            firstName: tenantName,
+            lastName: tenantLastName,
+            tenantPhoneNumber: tenantPhoneNumber,
+          );
+          newTenant = await TenantRepository.create(newTenant);
+        }
+
+        try {
+          var newUnit = Unit(
+            floor: floorNumber,
+            number: unitNumber,
+            phoneNumber: unitPhoneNumber,
+            unitStatus: unitStatus.toString(),
+            ownerId: newOwner.id,
+            tenantId: unitStatus == UnitStatus.tenant ? newTenant!.id : null,
+            owner: newOwner,
+            tenant: unitStatus == UnitStatus.tenant ? newTenant! : null,
+          );
+          await UnitRepository.create(newUnit);
+          allUnits.insert(0, newUnit);
+
+          Get.back();
+          AppSnackbar.successSnackbar('اطلاعات واحد با موفقیت ثبت شد.');
+        } catch (e) {
+          if (e is DatabaseException && e.isUniqueConstraintError()) {
+            AppSnackbar.errorSnackbar(
+                'اطلاعات این مستاجر قبلا برای واحد دیگری ثبت شده است.');
+            throw Exception(
+                'The tenant ID is already in use. Please choose a different tenant ID.');
+          } else {
+            rethrow;
+          }
+        }
+      } else {
+        updateUnit();
+      }
+      update();
+    }
+  }
+
+  void loadSelectedUnitData() async {
+    if (unitToUpdate != null) {
+      floorDropdownButtonValue = unitToUpdate!.floor!;
+      unitNumberDropdownButtonValue = unitToUpdate!.number!;
+      unitPhoneNumberTextController.text = unitToUpdate!.phoneNumber!;
+
+      if (unitToUpdate!.unitStatus! == UnitStatus.owner.toString()) {
+        radioGroupValue = 1;
+        isTenantFormVisible = false;
+        unitStatus = UnitStatus.owner;
+      } else if (unitToUpdate!.unitStatus! == UnitStatus.empty.toString()) {
+        radioGroupValue = 2;
+        isTenantFormVisible = false;
+        unitStatus = UnitStatus.empty;
+      } else {
+        radioGroupValue = 3;
+        isTenantFormVisible = true;
+        unitStatus = UnitStatus.tenant;
       }
 
+      ownerNameTextController.text = unitToUpdate!.owner!.firstName!;
+      ownerLastNameTextController.text = unitToUpdate!.owner!.lastName!;
+      ownerPhoneNumberTextController.text =
+          unitToUpdate!.owner!.ownerPhoneNumber!;
+
+      if (unitToUpdate!.tenant != null) {
+        tenantNameTextController.text = unitToUpdate!.tenant!.firstName!;
+        tenantLastNameTextController.text = unitToUpdate!.tenant!.lastName!;
+        tenantPhoneNumberTextController.text =
+            unitToUpdate!.tenant!.tenantPhoneNumber!;
+      }
+    }
+    update();
+  }
+
+  updateUnit() async {
+    if (validate()) {
+      saveUnitInputs();
+
       try {
-        var newUnit = Unit(
-          floor: floorNumber,
-          number: unitNumber,
-          phoneNumber: unitPhoneNumber,
-          unitStatus: unitStatus.toString(),
-          ownerId: newOwner.id,
-          tenantId: unitStatus == UnitStatus.tenant ? newTenant!.id : null,
-          owner: newOwner,
-          tenant: unitStatus == UnitStatus.tenant ? newTenant! : null,
+        var updatedOwner = Owner(
+          id: unitToUpdate!.ownerId,
+          firstName: ownerName,
+          lastName: ownerLastName,
+          ownerPhoneNumber: ownerPhoneNumber,
         );
-        await UnitRepository.create(newUnit);
-        allUnits.insert(0, newUnit);
+        await OwnerRepository.update(updatedOwner);
+
+        late Tenant? updatedTenant;
+        late Tenant? newTenant;
+
+        //!!!!!!!!!!!! Error: converting tennt state to owner state.
+        // if (unitStatus != UnitStatus.tenant) {
+        //   tenantNameTextController.clear();
+        //   tenantLastNameTextController.clear();
+        //   tenantPhoneNumberTextController.clear();
+        // }
+        if (unitStatus == UnitStatus.tenant) {
+          if (unitToUpdate!.tenantId == null) {
+            newTenant = Tenant(
+              firstName: tenantName,
+              lastName: tenantLastName,
+              tenantPhoneNumber: tenantPhoneNumber,
+            );
+            newTenant = await TenantRepository.create(newTenant);
+
+            var updatedUnit = Unit(
+              id: unitToUpdate!.id,
+              floor: floorNumber,
+              number: unitNumber,
+              phoneNumber: unitPhoneNumber,
+              unitStatus: unitStatus.toString(),
+              ownerId: updatedOwner.id,
+              tenantId: unitStatus == UnitStatus.tenant ? newTenant.id : null,
+              owner: updatedOwner,
+              tenant: unitStatus == UnitStatus.tenant ? newTenant : null,
+            );
+            await UnitRepository.update(updatedUnit);
+
+            allUnits.insert(0, updatedUnit); //!
+          } else {
+            updatedTenant = Tenant(
+              id: unitToUpdate!.tenantId,
+              firstName: tenantName,
+              lastName: tenantLastName,
+              tenantPhoneNumber: tenantPhoneNumber,
+            );
+            await TenantRepository.update(updatedTenant);
+
+            var updatedUnit = Unit(
+              id: unitToUpdate!.id,
+              floor: floorNumber,
+              number: unitNumber,
+              phoneNumber: unitPhoneNumber,
+              unitStatus: unitStatus.toString(),
+              ownerId: updatedOwner.id,
+              tenantId:
+                  unitStatus == UnitStatus.tenant ? updatedTenant.id : null,
+              owner: updatedOwner,
+              tenant: unitStatus == UnitStatus.tenant ? updatedTenant : null,
+            );
+            await UnitRepository.update(updatedUnit);
+
+            int index =
+                allUnits.indexWhere((unit) => unit.id == unitToUpdate!.id);
+            if (index != -1) {
+              allUnits[index] = updatedUnit;
+            }
+          }
+        }
 
         Get.back();
-        AppSnackbar.successSnackbar('اطلاعات واحد با موفقیت ثبت شد.');
+        AppSnackbar.successSnackbar('اطلاعات واحد با موفقیت بروزرسانی شد.');
       } catch (e) {
         if (e is DatabaseException && e.isUniqueConstraintError()) {
           AppSnackbar.errorSnackbar(
@@ -201,9 +337,12 @@ class UnitFormController extends GetxController {
           rethrow;
         }
       }
-
-      update();
     }
+
+    isLoading = false;
+    unitToUpdate = null;
+
+    update();
   }
 
   bool isLoading = false;

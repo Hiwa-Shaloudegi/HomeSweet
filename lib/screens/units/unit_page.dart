@@ -5,6 +5,7 @@ import 'package:home_sweet/widgets/empty_state.dart';
 import '../../controllers/unit_controller.dart';
 import '../../widgets/fab.dart';
 import '../auth/widgets/custom_text_field.dart';
+import 'widgets/unit_bottomsheet.dart';
 import 'widgets/unit_form.dart';
 import 'widgets/unit_item.dart';
 
@@ -19,21 +20,7 @@ class UnitPage extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       floatingActionButton: Fab(
         onPressed: () {
-          showModalBottomSheet(
-            context: context,
-            isDismissible: false,
-            isScrollControlled: true,
-            backgroundColor: Colors.white,
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadiusDirectional.only(
-                topEnd: Radius.circular(25),
-                topStart: Radius.circular(25),
-              ),
-            ),
-            builder: (context) {
-              return UnitForm();
-            },
-          ).then(
+          sbowUnitFormBottomSheet(context).then(
             (value) => unitFormController.resetForm(),
           );
         },

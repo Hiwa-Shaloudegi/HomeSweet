@@ -9,6 +9,7 @@ import '../../../models/owner.dart';
 import '../../../models/tenant.dart';
 import '../../../models/unit.dart';
 import '../../../themes/app_theme.dart';
+import 'unit_bottomsheet.dart';
 
 class UnitItem extends StatelessWidget {
   UnitItem({
@@ -113,17 +114,16 @@ class UnitItem extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(right: 14),
                   child: IconButton(
-                    onPressed: () {},
-                    // onPressed: () {
-                    //   //! selected Cost model.
-                    //   costsController.costToUpdate = cost;
-                    //   costsController.loadSelectedCostData();
-                    //   //!
+                    onPressed: () {
+                      //! selected Unit model.
+                      unitFormController.unitToUpdate = unit;
+                      unitFormController.loadSelectedUnitData();
+                      //!
 
-                    //   showCostFormBottomSheet(context).then(
-                    //     (value) => costsController.resetForm(),
-                    //   ); //! when the bottomShett closes
-                    // },
+                      sbowUnitFormBottomSheet(context).then(
+                        (value) => unitFormController.resetForm(),
+                      );
+                    },
                     splashColor: Colors.transparent,
                     highlightColor: Colors.transparent,
                     visualDensity: VisualDensity.compact,
@@ -172,7 +172,7 @@ class UnitItem extends StatelessWidget {
                       const SizedBox(width: 12),
                       const Text('ساکن :  '),
                       unit.tenantId != null
-                          ? Text('${tenant!.firstName} ${tenant!.lastName}')
+                          ? Text('${tenant?.firstName} ${tenant?.lastName}') //!
                           : Text(
                               '${owner?.firstName} ${owner?.lastName}',
                             ),
@@ -191,13 +191,13 @@ class UnitItem extends StatelessWidget {
                       //             .toString()
                       unit.tenantId != null
                           ? Text(
-                              '${tenant!.tenantPhoneNumber}'.toFarsiNumber,
+                              '${tenant?.tenantPhoneNumber}'.toFarsiNumber, //!
                               style: const TextStyle(
                                 letterSpacing: 1,
                               ),
                             )
                           : Text(
-                              '${owner!.ownerPhoneNumber}'.toFarsiNumber,
+                              '${owner?.ownerPhoneNumber}'.toFarsiNumber, //!
                               style: const TextStyle(
                                 letterSpacing: 1,
                               ),
