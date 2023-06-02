@@ -67,7 +67,12 @@ class UnitFormController extends GetxController {
   // Form
   bool validate() => formKey.currentState!.validate();
 
-  void saveUnitInputs() => formKey.currentState!.save();
+  void saveUnitInputs() {
+    formKey.currentState!.save();
+    unitDropdownButtonOnSaved();
+    floorDropdownButtonOnSaved();
+    // floo
+  }
 
   void resetForm() {
     formKey.currentState!.reset();
@@ -90,8 +95,8 @@ class UnitFormController extends GetxController {
 
     floorDropdownButtonValue = 1;
     unitNumberDropdownButtonValue = 1;
-    floorNumber = 1;
-    unitNumber = 1;
+    // floorNumber = 1;
+    // unitNumber = 1;
     radioGroupValue = 1;
     isTenantFormVisible = false;
     //!
@@ -135,12 +140,17 @@ class UnitFormController extends GetxController {
     return null;
   }
 
+  void floorDropdownButtonOnSaved() => floorNumber = floorDropdownButtonValue;
+
   void Function(int?)? unitDropdownButtonOnChanged(newValue) {
     unitNumberDropdownButtonValue = newValue;
     unitNumber = unitNumberDropdownButtonValue;
     update();
     return null;
   }
+
+  void unitDropdownButtonOnSaved() =>
+      unitNumber = unitNumberDropdownButtonValue;
 
   void Function(int?)? radioOnChanged(value) {
     radioGroupValue = value;
@@ -158,6 +168,12 @@ class UnitFormController extends GetxController {
     return null;
   }
 
+  //TODO:!
+  // void radioOnSaved() {
+  //   if (unitStatus == UnitStatus.tenant) {
+
+  //   }
+  // }
   // Database
   saveData() async {
     if (validate()) {
@@ -293,7 +309,11 @@ class UnitFormController extends GetxController {
             );
             await UnitRepository.update(updatedUnit);
 
-            allUnits.insert(0, updatedUnit); //!
+            int index =
+                allUnits.indexWhere((unit) => unit.id == unitToUpdate!.id);
+            if (index != -1) {
+              allUnits[index] = updatedUnit;
+            }
           } else {
             updatedTenant = Tenant(
               id: unitToUpdate!.tenantId,
@@ -322,6 +342,30 @@ class UnitFormController extends GetxController {
             if (index != -1) {
               allUnits[index] = updatedUnit;
             }
+          }
+        } else {
+          // changing the unitStatus from tenant to other.
+          if (unitToUpdate!.tenantId != null) {
+            // tenant info will be deleted.
+            await TenantRepository.delete(unitToUpdate!.tenantId!);
+          }
+          var updatedUnit = Unit(
+            id: unitToUpdate!.id,
+            floor: floorNumber,
+            number: unitNumber,
+            phoneNumber: unitPhoneNumber,
+            unitStatus: unitStatus.toString(),
+            ownerId: updatedOwner.id,
+            tenantId: null,
+            owner: updatedOwner,
+            tenant: null,
+          );
+          await UnitRepository.update(updatedUnit);
+
+          int index =
+              allUnits.indexWhere((unit) => unit.id == unitToUpdate!.id);
+          if (index != -1) {
+            allUnits[index] = updatedUnit;
           }
         }
 

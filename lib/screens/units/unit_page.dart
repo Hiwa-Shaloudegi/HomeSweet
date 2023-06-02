@@ -56,8 +56,7 @@ class UnitPage extends StatelessWidget {
               onSaved: null,
             ),
           ),
-          SizedBox(
-            height: Get.height * 0.8,
+          Expanded(
             child: ListView.separated(
               physics: const BouncingScrollPhysics(),
               itemCount: unitFormController.allUnits.length,
