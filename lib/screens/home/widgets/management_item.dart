@@ -36,6 +36,7 @@ class ManagementItem extends StatelessWidget {
             Get.toNamed(AppRoutes.costsPage);
             break;
           case 3:
+            Get.toNamed(AppRoutes.chargePage);
             break;
           default:
         }

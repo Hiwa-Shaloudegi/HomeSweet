@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:home_sweet/screens/apartment/apartment_form_page.dart';
+import 'package:home_sweet/screens/charge/charge_page.dart';
 import 'package:home_sweet/screens/costs/costs_page.dart';
 import 'package:home_sweet/screens/home/main_screen.dart';
 import 'package:home_sweet/screens/units/unit_page.dart';
@@ -17,5 +18,6 @@ class AppPages {
     GetPage(name: AppRoutes.apartmentFormPage, page: () => ApartmentFormPage()),
     GetPage(name: AppRoutes.costsPage, page: () => CostsPage()),
     GetPage(name: AppRoutes.unitPage, page: () => UnitPage()),
+    GetPage(name: AppRoutes.chargePage, page: () => ChargePage()),
   ];
 }
