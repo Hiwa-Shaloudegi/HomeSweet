@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:home_sweet/utils/extensions.dart';
+import 'package:home_sweet/widgets/custom_dropdown.dart';
 
 import '../../../constants/colors.dart';
 import '../../../controllers/apartment_form_controller.dart';
@@ -49,21 +49,14 @@ class UnitForm extends StatelessWidget {
                           children: [
                             const Text('طبقه'),
                             const SizedBox(width: 16),
-                            DropdownButton(
+                            CustomDropdown(
                               value:
                                   unitFormController.floorDropdownButtonValue,
-                              borderRadius: BorderRadius.circular(16),
-                              items: List.generate(
-                                apartmentFormController
-                                    .apartment!.storyNumber!, // !
-                                (index) => DropdownMenuItem<int>(
-                                  value: index + 1,
-                                  child: Text('${index + 1}'.toFarsiNumber),
-                                ),
-                              ),
+                              itemsValue: apartmentFormController
+                                  .apartment!.storyNumber!,
                               onChanged: (newValue) => unitFormController
                                   .floorDropdownButtonOnChanged(newValue),
-                            ),
+                            )
                           ],
                         ),
                         Container(
@@ -75,21 +68,14 @@ class UnitForm extends StatelessWidget {
                           children: [
                             const Text('واحد'),
                             const SizedBox(width: 16),
-                            DropdownButton(
+                            CustomDropdown(
                               value: unitFormController
                                   .unitNumberDropdownButtonValue,
-                              borderRadius: BorderRadius.circular(16),
-                              items: List.generate(
-                                apartmentFormController
-                                    .apartment!.unitNumber!, //!
-                                (index) => DropdownMenuItem<int>(
-                                  value: index + 1,
-                                  child: Text('${index + 1}'.toFarsiNumber),
-                                ),
-                              ),
+                              itemsValue: apartmentFormController
+                                  .apartment!.unitNumber!,
                               onChanged: (newValue) => unitFormController
                                   .unitDropdownButtonOnChanged(newValue),
-                            ),
+                            )
                           ],
                         ),
                       ],

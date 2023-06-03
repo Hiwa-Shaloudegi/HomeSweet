@@ -4,9 +4,22 @@ import 'package:home_sweet/utils/extensions.dart';
 import '../constants/colors.dart';
 
 class CustomDropdown extends StatelessWidget {
+  final int? value;
+  final List<DropdownMenuItem<int>>? items;
+  final int? itemsValue;
+  final void Function(int?)? onChanged;
+
   const CustomDropdown({
     super.key,
-  });
+    required this.value,
+    required this.onChanged,
+    this.itemsValue,
+    this.items,
+  }) : assert(
+          items == null && itemsValue != null ||
+              items != null && itemsValue == null,
+          'Only one of items or itemsValue must be initialized.',
+        );
 
   @override
   Widget build(BuildContext context) {
@@ -20,27 +33,25 @@ class CustomDropdown extends StatelessWidget {
         ),
         borderRadius: BorderRadius.circular(
           12,
-        ), //border raiuds of dropdown button
+        ),
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: DropdownButton(
           menuMaxHeight: 300,
           underline: const SizedBox.shrink(),
-          value: 1,
+          value: value,
           iconEnabledColor: AppColors.primaryColor,
           borderRadius: BorderRadius.circular(16),
-          items: List.generate(
-            20,
-            (index) => DropdownMenuItem<int>(
-              value: index + 1,
-              child: Text('${index + 1}'.toFarsiNumber),
-            ),
-          ),
-          onChanged: (newValue) {
-            // unitFormController
-            //     .unitDropdownButtonOnChanged(newValue);
-          },
+          items: items ??
+              List.generate(
+                itemsValue!,
+                (index) => DropdownMenuItem<int>(
+                  value: index + 1,
+                  child: Text('${index + 1}'.toFarsiNumber),
+                ),
+              ),
+          onChanged: onChanged,
         ),
       ),
     );

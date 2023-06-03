@@ -5,7 +5,6 @@ import 'package:home_sweet/utils/extensions.dart';
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 
 import '../../../constants/colors.dart';
-import '../../../controllers/unit_controller.dart';
 import '../../../utils/validators.dart';
 import '../../../widgets/custom_dropdown.dart';
 import '../../../widgets/form_bottomsheet_header.dart';
@@ -20,7 +19,7 @@ class ChargeForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<UnitFormController>(builder: (_) {
+    return GetBuilder<ChargeController>(builder: (chargeController) {
       return SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsetsDirectional.symmetric(
@@ -49,7 +48,11 @@ class ChargeForm extends StatelessWidget {
                           children: [
                             const Text('طبقه'),
                             const SizedBox(width: 16),
-                            CustomDropdown(),
+                            CustomDropdown(
+                              value: 1,
+                              itemsValue: 20,
+                              onChanged: (p0) {},
+                            ),
                           ],
                         ),
                         Container(
@@ -61,7 +64,11 @@ class ChargeForm extends StatelessWidget {
                           children: [
                             const Text('واحد'),
                             const SizedBox(width: 16),
-                            CustomDropdown(),
+                            CustomDropdown(
+                              value: 1,
+                              itemsValue: 20,
+                              onChanged: (p0) {},
+                            ),
                           ],
                         ),
                       ],
@@ -69,14 +76,14 @@ class ChargeForm extends StatelessWidget {
                   ),
                   const SizedBox(height: 16),
                   CustomTextField(
-                    controller: null,
+                    controller: TextEditingController(),
                     hintText: 'عنوان هزینه',
                     keyboardType: TextInputType.number,
                     validator: Validators.phoneNumberInputValidator,
                     onSaved: (p0) {},
                   ),
                   CustomTextField.datePicker(
-                    controller: null,
+                    controller: TextEditingController(),
 
                     // controller: costsController.dateTextController,
                     onTap: () async {
@@ -102,7 +109,7 @@ class ChargeForm extends StatelessWidget {
                     suffixIcon: const Icon(Icons.calendar_month_rounded),
                   ),
                   CustomTextField(
-                    controller: null,
+                    controller: TextEditingController(),
                     hintText: 'مقدار هزینه',
                     keyboardType: TextInputType.number,
                     validator: (value) =>
