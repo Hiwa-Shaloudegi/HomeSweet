@@ -3,6 +3,7 @@ import 'package:home_sweet/models/apartment.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
+import '../models/charge.dart';
 import '../models/cost.dart';
 import '../models/owner.dart';
 import '../models/tenant.dart';
@@ -117,6 +118,17 @@ class DatabaseHelper {
       ${UnitTable.tenantId} $foreignKeyNullableType,
       FOREIGN KEY (${UnitTable.ownerId}) REFERENCES ${OwnerTable.name} (${OwnerTable.id}),
       FOREIGN KEY (${UnitTable.tenantId}) REFERENCES ${TenantTable.name} (${TenantTable.id})
+      )
+""");
+
+    // Charge Table
+    await db.execute(""" 
+      CREATE TABLE ${ChargeTable.name} (
+      ${ChargeTable.id} $idType,
+      ${ChargeTable.title} $textType,
+      ${ChargeTable.date} $textType,
+      ${ChargeTable.amount} $integerType,
+      ${ChargeTable.unitId} $foreignKeyType
       )
 """);
 
