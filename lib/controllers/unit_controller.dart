@@ -410,7 +410,14 @@ class UnitFormController extends GetxController {
       textConfirm: 'بلی',
       textCancel: 'خیر',
       onConfirm: () async {
+        var unitToBeDeleted = await UnitRepository.read(id);
         await UnitRepository.delete(id);
+
+        var ownerToBeDeleted = unitToBeDeleted!.owner;
+        await OwnerRepository.delete(ownerToBeDeleted!.id!);
+
+        var tenantToBeDeleted = unitToBeDeleted.tenant;
+        await TenantRepository.delete(tenantToBeDeleted!.id!);
 
         // Removes any snackbar or dialog on the stack until it gets to the actual screen.
         Navigator.of(Get.overlayContext!)
