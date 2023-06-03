@@ -32,7 +32,7 @@ class ChargeForm extends StatelessWidget {
               bottom: MediaQuery.of(context).viewInsets.bottom + 16.0,
             ),
             child: Form(
-              // key: unitFormController.formKey,
+              key: chargeController.formKey,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -49,9 +49,10 @@ class ChargeForm extends StatelessWidget {
                             const Text('طبقه'),
                             const SizedBox(width: 16),
                             CustomDropdown(
-                              value: 1,
-                              itemsValue: 20,
-                              onChanged: (p0) {},
+                              value: chargeController.floorDropdownButtonValue,
+                              itemsValue: 7,
+                              onChanged: (newValue) => chargeController
+                                  .floorDropdownButtonOnChanged(newValue),
                             ),
                           ],
                         ),
@@ -65,9 +66,11 @@ class ChargeForm extends StatelessWidget {
                             const Text('واحد'),
                             const SizedBox(width: 16),
                             CustomDropdown(
-                              value: 1,
-                              itemsValue: 20,
-                              onChanged: (p0) {},
+                              value: chargeController
+                                  .unitNumberDropdownButtonValue,
+                              itemsValue: 14,
+                              onChanged: (newValue) => chargeController
+                                  .unitDropdownButtonOnChanged(newValue),
                             ),
                           ],
                         ),
@@ -76,16 +79,15 @@ class ChargeForm extends StatelessWidget {
                   ),
                   const SizedBox(height: 16),
                   CustomTextField(
-                    controller: TextEditingController(),
+                    controller: chargeController.titleTextController,
                     hintText: 'عنوان هزینه',
                     keyboardType: TextInputType.number,
-                    validator: Validators.phoneNumberInputValidator,
-                    onSaved: (p0) {},
+                    validator: Validators.textInputValidator,
+                    onSaved: (newValue) =>
+                        chargeController.titleOnSaved(newValue),
                   ),
                   CustomTextField.datePicker(
-                    controller: TextEditingController(),
-
-                    // controller: costsController.dateTextController,
+                    controller: chargeController.dateTextController,
                     onTap: () async {
                       FocusScope.of(context).requestFocus(FocusNode());
 
@@ -100,28 +102,29 @@ class ChargeForm extends StatelessWidget {
                         errorInvalidText: 'تاریخ خارج از محدوده مجاز است.',
                       );
                       String label = pickedDate!.formatFullDate();
-                      // costsController.dateTextController.text = label;
+                      chargeController.dateTextController.text = label;
                     },
                     hintText: 'تاریخ تراکنش',
                     validator: (value) => Validators.dateInputValidator(value),
-                    // onSaved: (newValue) => costsController.dateOnSaved(newValue),
-                    onSaved: (p0) {},
+                    onSaved: (newValue) =>
+                        chargeController.dateOnSaved(newValue),
                     suffixIcon: const Icon(Icons.calendar_month_rounded),
                   ),
                   CustomTextField(
-                    controller: TextEditingController(),
+                    controller: chargeController.amountTextController,
                     hintText: 'مقدار هزینه',
                     keyboardType: TextInputType.number,
                     validator: (value) =>
                         Validators.amountInputValidator(value),
-                    onSaved: (p0) {},
+                    onSaved: (newValue) =>
+                        chargeController.amountOnSaved(newValue),
                   ),
                   const SizedBox(height: 24),
                   SaveButton(
                     text: 'ثبت اطلاعات',
                     bottomMargin: 0,
                     onPressed: () {
-                      // unitFormController.saveData();
+                      // unitFormController.saveData(); //!
                     },
                   ),
                 ],

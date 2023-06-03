@@ -9,7 +9,7 @@ import 'widgets/charge_bottomsheet.dart';
 class ChargePage extends StatelessWidget {
   ChargePage({super.key});
 
-  var chargeController = Get.put(ChargeController());
+  final chargeController = Get.put(ChargeController());
 
   @override
   Widget build(BuildContext context) {
@@ -18,16 +18,14 @@ class ChargePage extends StatelessWidget {
       floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
       floatingActionButton: Fab(
         onPressed: () {
-          sbowChargeFormBottomSheet(context);
-          //TODO:resetForm()
-          // .then(
-          //   (value) => unitFormController.resetForm(),
-          // );
+          sbowChargeFormBottomSheet(context).then(
+            (value) => chargeController.resetForm(),
+          );
         },
       ),
       body: GetBuilder<ChargeController>(builder: (chargeController) {
         if (chargeController.allCharges.isEmpty) {
-          return EmptyState(message: 'هیچ رسید شارژی ثبت نشده است.');
+          return const EmptyState(message: 'هیچ رسید شارژی ثبت نشده است.');
         } else {
           return Center(
             child: Text('CHARGES...'),
