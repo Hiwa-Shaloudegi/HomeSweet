@@ -14,7 +14,7 @@ class ChargeController extends GetxController {
   // Form
   var floorDropdownButtonValue = 1;
   var unitNumberDropdownButtonValue = 1;
-  final titleTextController = TextEditingController();
+  String? titleDropDownFieldValue = 'شارژ ماهیانه';
   final dateTextController = TextEditingController();
   final amountTextController = TextEditingController();
 
@@ -29,8 +29,7 @@ class ChargeController extends GetxController {
   Charge? chargeToUpdate;
 
   // OnSaved
-  void titleOnSaved(String? newValue) =>
-      title = titleTextController.text.trim();
+  void titleDropDownOnSaved(String? newValue) => title = newValue!;
 
   void dateOnSaved(String? newValue) => date = dateTextController.text.trim();
 
@@ -41,6 +40,8 @@ class ChargeController extends GetxController {
       unitNumber = unitNumberDropdownButtonValue;
 
   void floorDropdownButtonOnSaved() => floorNumber = floorDropdownButtonValue;
+
+  void titleDropDownFieldOnSaved() => title = titleDropDownFieldValue!;
 
   // OnChanged
   void Function(int?)? floorDropdownButtonOnChanged(newValue) {
@@ -57,6 +58,13 @@ class ChargeController extends GetxController {
     return null;
   }
 
+  void Function(int?)? titleDropDownFieldOnChanged(newValue) {
+    titleDropDownFieldValue = newValue;
+    title = titleDropDownFieldValue!;
+    update();
+    return null;
+  }
+
   bool validate() => formKey.currentState!.validate();
 
   void saveChargeInputs() {
@@ -68,11 +76,11 @@ class ChargeController extends GetxController {
   void resetForm() {
     formKey.currentState!.reset();
 
-    titleTextController.clear();
+    titleDropDownFieldValue = 'شارژ ماهیانه';
     dateTextController.clear();
     amountTextController.clear();
 
-    title = '';
+    // title = '';
     date = '';
     amount = 0;
 
@@ -154,6 +162,8 @@ class ChargeController extends GetxController {
       resetForm();
     } catch (e) {
       throw Exception('CATCH ERROR: $e');
+    } finally {
+      update();
     }
   }
 

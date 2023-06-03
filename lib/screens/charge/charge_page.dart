@@ -46,8 +46,7 @@ class ChargePage extends StatelessWidget {
                           onSaved: null,
                         ),
                       ),
-                      SizedBox(
-                        height: Get.height * 0.79, //!
+                      Expanded(
                         child: ListView.separated(
                           physics: const BouncingScrollPhysics(),
                           itemCount: chargeController.allCharges.length,

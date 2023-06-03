@@ -11,6 +11,7 @@ import '../../../widgets/custom_dropdown.dart';
 import '../../../widgets/form_bottomsheet_header.dart';
 import '../../auth/widgets/custom_text_field.dart';
 import '../../auth/widgets/save_button.dart';
+import 'charge_dropdown_button_field.dart';
 
 class ChargeForm extends StatelessWidget {
   ChargeForm({super.key});
@@ -29,7 +30,7 @@ class ChargeForm extends StatelessWidget {
           ),
           child: Container(
             padding: EdgeInsets.only(
-              top: 32.0, //! not responsible.
+              top: 12, //! not responsible.
               bottom: MediaQuery.of(context).viewInsets.bottom + 16.0,
             ),
             child: Form(
@@ -79,14 +80,40 @@ class ChargeForm extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  CustomTextField(
-                    controller: chargeController.titleTextController,
-                    hintText: 'عنوان هزینه',
-                    keyboardType: TextInputType.text,
-                    validator: Validators.textInputValidator,
-                    onSaved: (newValue) =>
-                        chargeController.titleOnSaved(newValue),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'عنوان هزینه',
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                        const SizedBox(height: 14),
+                        Container(
+                          // height:
+                          //     70, // set the height of the Container to your desired value
+                          // decoration: BoxDecoration(
+                          //   borderRadius: BorderRadius.circular(10),
+                          //   border: Border.all(
+                          //     color: Theme.of(context).dividerColor,
+                          //     width: 1,
+                          //   ),
+                          // ),
+                          //TODO: increase the height.
+                          child: ChargeDropdownButtonField(),
+                        ),
+                      ],
+                    ),
                   ),
+                  // CustomTextField(
+                  //   controller: chargeController.titleTextController,
+                  //   hintText: 'عنوان هزینه',
+                  //   keyboardType: TextInputType.text,
+                  //   validator: Validators.textInputValidator,
+                  //   onSaved: (newValue) =>
+                  //       chargeController.titleOnSaved(newValue),
+                  // ),
                   CustomTextField.datePicker(
                     controller: chargeController.dateTextController,
                     onTap: () async {
