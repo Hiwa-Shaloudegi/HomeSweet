@@ -58,6 +58,26 @@ class UnitRepository {
     return result;
   }
 
+  static Future<Unit?> getUnitByFloorAndNumber(Unit unit) async {
+    var db = await _databaseHelper.database;
+
+    final maps = await db.query(
+      UnitTable.name,
+      columns: UnitTable.allColumns,
+      where: '${UnitTable.floor} = ? AND ${UnitTable.number} = ?',
+      whereArgs: [
+        unit.floor,
+        unit.number,
+      ],
+    );
+
+    if (maps.isNotEmpty) {
+      return Unit.fromMap(maps.first);
+    } else {
+      return null;
+    }
+  }
+
   static Future<int?> getId(Unit unit) async {
     var db = await _databaseHelper.database;
 

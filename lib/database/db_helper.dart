@@ -117,7 +117,8 @@ class DatabaseHelper {
       ${UnitTable.ownerId} $foreignKeyType,
       ${UnitTable.tenantId} $foreignKeyNullableType,
       FOREIGN KEY (${UnitTable.ownerId}) REFERENCES ${OwnerTable.name} (${OwnerTable.id}),
-      FOREIGN KEY (${UnitTable.tenantId}) REFERENCES ${TenantTable.name} (${TenantTable.id})
+      FOREIGN KEY (${UnitTable.tenantId}) REFERENCES ${TenantTable.name} (${TenantTable.id}),
+      UNIQUE (${UnitTable.floor}, ${UnitTable.number})
       )
 """);
 

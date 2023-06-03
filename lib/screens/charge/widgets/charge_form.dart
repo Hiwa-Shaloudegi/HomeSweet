@@ -5,6 +5,7 @@ import 'package:home_sweet/utils/extensions.dart';
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 
 import '../../../constants/colors.dart';
+import '../../../controllers/apartment_form_controller.dart';
 import '../../../utils/validators.dart';
 import '../../../widgets/custom_dropdown.dart';
 import '../../../widgets/form_bottomsheet_header.dart';
@@ -14,7 +15,7 @@ import '../../auth/widgets/save_button.dart';
 class ChargeForm extends StatelessWidget {
   ChargeForm({super.key});
 
-  // final apartmentFormController = Get.put(ApartmentFormController());
+  final apartmentFormController = Get.put(ApartmentFormController());
   final chargeController = Get.put(ChargeController());
 
   @override
@@ -38,7 +39,7 @@ class ChargeForm extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const FormBottomSheetHeader(title: 'ثبت شارژ و قبض'),
-                  Container(height: 16),
+                  Container(height: 24),
                   Padding(
                     padding: const EdgeInsets.only(left: 8),
                     child: Row(
@@ -50,7 +51,7 @@ class ChargeForm extends StatelessWidget {
                             const SizedBox(width: 16),
                             CustomDropdown(
                               value: chargeController.floorDropdownButtonValue,
-                              itemsValue: 7,
+                              itemsValue: apartmentFormController.storyNumber,
                               onChanged: (newValue) => chargeController
                                   .floorDropdownButtonOnChanged(newValue),
                             ),
@@ -68,7 +69,7 @@ class ChargeForm extends StatelessWidget {
                             CustomDropdown(
                               value: chargeController
                                   .unitNumberDropdownButtonValue,
-                              itemsValue: 14,
+                              itemsValue: apartmentFormController.unitNumber,
                               onChanged: (newValue) => chargeController
                                   .unitDropdownButtonOnChanged(newValue),
                             ),
@@ -81,7 +82,7 @@ class ChargeForm extends StatelessWidget {
                   CustomTextField(
                     controller: chargeController.titleTextController,
                     hintText: 'عنوان هزینه',
-                    keyboardType: TextInputType.number,
+                    keyboardType: TextInputType.text,
                     validator: Validators.textInputValidator,
                     onSaved: (newValue) =>
                         chargeController.titleOnSaved(newValue),
@@ -124,7 +125,7 @@ class ChargeForm extends StatelessWidget {
                     text: 'ثبت اطلاعات',
                     bottomMargin: 0,
                     onPressed: () {
-                      // unitFormController.saveData(); //!
+                      chargeController.saveData();
                     },
                   ),
                 ],

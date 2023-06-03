@@ -24,12 +24,16 @@ class ChargePage extends StatelessWidget {
         },
       ),
       body: GetBuilder<ChargeController>(builder: (chargeController) {
-        if (chargeController.allCharges.isEmpty) {
-          return const EmptyState(message: 'هیچ رسید شارژی ثبت نشده است.');
+        if (chargeController.isLoading) {
+          return const Center(child: CircularProgressIndicator());
         } else {
-          return Center(
-            child: Text('CHARGES...'),
-          );
+          if (chargeController.allCharges.isEmpty) {
+            return const EmptyState(message: 'هیچ رسید شارژی ثبت نشده است.');
+          } else {
+            return Center(
+              child: Text('CHARGES...'),
+            );
+          }
         }
       }),
     );

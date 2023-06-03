@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:home_sweet/database/charge_repository.dart';
+import 'package:home_sweet/database/unit_repository.dart';
+import 'package:home_sweet/routes/routes.dart';
+import 'package:home_sweet/widgets/snackbar.dart';
 
 import '../models/charge.dart';
+import '../models/unit.dart';
 
 class ChargeController extends GetxController {
   final formKey = GlobalKey<FormState>();
@@ -54,7 +59,7 @@ class ChargeController extends GetxController {
 
   bool validate() => formKey.currentState!.validate();
 
-  void saveCostInputs() {
+  void saveChargeInputs() {
     formKey.currentState!.save();
     unitDropdownButtonOnSaved();
     floorDropdownButtonOnSaved();
@@ -80,7 +85,7 @@ class ChargeController extends GetxController {
 
   @override
   void onInit() {
-    // TODO: implement onInit
+    loadData();
     super.onInit();
   }
 
@@ -90,19 +95,67 @@ class ChargeController extends GetxController {
     super.onClose();
   }
 
+  bool isLoading = false;
+  loadData() async {
+    isLoading = true;
+    allCharges.clear();
+
+    allCharges.addAll(await ChargeRepository.readAll());
+    allCharges = List.from(allCharges.reversed);
+
+    await Future.delayed(const Duration(milliseconds: 300));
+    isLoading = false;
+    update();
+  }
+
   saveData() async {
     if (validate()) {
-      saveCostInputs();
+      saveChargeInputs();
 
-      if (chargeToUpdate != null) {
+      if (chargeToUpdate == null) {
         createCharge();
       } else {
         updateCharge();
       }
     }
+
+    update();
   }
 
-  void createCharge() {}
+  void createCharge() async {
+    Unit? relatedUnit = await UnitRepository.getUnitByFloorAndNumber(
+      Unit(floor: floorNumber, number: unitNumber),
+    );
 
-  void updateCharge() {}
+    if (relatedUnit == null) {
+      // No such unit in database.
+      AppSnackbar.errorSnackbar(
+        'اطلاعات واحد $unitNumber طبقه $floorNumber ثبت نشده است.',
+        buttonText: 'افزودن واحد',
+        onTap: () => Get.toNamed(AppRoutes.unitPage),
+      );
+      return;
+    }
+
+    Charge newCharge = Charge(
+      title: title,
+      date: date,
+      amount: amount,
+      unitId: relatedUnit.id,
+    );
+
+    try {
+      newCharge = await ChargeRepository.create(newCharge);
+      allCharges.insert(0, newCharge);
+
+      Get.back();
+      AppSnackbar.successSnackbar(
+          'اطلاعات شارژ با موفقیت ثبت شد.'); //TODO: charge or somthing else.
+      resetForm();
+    } catch (e) {
+      throw Exception('CATCH ERROR: $e');
+    }
+  }
+
+  void updateCharge() async {}
 }
