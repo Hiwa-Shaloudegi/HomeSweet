@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:home_sweet/database/charge_repository.dart';
 import 'package:home_sweet/database/unit_repository.dart';
 import 'package:home_sweet/routes/routes.dart';
+import 'package:home_sweet/utils/extensions.dart';
 import 'package:home_sweet/widgets/snackbar.dart';
 
 import '../models/charge.dart';
@@ -138,7 +139,8 @@ class ChargeController extends GetxController {
     if (relatedUnit == null) {
       // No such unit in database.
       AppSnackbar.errorSnackbar(
-        'اطلاعات واحد $unitNumber طبقه $floorNumber ثبت نشده است.',
+        'اطلاعات واحد $unitNumber طبقه $floorNumber ثبت نشده است.'
+            .toFarsiNumber,
         buttonText: 'افزودن واحد',
         onTap: () => Get.toNamed(AppRoutes.unitPage),
       );

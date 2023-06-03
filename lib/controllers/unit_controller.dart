@@ -8,6 +8,7 @@ import 'package:home_sweet/database/unit_repository.dart';
 import 'package:home_sweet/models/owner.dart';
 import 'package:home_sweet/models/tenant.dart';
 import 'package:home_sweet/models/unit.dart';
+import 'package:home_sweet/utils/extensions.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../routes/routes.dart';
@@ -180,6 +181,19 @@ class UnitFormController extends GetxController {
       saveUnitInputs();
 
       if (unitToUpdate == null) {
+        Unit? unitToCheck = await UnitRepository.getUnitByFloorAndNumber(
+          Unit(floor: floorNumber, number: unitNumber),
+        );
+
+        if (unitToCheck != null) {
+          // this unit exist in database already.
+          AppSnackbar.errorSnackbar(
+            'اطلاعات واحد $unitNumber طبقه $floorNumber قبلا ثبت شده است.'
+                .toFarsiNumber,
+          );
+          return;
+        }
+
         var newOwner = Owner(
           firstName: ownerName,
           lastName: ownerLastName,
