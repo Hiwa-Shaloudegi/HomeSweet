@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:home_sweet/controllers/charge_controller.dart';
-import 'package:home_sweet/widgets/empty_state.dart';
 
+import '../../controllers/charge_controller.dart';
+import '../../widgets/empty_state.dart';
 import '../../widgets/fab.dart';
+import '../auth/widgets/custom_text_field.dart';
 import 'widgets/charge_bottomsheet.dart';
+import 'widgets/charge_item.dart';
 
 class ChargePage extends StatelessWidget {
   ChargePage({super.key});
@@ -27,13 +29,39 @@ class ChargePage extends StatelessWidget {
         if (chargeController.isLoading) {
           return const Center(child: CircularProgressIndicator());
         } else {
-          if (chargeController.allCharges.isEmpty) {
-            return const EmptyState(message: 'هیچ رسید شارژی ثبت نشده است.');
-          } else {
-            return Center(
-              child: Text('CHARGES...'),
-            );
-          }
+          return chargeController.allCharges.isEmpty
+              ? const EmptyState(message: 'هیچ رسید شارژی ثبت نشده است.')
+              : Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                  ),
+                  child: Column(
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.only(top: 60),
+                        //TODO: search functionality
+                        child: CustomTextField.search(
+                          controller: null,
+                          validator: null,
+                          onSaved: null,
+                        ),
+                      ),
+                      SizedBox(
+                        height: Get.height * 0.79, //!
+                        child: ListView.separated(
+                          physics: const BouncingScrollPhysics(),
+                          itemCount: chargeController.allCharges.length,
+                          itemBuilder: (context, index) => ChargeItem(
+                            charge: chargeController.allCharges[index],
+                          ),
+                          separatorBuilder: (context, index) =>
+                              const SizedBox(height: 24),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+          ;
         }
       }),
     );
