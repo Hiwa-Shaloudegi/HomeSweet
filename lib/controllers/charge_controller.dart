@@ -103,7 +103,7 @@ class ChargeController extends GetxController {
     unitNumberDropdownButtonValue = 1;
 
     //! TODO: update/edit 'charge state'.
-    // chargeToUpdate = null;
+    chargeToUpdate = null;
   }
 
   @override
@@ -183,7 +183,63 @@ class ChargeController extends GetxController {
     }
   }
 
-  void updateCharge() async {}
+  void loadSelectedChargeData() async {
+    if (chargeToUpdate != null) {
+      Unit? relatedUnit = await UnitRepository.read(chargeToUpdate!.unitId!);
+
+      floorDropdownButtonValue = relatedUnit!.floor!;
+      unitNumberDropdownButtonValue = relatedUnit.number!;
+
+      titleDropDownFieldValue = chargeToUpdate!.title!;
+      dateTextController.text = chargeToUpdate!.date!;
+      amountTextController.text = chargeToUpdate!.amount.toString();
+    }
+    update();
+  }
+
+  void updateCharge() async {
+    Unit? relatedUpdatedUnit = await UnitRepository.getUnitByFloorAndNumber(
+      Unit(floor: floorNumber, number: unitNumber),
+    );
+
+    if (relatedUpdatedUnit == null) {
+      // No such unit in database.
+      AppSnackbar.errorSnackbar(
+        'اطلاعات واحد $unitNumber طبقه $floorNumber ثبت نشده است.'
+            .toFarsiNumber,
+        buttonText: 'افزودن واحد',
+        onTap: () => Get.toNamed(AppRoutes.unitPage),
+      );
+      return;
+    }
+
+    var updatedCharge = Charge(
+      id: chargeToUpdate!.id,
+      title: title,
+      date: date,
+      amount: amount,
+      unitId: relatedUpdatedUnit.id,
+    );
+
+    try {
+      await ChargeRepository.update(updatedCharge);
+
+      int index =
+          allCharges.indexWhere((charge) => charge.id == chargeToUpdate!.id);
+      if (index != -1) {
+        allCharges[index] = updatedCharge;
+      }
+
+      Get.back();
+      AppSnackbar.successSnackbar('اطلاعات با موفقیت بروز رسانی شد.');
+    } catch (e) {
+      throw Exception('CATCH ERROR: $e');
+    }
+
+    chargeToUpdate = null;
+
+    update();
+  }
 
   void deleteCharge(int id) async {
     isLoading = true;

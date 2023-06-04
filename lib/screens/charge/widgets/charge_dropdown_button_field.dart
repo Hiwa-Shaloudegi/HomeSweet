@@ -8,6 +8,7 @@ class ChargeDropdownButtonField extends StatelessWidget {
   ChargeDropdownButtonField({
     super.key,
   });
+
   final chargeController = Get.put(ChargeController());
 
   @override
@@ -17,7 +18,7 @@ class ChargeDropdownButtonField extends StatelessWidget {
       borderRadius: BorderRadius.circular(24),
       iconEnabledColor: AppColors.primaryColor,
       iconSize: 28,
-      value: 'شارژ ماهیانه',
+      value: chargeController.titleDropDownFieldValue, //?? 'شارژ ماهیانه',
       items: const [
         DropdownMenuItem(
           value: 'شارژ ماهیانه',

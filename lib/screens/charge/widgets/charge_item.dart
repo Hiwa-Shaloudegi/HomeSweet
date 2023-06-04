@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:home_sweet/database/charge_repository.dart';
+import 'package:home_sweet/screens/charge/widgets/charge_bottomsheet.dart';
 import 'package:home_sweet/utils/extensions.dart';
 
 import '../../../constants/colors.dart';
@@ -81,20 +82,14 @@ class ChargeItem extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(right: 14),
                   child: IconButton(
-                    onPressed: () {},
-                    // onPressed: () {
-                    //   //! selected Cost model.
-                    //   costsController.costToUpdate = cost;
-                    //   costsController
-                    //       .loadSelectedCostData();
-                    //   //!
+                    onPressed: () {
+                      chargeController.chargeToUpdate = charge;
+                      chargeController.loadSelectedChargeData();
 
-                    //   showCostFormBottomSheet(context)
-                    //       .then(
-                    //     (value) =>
-                    //         costsController.resetForm(),
-                    //   ); //! when the bottomShett closes
-                    // },
+                      sbowChargeFormBottomSheet(context).then(
+                        (value) => chargeController.resetForm(),
+                      );
+                    },
                     splashColor: Colors.transparent,
                     highlightColor: Colors.transparent,
                     visualDensity: VisualDensity.compact,
