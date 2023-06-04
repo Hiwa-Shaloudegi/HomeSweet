@@ -20,7 +20,7 @@ class UnitForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<UnitFormController>(builder: (_) {
+    return GetBuilder<UnitFormController>(builder: (unitFormController) {
       return SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsetsDirectional.symmetric(

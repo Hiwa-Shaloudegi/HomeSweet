@@ -47,7 +47,8 @@ class DatabaseHelper {
     const textType = 'TEXT NOT NULL';
     const integerType = 'INTEGER NOT NULL';
     const doubleType = 'REAL NOT NULL';
-    const foreignKeyType = 'INTEGER UNIQUE NOT NULL';
+    const foreignKeyUniqueType = 'INTEGER UNIQUE NOT NULL';
+    const foreignKeyType = 'INTEGER NOT NULL';
     const foreignKeyNullableType = 'INTEGER UNIQUEL';
     // const boolType = 'BOOLEAN NOT NULL';
     // const dateType = 'Date NOT NULL'
@@ -114,7 +115,7 @@ class DatabaseHelper {
       ${UnitTable.number} $integerType,
       ${UnitTable.unitPhoneNumber} $textType,
       ${UnitTable.unitStatus} $textType,
-      ${UnitTable.ownerId} $foreignKeyType,
+      ${UnitTable.ownerId} $foreignKeyUniqueType,
       ${UnitTable.tenantId} $foreignKeyNullableType,
       FOREIGN KEY (${UnitTable.ownerId}) REFERENCES ${OwnerTable.name} (${OwnerTable.id}),
       FOREIGN KEY (${UnitTable.tenantId}) REFERENCES ${TenantTable.name} (${TenantTable.id}),

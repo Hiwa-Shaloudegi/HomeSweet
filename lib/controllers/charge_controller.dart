@@ -174,7 +174,7 @@ class ChargeController extends GetxController {
 
       Get.back();
       AppSnackbar.successSnackbar(
-          'اطلاعات شارژ با موفقیت ثبت شد.'); //TODO: charge or somthing else.
+          'اطلاعات ${title} با موفقیت ثبت شد.'); //TODO: charge or somthing else.
       resetForm();
     } catch (e) {
       throw Exception('CATCH ERROR: $e');
