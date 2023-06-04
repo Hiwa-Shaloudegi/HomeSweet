@@ -186,7 +186,7 @@ class ChargeController extends GetxController {
         Navigator.of(Get.overlayContext!)
             .popUntil(ModalRoute.withName(AppRoutes.chargePage));
 
-        // Also removes the cost from list of costs state.
+        // Also removes the charge from list of costs state.
         allCharges.removeWhere((charge) => charge.id == id);
         AppSnackbar.successSnackbar('اطلاعلات قبض با موفقیت حذف شد.');
 

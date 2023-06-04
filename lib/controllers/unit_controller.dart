@@ -437,13 +437,13 @@ class UnitFormController extends GetxController {
         Navigator.of(Get.overlayContext!)
             .popUntil(ModalRoute.withName(AppRoutes.unitPage));
 
-        // Also removes the cost from list of costs state.
+        // Also removes the unit from list of costs state.
         allUnits.removeWhere((unit) => unit.id == id);
         AppSnackbar.successSnackbar('اطلاعلات واحد با موفقیت حذف شد.');
+        isLoading = false;
+
         update();
       },
     );
-
-    isLoading = false;
   }
 }
