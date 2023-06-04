@@ -154,7 +154,7 @@ class ChargeItem extends StatelessWidget {
                       ),
                       const SizedBox(width: 12),
                       const Text('هزینه کل :  '),
-                      Text(charge.amount.toString()),
+                      Text(charge.amount.toString().toFarsiNumber),
                       const Text('  تومان'),
                     ],
                   ),

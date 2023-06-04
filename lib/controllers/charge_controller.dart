@@ -19,6 +19,10 @@ class ChargeController extends GetxController {
   String? titleDropDownFieldValue = 'شارژ ماهیانه';
   final dateTextController = TextEditingController();
   final amountTextController = TextEditingController();
+  // TODO1:
+  // TextEditingController(
+  //   text: Get.find<ApartmentFormController>().apartment!.unitCharge.toString(),
+  // );
 
   int floorNumber = 1;
   int unitNumber = 1;
@@ -63,6 +67,15 @@ class ChargeController extends GetxController {
   void Function(int?)? titleDropDownFieldOnChanged(newValue) {
     titleDropDownFieldValue = newValue;
     title = titleDropDownFieldValue!;
+    // TODO1: automatically change the amout textField when the title dropdown changes without activating the form validation which is set to onUserInrteraction.
+    // if (titleDropDownFieldValue == 'شارژ ماهیانه') {
+    //   amountTextController.text =
+    //       Get.find<ApartmentFormController>().apartment!.unitCharge.toString();
+
+    //   log('AMOUNT TEXT: ${amountTextController.text}');
+    // } else {
+    //   amountTextController.clear();
+    // }
     update();
     return null;
   }
