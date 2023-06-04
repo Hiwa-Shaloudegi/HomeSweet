@@ -7,10 +7,12 @@ import 'package:home_sweet/utils/extensions.dart';
 import '../../../constants/colors.dart';
 import '../../../controllers/charge_controller.dart';
 import '../../../models/charge.dart';
+import '../../../models/unit.dart';
 import '../../../themes/app_theme.dart';
 
 class ChargeItem extends StatelessWidget {
   final Charge charge;
+  final Unit? relatedUnit;
 
   final double totalHeight;
   final double bodyHeight;
@@ -18,11 +20,13 @@ class ChargeItem extends StatelessWidget {
   ChargeItem({
     super.key,
     required this.charge,
+    required this.relatedUnit,
     this.totalHeight = 210,
     this.bodyHeight = 60,
   });
 
   final chargeController = Get.find<ChargeController>();
+  //  chargeController.getRelatedUnit(charge);
 
   @override
   Widget build(BuildContext context) {
@@ -136,9 +140,9 @@ class ChargeItem extends StatelessWidget {
                         color: AppColors.primaryColor,
                       ),
                       const SizedBox(width: 12),
-                      Text(' طبقه: ${charge.unitId} '), //TODO:get from unit
-                      const SizedBox(width: 8),
-                      Text(' واحد: ${charge.unitId} '), //TODO:get from unit
+                      Text(' طبقه: ${relatedUnit!.floor}'.toFarsiNumber),
+                      const SizedBox(width: 16),
+                      Text(' واحد: ${relatedUnit!.number}'.toFarsiNumber),
                     ],
                   ),
                   Row(

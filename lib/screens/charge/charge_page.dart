@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../controllers/charge_controller.dart';
+import '../../models/unit.dart';
 import '../../widgets/empty_state.dart';
 import '../../widgets/fab.dart';
 import '../auth/widgets/custom_text_field.dart';
@@ -50,9 +51,31 @@ class ChargePage extends StatelessWidget {
                         child: ListView.separated(
                           physics: const BouncingScrollPhysics(),
                           itemCount: chargeController.allCharges.length,
-                          itemBuilder: (context, index) => ChargeItem(
-                            charge: chargeController.allCharges[index],
-                          ),
+                          itemBuilder: (context, index) {
+                            //TODO*: better solution?
+                            return FutureBuilder<Unit?>(
+                              future: chargeController.getRelatedUnit(
+                                  chargeController.allCharges[index]),
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState ==
+                                        ConnectionState.done &&
+                                    snapshot.hasData) {
+                                  return ChargeItem(
+                                    charge: chargeController.allCharges[index],
+                                    relatedUnit: snapshot.data,
+                                  );
+                                } else if (snapshot.hasError) {
+                                  return Center(
+                                    child: Text(
+                                      snapshot.error.toString(),
+                                    ),
+                                  );
+                                } else {
+                                  return const SizedBox.shrink();
+                                }
+                              },
+                            );
+                          },
                           separatorBuilder: (context, index) =>
                               const SizedBox(height: 24),
                         ),
