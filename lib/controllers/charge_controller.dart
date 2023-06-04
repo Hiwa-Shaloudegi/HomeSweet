@@ -145,7 +145,7 @@ class ChargeController extends GetxController {
     update();
   }
 
-  void createCharge() async {
+  createCharge() async {
     Unit? relatedUnit = await UnitRepository.getUnitByFloorAndNumber(
       Unit(floor: floorNumber, number: unitNumber),
     );
@@ -183,7 +183,7 @@ class ChargeController extends GetxController {
     }
   }
 
-  void loadSelectedChargeData() async {
+  loadSelectedChargeData() async {
     if (chargeToUpdate != null) {
       Unit? relatedUnit = await UnitRepository.read(chargeToUpdate!.unitId!);
 
@@ -197,7 +197,7 @@ class ChargeController extends GetxController {
     update();
   }
 
-  void updateCharge() async {
+  updateCharge() async {
     Unit? relatedUpdatedUnit = await UnitRepository.getUnitByFloorAndNumber(
       Unit(floor: floorNumber, number: unitNumber),
     );
@@ -241,7 +241,7 @@ class ChargeController extends GetxController {
     update();
   }
 
-  void deleteCharge(int id) async {
+  deleteCharge(int id) async {
     isLoading = true;
     await showAppDialog(
       title: 'هشدار',
@@ -265,5 +265,9 @@ class ChargeController extends GetxController {
 
     isLoading = false;
     update();
+  }
+
+  Future<Unit?> getRelatedUnit(Charge charge) async {
+    return await UnitRepository.read(charge.unitId!);
   }
 }
