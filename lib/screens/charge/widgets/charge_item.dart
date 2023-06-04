@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:home_sweet/database/charge_repository.dart';
 import 'package:home_sweet/utils/extensions.dart';
 
 import '../../../constants/colors.dart';
@@ -105,14 +106,13 @@ class ChargeItem extends StatelessWidget {
                   ),
                 ),
                 IconButton(
-                  // onPressed: () async {
-                  //   int? id =
-                  //       await CostRepository.getId(cost);
-                  //   if (id != null) {
-                  //     costsController.deleteCost(id);
-                  //   }
-                  // },
-                  onPressed: () {},
+                  onPressed: () async {
+                    int? id = await ChargeRepository.getId(charge);
+                    if (id != null) {
+                      chargeController.deleteCharge(id);
+                    }
+                  },
+                  // onPressed: () {},
                   splashColor: Colors.transparent,
                   highlightColor: Colors.transparent,
                   visualDensity: VisualDensity.compact,

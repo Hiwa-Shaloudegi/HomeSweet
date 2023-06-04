@@ -60,7 +60,6 @@ class ChargePage extends StatelessWidget {
                     ],
                   ),
                 );
-          ;
         }
       }),
     );

@@ -216,10 +216,12 @@ class CostsController extends GetxController {
 
         // Also removes the cost from list of costs state.
         allCosts.removeWhere((cost) => cost.id == id);
+        AppSnackbar.successSnackbar('اطلاعلات هزینه با موفقیت حذف شد.');
+
+        update();
       },
     );
 
     isLoading = false;
-    update();
   }
 }

@@ -8,6 +8,7 @@ import 'package:home_sweet/widgets/snackbar.dart';
 
 import '../models/charge.dart';
 import '../models/unit.dart';
+import '../widgets/app_dialog.dart';
 
 class ChargeController extends GetxController {
   final formKey = GlobalKey<FormState>();
@@ -170,4 +171,30 @@ class ChargeController extends GetxController {
   }
 
   void updateCharge() async {}
+
+  void deleteCharge(int id) async {
+    isLoading = true;
+    await showAppDialog(
+      title: 'هشدار',
+      message: 'آیا مطمئن هستید که می خواهید این مورد را حذف کنید؟',
+      textConfirm: 'بلی',
+      textCancel: 'خیر',
+      onConfirm: () async {
+        await ChargeRepository.delete(id);
+
+        // Removes any snackbar or dialog on the stack until it gets to the actual screen.
+        Navigator.of(Get.overlayContext!)
+            .popUntil(ModalRoute.withName(AppRoutes.chargePage));
+
+        // Also removes the cost from list of costs state.
+        allCharges.removeWhere((charge) => charge.id == id);
+        AppSnackbar.successSnackbar('اطلاعلات قبض با موفقیت حذف شد.');
+
+        update();
+      },
+    );
+
+    isLoading = false;
+    update();
+  }
 }
