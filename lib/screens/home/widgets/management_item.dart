@@ -31,6 +31,7 @@ class ManagementItem extends StatelessWidget {
             Get.toNamed(AppRoutes.unitPage);
             break;
           case 1:
+            Get.toNamed(AppRoutes.staffPage);
             break;
           case 2:
             Get.toNamed(AppRoutes.costsPage);
@@ -39,6 +40,7 @@ class ManagementItem extends StatelessWidget {
             Get.toNamed(AppRoutes.chargePage);
             break;
           default:
+            break;
         }
       },
       child: Container(

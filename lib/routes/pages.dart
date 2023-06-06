@@ -3,6 +3,7 @@ import 'package:home_sweet/screens/apartment/apartment_form_page.dart';
 import 'package:home_sweet/screens/charge/charge_page.dart';
 import 'package:home_sweet/screens/costs/costs_page.dart';
 import 'package:home_sweet/screens/home/main_screen.dart';
+import 'package:home_sweet/screens/staff/staff_page.dart';
 import 'package:home_sweet/screens/units/unit_page.dart';
 
 import '../screens/auth/login/login_screen.dart';
@@ -19,5 +20,6 @@ class AppPages {
     GetPage(name: AppRoutes.costsPage, page: () => CostsPage()),
     GetPage(name: AppRoutes.unitPage, page: () => UnitPage()),
     GetPage(name: AppRoutes.chargePage, page: () => ChargePage()),
+    GetPage(name: AppRoutes.staffPage, page: () => StaffPage()),
   ];
 }
