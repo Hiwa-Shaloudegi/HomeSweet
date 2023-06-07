@@ -53,13 +53,13 @@ class AuthController extends GetxController {
       } else {
         signupFormController.saveUserInputs();
 
-        // Save datas to Database
+        if (await StaffRepository.isUsernameTaken(
+            signupFormController.username)) {
+          AppSnackbar.errorSnackbar('این نام کاربری قبلا انتخاب شده است.');
+          return;
+        }
 
-        //!!!
-        // var user = User(
-        //   username: signupFormController.username,
-        //   password: signupFormController.password,
-        // );
+        // Save datas to Database
 
         var staff = Staff(
           username: signupFormController.username,

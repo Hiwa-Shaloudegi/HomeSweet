@@ -98,4 +98,15 @@ class StaffRepository {
     }
     return null;
   }
+
+  static Future<bool> isUsernameTaken(String username) async {
+    var db = await _databaseHelper.database;
+
+    final result = await db.query(
+      StaffTable.name,
+      where: '${StaffTable.username} = ?',
+      whereArgs: [username],
+    );
+    return result.isNotEmpty;
+  }
 }

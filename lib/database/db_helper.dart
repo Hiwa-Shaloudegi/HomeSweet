@@ -54,19 +54,9 @@ class DatabaseHelper {
     const doubleType = 'REAL NOT NULL';
     const foreignKeyUniqueType = 'INTEGER UNIQUE NOT NULL';
     const foreignKeyType = 'INTEGER NOT NULL';
-    const foreignKeyNullableType = 'INTEGER UNIQUEL';
+    const foreignKeyNullableType = 'INTEGER UNIQUE';
     // const boolType = 'BOOLEAN NOT NULL';
     // const dateType = 'Date NOT NULL'
-
-    // User Table
-    //!!!
-//     await db.execute("""
-//       CREATE TABLE ${UserTable.name} (
-//       ${UserTable.id} $idType,
-//       ${UserTable.username} $textType,
-//       ${UserTable.password} $textType
-//       )
-// """);
 
     // Staff Table
     await db.execute(""" 
@@ -78,7 +68,7 @@ class DatabaseHelper {
       ${StaffTable.staffPhoneNumber} $textNullableType,
       ${StaffTable.startingDate} $textNullableType,
       ${StaffTable.salary} $integerNullableType,
-      ${UserTable.username} $textType,
+      ${UserTable.username} $textType UNIQUE,
       ${UserTable.password} $textType
       )
 """);
