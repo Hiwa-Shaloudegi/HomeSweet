@@ -23,7 +23,7 @@ class StaffController extends GetxController {
 
   // States
   bool isLoading = false;
-  List allStaff = [];
+  List<Staff> allStaff = [];
 
   Staff? staffToUpdate = null; //!
 
