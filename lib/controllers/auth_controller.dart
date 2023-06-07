@@ -6,17 +6,15 @@ import 'package:home_sweet/database/staff_repository.dart';
 import 'package:home_sweet/models/staff.dart';
 
 import '../constants/storage_keys.dart';
-import '../database/user_repository.dart';
 import '../widgets/snackbar.dart';
 import '../database/db_helper.dart';
-import '../models/user.dart';
 import '../routes/routes.dart';
 import 'login_form_controller.dart';
 import 'signup_form_controller.dart';
 
 class AuthController extends GetxController {
   // Controllers
-  final staffController = Get.find<StaffController>();
+  final staffController = Get.put(StaffController());
   final signupFormController = Get.find<SignupFormController>();
   final loginFormController = Get.find<LoginFormController>();
 
@@ -66,7 +64,7 @@ class AuthController extends GetxController {
           password: signupFormController.password,
           firstName: null,
           lastName: null,
-          role: 'مدیر',
+          role: signupFormController.role,
           salary: null,
           staffPhoneNumber: null,
           startingDate: null,
@@ -75,10 +73,7 @@ class AuthController extends GetxController {
         signupFormController.resetForm();
 
         try {
-          //!!!
-          // await UserRepository.create(user);
           await StaffRepository.create(staff);
-          //!!!
 
           // Transition to the home page
           Get.offAndToNamed(AppRoutes.loginScreen);

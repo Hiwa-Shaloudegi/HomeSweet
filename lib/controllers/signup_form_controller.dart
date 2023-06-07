@@ -12,6 +12,8 @@ class SignupFormController extends GetxController {
   String username = '';
   String password = '';
   String repeatPassword = '';
+  String role = '';
+  String roleGroupValue = 'مدیر';
 
   bool isPasswordVisible = false;
   bool isRepeatPasswordVisible = false;
@@ -34,6 +36,11 @@ class SignupFormController extends GetxController {
     password = passwordTextController.text.trim().hash;
   }
 
+  void Function(String?)? roleGroupValueOnChanged(String? newValue) {
+    roleGroupValue = newValue!;
+    update();
+  }
+
   bool validate() {
     return formKey.currentState!.validate();
   }
@@ -45,6 +52,7 @@ class SignupFormController extends GetxController {
 
   void saveUserInputs() {
     formKey.currentState!.save();
+    role = roleGroupValue;
   }
 
   void resetForm() {

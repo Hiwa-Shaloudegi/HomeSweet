@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:home_sweet/utils/extensions.dart';
@@ -116,11 +118,11 @@ class StaffController extends GetxController {
     allStaff.clear();
 
     allStaff.addAll(await StaffRepository.readAll());
+    log(allStaff.toString());
 
     //Reversing the list to get the recent added items first.
     allStaff = List.from(allStaff.reversed);
 
-    //TODO: delay
     await Future.delayed(const Duration(milliseconds: 350));
     isLoading = false;
     update();

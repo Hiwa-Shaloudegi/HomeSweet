@@ -24,7 +24,6 @@ Future<void> initApp() async {
   // TODO: Checking if the app is launched for the first time. If yes then show the onBording screen.
   // bool isFirstTime = GetStorage().read<bool>('first_time') ?? true;
   // runApp(MyApp(isFirstTime: isFirstTime));
-  Get.put(StaffController());
   Get.put(LoginFormController());
   Get.put(SignupFormController());
   Get.put(AuthController());
