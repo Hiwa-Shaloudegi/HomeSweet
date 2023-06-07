@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:home_sweet/controllers/staff_controller.dart';
+import 'package:home_sweet/database/staff_repository.dart';
 import 'package:home_sweet/utils/extensions.dart';
 
 import '../../../constants/colors.dart';
@@ -106,13 +107,12 @@ class StaffItem extends StatelessWidget {
                 ),
                 IconButton(
                   //!!!
-                  onPressed: () {},
-                  // onPressed: () async {
-                  //   int? id = await CostRepository.getId(cost);
-                  //   if (id != null) {
-                  //     costsController.deleteCost(id);
-                  //   }
-                  // },
+                  onPressed: () async {
+                    int? id = await StaffRepository.getId(staff);
+                    if (id != null) {
+                      staffController.deleteStaff(id);
+                    }
+                  },
                   splashColor: Colors.transparent,
                   highlightColor: Colors.transparent,
                   visualDensity: VisualDensity.compact,

@@ -43,6 +43,26 @@ class StaffRepository {
     return result;
   }
 
+  static Future<int?> getId(Staff staff) async {
+    var db = await _databaseHelper.database;
+
+    final maps = await db.query(
+      StaffTable.name,
+      columns: [StaffTable.id],
+      where: '${StaffTable.username} = ? AND ${StaffTable.password} = ?',
+      whereArgs: [
+        staff.username,
+        staff.password,
+      ],
+    );
+
+    if (maps.isNotEmpty) {
+      return maps.first[StaffTable.id] as int;
+    } else {
+      return null;
+    }
+  }
+
   static Future<int> update(Staff staff) async {
     var db = await _databaseHelper.database;
 

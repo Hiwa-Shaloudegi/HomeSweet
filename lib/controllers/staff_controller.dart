@@ -4,6 +4,8 @@ import 'package:home_sweet/utils/extensions.dart';
 
 import '../database/staff_repository.dart';
 import '../models/staff.dart';
+import '../routes/routes.dart';
+import '../widgets/app_dialog.dart';
 import '../widgets/snackbar.dart';
 
 class StaffController extends GetxController {
@@ -104,12 +106,12 @@ class StaffController extends GetxController {
 
   @override
   void onInit() {
-    getAllCosts();
+    getAllStaff();
     super.onInit();
   }
 
   // CRUD
-  void getAllCosts() async {
+  void getAllStaff() async {
     isLoading = true;
     allStaff.clear();
 
@@ -165,4 +167,31 @@ class StaffController extends GetxController {
   }
 
   updateStaff() async {}
+
+  void deleteStaff(int id) async {
+    isLoading = true;
+    await showAppDialog(
+      title: 'هشدار',
+      message: 'آیا مطمئن هستید که می خواهید این مورد را حذف کنید؟',
+      textConfirm: 'بلی',
+      textCancel: 'خیر',
+      onConfirm: () async {
+        var staffToDelete = await StaffRepository.read(id);
+        await StaffRepository.delete(id);
+
+        // Removes any snackbar or dialog on the stack until it gets to the actual screen.
+        Navigator.of(Get.overlayContext!)
+            .popUntil(ModalRoute.withName(AppRoutes.staffPage));
+
+        // Also removes the staff from list of costs state.
+        allStaff.removeWhere((staff) => staff.id == id);
+        AppSnackbar.successSnackbar(
+            'اطلاعلات ${staffToDelete.role} با موفقیت حذف شد.');
+
+        update();
+      },
+    );
+
+    isLoading = false;
+  }
 }
