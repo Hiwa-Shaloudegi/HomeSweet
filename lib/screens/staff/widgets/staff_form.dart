@@ -127,6 +127,31 @@ class StaffForm extends StatelessWidget {
                               onSaved: (newValue) =>
                                   staffController.salaryOnSaved(newValue),
                             ),
+                            CustomTextField(
+                              controller:
+                                  staffController.usernameTextController,
+                              hintText: 'نام کاربری',
+                              validator: (value) =>
+                                  Validators.usernameValidator(value),
+                              onSaved: (newValue) =>
+                                  staffController.usernameOnSaved(newValue),
+                            ),
+                            CustomTextField.password(
+                              controller:
+                                  staffController.passwordTextController,
+                              obscureText: !staffController.isPasswordVisible,
+                              suffixIcon: GestureDetector(
+                                onTap: () =>
+                                    staffController.togglePasswordVisibility(),
+                                child: staffController.isPasswordVisible
+                                    ? const Icon(Icons.visibility)
+                                    : const Icon(Icons.visibility_off),
+                              ),
+                              validator: (value) =>
+                                  Validators.passwordValidator(value),
+                              onSaved: (newValue) =>
+                                  staffController.passwordOnSaved(newValue),
+                            ),
                             const SizedBox(height: 32),
                             SaveButton(
                               text: 'ثبت اطلاعات',

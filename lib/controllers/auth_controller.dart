@@ -1,6 +1,9 @@
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:home_sweet/controllers/staff_controller.dart';
 import 'package:home_sweet/database/apartment_repository.dart';
+import 'package:home_sweet/database/staff_repository.dart';
+import 'package:home_sweet/models/staff.dart';
 
 import '../constants/storage_keys.dart';
 import '../database/user_repository.dart';
@@ -13,12 +16,13 @@ import 'signup_form_controller.dart';
 
 class AuthController extends GetxController {
   // Controllers
+  final staffController = Get.find<StaffController>();
   final signupFormController = Get.find<SignupFormController>();
   final loginFormController = Get.find<LoginFormController>();
 
   // States
   bool isUserLoggedIn = false;
-  User? loggedInUser;
+  Staff? loggedInUser;
 
   late DatabaseHelper databaseHelper;
   var box = GetStorage();
@@ -27,11 +31,11 @@ class AuthController extends GetxController {
   void onInit() {
     super.onInit();
     databaseHelper = DatabaseHelper.instance;
-
+    //!!!
     var userMap = box.read(StorageKeys.user);
 
     if (userMap != null) {
-      loggedInUser = User.fromMap(userMap);
+      loggedInUser = Staff.fromMap(userMap);
       isUserLoggedIn = true;
     } else {
       loggedInUser = null;
@@ -50,14 +54,31 @@ class AuthController extends GetxController {
         signupFormController.saveUserInputs();
 
         // Save datas to Database
-        var user = User(
+
+        //!!!
+        // var user = User(
+        //   username: signupFormController.username,
+        //   password: signupFormController.password,
+        // );
+
+        var staff = Staff(
           username: signupFormController.username,
           password: signupFormController.password,
+          firstName: null,
+          lastName: null,
+          role: 'مدیر',
+          salary: null,
+          staffPhoneNumber: null,
+          startingDate: null,
         );
+        //!!!
         signupFormController.resetForm();
 
         try {
-          await UserRepository.create(user);
+          //!!!
+          // await UserRepository.create(user);
+          await StaffRepository.create(staff);
+          //!!!
 
           // Transition to the home page
           Get.offAndToNamed(AppRoutes.loginScreen);
@@ -74,7 +95,7 @@ class AuthController extends GetxController {
       loginFormController.saveUserInputs();
 
       try {
-        loggedInUser = await UserRepository.getLoginUser(
+        loggedInUser = await StaffRepository.getLoginUser(
           loginFormController.username,
           loginFormController.password,
         );

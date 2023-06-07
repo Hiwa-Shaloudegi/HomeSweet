@@ -5,6 +5,7 @@ import 'package:home_sweet/constants/colors.dart';
 import 'package:home_sweet/controllers/staff_controller.dart';
 import 'package:home_sweet/screens/auth/widgets/custom_text_field.dart';
 import 'package:home_sweet/screens/staff/widgets/staff_bottomsheet.dart';
+import 'package:home_sweet/screens/staff/widgets/staff_item.dart';
 
 import '../../widgets/empty_state.dart';
 import '../../widgets/fab.dart';
@@ -162,10 +163,8 @@ class _StaffPageState extends State<StaffPage> {
                                 physics: const BouncingScrollPhysics(),
                                 itemCount: staffController.allStaff.length,
                                 itemBuilder: (context, index) {
-                                  return Container();
-                                  //   CostItem(
-                                  //   cost: staffController.allStaff[index],
-                                  // );
+                                  return StaffItem(
+                                      staff: staffController.allStaff[index]);
                                 },
                                 separatorBuilder: (context, index) =>
                                     const SizedBox(height: 24),

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:home_sweet/models/apartment.dart';
 import 'package:path/path.dart';
@@ -6,6 +8,7 @@ import 'package:sqflite/sqflite.dart';
 import '../models/charge.dart';
 import '../models/cost.dart';
 import '../models/owner.dart';
+import '../models/staff.dart';
 import '../models/tenant.dart';
 import '../models/unit.dart';
 import '../models/user.dart';
@@ -31,9 +34,9 @@ class DatabaseHelper {
 
   Future<Database> _initDB() async {
     final dbPath = await getDatabasesPath();
-    print("DB Location:-----> $dbPath");
+    log("DB Location:-----> $dbPath");
     final path = join(dbPath, databaseName);
-    debugPrint("Path Of DB: $path");
+    log("Path Of DB: $path");
 
     return await openDatabase(
       path,
@@ -45,7 +48,9 @@ class DatabaseHelper {
   Future<void> _onDbCreate(Database db, int version) async {
     const idType = 'INTEGER PRIMARY KEY AUTOINCREMENT';
     const textType = 'TEXT NOT NULL';
+    const textNullableType = 'TEXT';
     const integerType = 'INTEGER NOT NULL';
+    const integerNullableType = 'INTEGER';
     const doubleType = 'REAL NOT NULL';
     const foreignKeyUniqueType = 'INTEGER UNIQUE NOT NULL';
     const foreignKeyType = 'INTEGER NOT NULL';
@@ -54,9 +59,25 @@ class DatabaseHelper {
     // const dateType = 'Date NOT NULL'
 
     // User Table
+    //!!!
+//     await db.execute("""
+//       CREATE TABLE ${UserTable.name} (
+//       ${UserTable.id} $idType,
+//       ${UserTable.username} $textType,
+//       ${UserTable.password} $textType
+//       )
+// """);
+
+    // Staff Table
     await db.execute(""" 
-      CREATE TABLE ${UserTable.name} (
-      ${UserTable.id} $idType,
+      CREATE TABLE ${StaffTable.name} (
+      ${StaffTable.id} $idType,
+      ${StaffTable.role} $textType,
+      ${StaffTable.firstName} $textNullableType,
+      ${StaffTable.lastName} $textNullableType,
+      ${StaffTable.staffPhoneNumber} $textNullableType,
+      ${StaffTable.startingDate} $textNullableType,
+      ${StaffTable.salary} $integerNullableType,
       ${UserTable.username} $textType,
       ${UserTable.password} $textType
       )
