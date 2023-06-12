@@ -76,7 +76,9 @@ class UnitFormController extends GetxController {
   }
 
   void resetForm() {
-    formKey.currentState!.reset();
+    if (formKey.currentState != null) {
+      formKey.currentState!.reset();
+    }
 
     unitPhoneNumberTextController.clear();
     ownerNameTextController.clear();

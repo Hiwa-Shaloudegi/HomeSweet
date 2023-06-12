@@ -1,10 +1,16 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:home_sweet/controllers/auth_controller.dart';
 import 'package:home_sweet/controllers/staff_controller.dart';
 import 'package:home_sweet/utils/extensions.dart';
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 
 import '../../../constants/colors.dart';
+import '../../../constants/storage_keys.dart';
+import '../../../models/staff.dart';
 import '../../../utils/validators.dart';
 import '../../../widgets/form_bottomsheet_header.dart';
 import '../../auth/widgets/custom_text_field.dart';
@@ -14,10 +20,27 @@ class StaffForm extends StatelessWidget {
   StaffForm({super.key});
 
   final staffController = Get.put(StaffController());
+  var box = GetStorage();
 
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+
+    Staff loggedInUser = Get.find<AuthController>().loggedInUser!;
+    log(loggedInUser.username!); //!
+
+    bool isStaffToupdate = staffController.staffToUpdate == null ? false : true;
+    bool isUserItem = false;
+
+    if (isStaffToupdate) {
+      if (loggedInUser.username == staffController.staffToUpdate!.username &&
+          loggedInUser.password == staffController.staffToUpdate!.password) {
+        isUserItem = true;
+      } else {
+        isUserItem = false;
+      }
+    }
+    log(staffController.role);
 
     return GetBuilder<StaffController>(
       builder: (staffController) {
@@ -36,15 +59,25 @@ class StaffForm extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          staffController.role == 'manager'
-                              ? 'ثبت اطلاعات مدیر'
-                              : 'ثبت اطلاعات لابی من',
-                          style: textTheme.bodyLarge!.copyWith(
-                            fontSize: 22,
-                            fontWeight: FontWeight.normal,
-                          ),
-                        ),
+                        staffController.staffToUpdate != null
+                            ? Text(
+                                staffController.staffToUpdate!.role == 'manager'
+                                    ? 'ثبت اطلاعات مدیر'
+                                    : 'ثبت اطلاعات لابی من',
+                                style: textTheme.bodyLarge!.copyWith(
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                              )
+                            : Text(
+                                staffController.role == 'manager'
+                                    ? 'ثبت اطلاعات مدیر'
+                                    : 'ثبت اطلاعات لابی من',
+                                style: textTheme.bodyLarge!.copyWith(
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                              ),
                       ],
                     ),
                     Container(
@@ -129,30 +162,41 @@ class StaffForm extends StatelessWidget {
                               onSaved: (newValue) =>
                                   staffController.salaryOnSaved(newValue),
                             ),
-                            CustomTextField(
-                              controller:
-                                  staffController.usernameTextController,
-                              hintText: 'نام کاربری',
-                              validator: (value) =>
-                                  Validators.usernameValidator(value),
-                              onSaved: (newValue) =>
-                                  staffController.usernameOnSaved(newValue),
-                            ),
-                            CustomTextField.password(
-                              controller:
-                                  staffController.passwordTextController,
-                              obscureText: !staffController.isPasswordVisible,
-                              suffixIcon: GestureDetector(
-                                onTap: () =>
-                                    staffController.togglePasswordVisibility(),
-                                child: staffController.isPasswordVisible
-                                    ? const Icon(Icons.visibility)
-                                    : const Icon(Icons.visibility_off),
+                            Visibility(
+                              visible: (isStaffToupdate && isUserItem) ||
+                                  !isStaffToupdate,
+                              child: CustomTextField(
+                                controller:
+                                    staffController.usernameTextController,
+                                hintText: 'نام کاربری',
+                                validator: (value) =>
+                                    Validators.usernameValidator(value),
+                                onSaved: (newValue) =>
+                                    staffController.usernameOnSaved(newValue),
                               ),
-                              validator: (value) =>
-                                  Validators.passwordValidator(value),
-                              onSaved: (newValue) =>
-                                  staffController.passwordOnSaved(newValue),
+                            ),
+                            Visibility(
+                              visible: (isStaffToupdate && isUserItem) ||
+                                  !isStaffToupdate,
+                              child: CustomTextField.password(
+                                hintText: staffController.staffToUpdate != null
+                                    ? 'رمز عبور جدید'
+                                    : 'رمز عبور',
+                                controller:
+                                    staffController.passwordTextController,
+                                obscureText: !staffController.isPasswordVisible,
+                                suffixIcon: GestureDetector(
+                                  onTap: () => staffController
+                                      .togglePasswordVisibility(),
+                                  child: staffController.isPasswordVisible
+                                      ? const Icon(Icons.visibility)
+                                      : const Icon(Icons.visibility_off),
+                                ),
+                                validator: (value) =>
+                                    Validators.passwordValidator(value),
+                                onSaved: (newValue) =>
+                                    staffController.passwordOnSaved(newValue),
+                              ),
                             ),
                             const SizedBox(height: 32),
                             SaveButton(

@@ -83,8 +83,10 @@ class CostsController extends GetxController {
   }
 
   void resetForm() {
-    formKey.currentState!.reset();
-    //TODO: Is this a write thing to do?
+    if (formKey.currentState != null) {
+      formKey.currentState!.reset();
+    }
+
     titleTextController.clear();
     descriptionTextController.clear();
     dateTextController.clear();
@@ -94,7 +96,7 @@ class CostsController extends GetxController {
     date = '';
     amount = 0;
     numberOfUnits = 0;
-    //!
+
     costToUpdate = null;
   }
 

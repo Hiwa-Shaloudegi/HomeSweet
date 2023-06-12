@@ -9,6 +9,7 @@ import 'package:home_sweet/utils/extensions.dart';
 import '../../../constants/colors.dart';
 import '../../../models/staff.dart';
 import '../../../themes/app_theme.dart';
+import 'staff_bottomsheet.dart';
 // import 'cost_bottomsheet.dart';
 
 class StaffItem extends StatelessWidget {
@@ -75,7 +76,9 @@ class StaffItem extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    staff.username!, //!!!
+                    staff.firstName != null
+                        ? '${staff.firstName} ${staff.lastName}'
+                        : 'تکمیل پروفایل', //!!!
                     style: AppTheme.textTheme().labelLarge,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -85,18 +88,15 @@ class StaffItem extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(right: 14),
                   child: IconButton(
-                    //!!!
-                    onPressed: () {},
-                    // onPressed: () {
-                    //   //! selected Staff model.
-                    //   staffController.staffToUpdate = staff;
-                    //   staffController.loadSelectedCostData();
-                    //   //!
+                    onPressed: () {
+                      //! selected Staff model.
+                      staffController.staffToUpdate = staff;
+                      staffController.loadSelectedStaffData();
 
-                    //   showCostFormBottomSheet(context).then(
-                    //     (value) => costsController.resetForm(),
-                    //   ); //! when the bottomShett closes
-                    // },
+                      showStaffFormBottomSheet(context).then(
+                        (value) => staffController.resetForm(),
+                      );
+                    },
                     splashColor: Colors.transparent,
                     highlightColor: Colors.transparent,
                     visualDensity: VisualDensity.compact,
@@ -108,7 +108,6 @@ class StaffItem extends StatelessWidget {
                   ),
                 ),
                 IconButton(
-                  //!!!
                   onPressed: () async {
                     int? id = await StaffRepository.getId(staff);
                     if (id != null) {
@@ -162,6 +161,7 @@ class StaffItem extends StatelessWidget {
                             ? staff.salary.toString().toTooman()
                             : 'نامشخص',
                       ),
+                      Text(staff.salary != null ? '  تومان' : ''),
                     ],
                   ),
                   Row(

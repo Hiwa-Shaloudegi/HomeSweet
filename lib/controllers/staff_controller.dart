@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:home_sweet/controllers/auth_controller.dart';
 import 'package:home_sweet/utils/extensions.dart';
 
 import '../database/staff_repository.dart';
@@ -37,7 +38,7 @@ class StaffController extends GetxController {
   bool isPasswordVisible = false;
   List<Staff> allStaff = [];
 
-  Staff? staffToUpdate = null; //!
+  Staff? staffToUpdate;
 
   // OnSaved
   void firstNameOnSaved(String? newValue) =>
@@ -68,7 +69,6 @@ class StaffController extends GetxController {
       role = 'lobby man';
     }
     update();
-    return null;
   }
 
   void togglePasswordVisibility() {
@@ -82,8 +82,10 @@ class StaffController extends GetxController {
   void saveStaffInputs() => formKey.currentState!.save();
 
   void resetForm() {
-    formKey.currentState!.reset();
-    //! is it necessary?
+    if (formKey.currentState != null) {
+      formKey.currentState!.reset();
+    }
+
     firstNameTextController.clear();
     lastNameTextController.clear();
     phoneNumberTextController.clear();
@@ -172,7 +174,55 @@ class StaffController extends GetxController {
     }
   }
 
-  updateStaff() async {}
+  loadSelectedStaffData() async {
+    if (staffToUpdate != null) {
+      firstNameTextController.text = staffToUpdate!.firstName ?? '';
+      lastNameTextController.text = staffToUpdate!.lastName ?? '';
+
+      phoneNumberTextController.text = staffToUpdate!.staffPhoneNumber ?? '';
+      dateTextController.text = staffToUpdate!.startingDate ?? '';
+      salaryTextController.text = staffToUpdate!.salary.toString() == 'null'
+          ? ''
+          : staffToUpdate!.salary.toString();
+
+      usernameTextController.text = staffToUpdate!.username!;
+    }
+    update();
+  }
+
+  updateStaff() async {
+    var updatedStaff = Staff(
+      id: staffToUpdate!.id,
+      role: staffToUpdate!.role,
+      firstName: firstName,
+      lastName: lastName,
+      staffPhoneNumber: phoneNumber,
+      startingDate: date,
+      salary: salary,
+      username: username == '' ? staffToUpdate!.username : username,
+      password: password == '' ? staffToUpdate!.password : password, //!
+    );
+
+    try {
+      await StaffRepository.update(updatedStaff);
+
+      Get.find<AuthController>().loggedInUser = updatedStaff;
+
+      int index = allStaff.indexWhere((charge) => charge.id == updatedStaff.id);
+      if (index != -1) {
+        allStaff[index] = updatedStaff;
+      }
+
+      Get.back();
+      AppSnackbar.successSnackbar('اطلاعات با موفقیت بروز رسانی شد.');
+    } catch (e) {
+      throw Exception('CATCH ERROR: $e');
+    }
+
+    staffToUpdate = null;
+
+    update();
+  }
 
   void deleteStaff(int id) async {
     isLoading = true;

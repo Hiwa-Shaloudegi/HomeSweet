@@ -89,8 +89,9 @@ class ChargeController extends GetxController {
   }
 
   void resetForm() {
-    formKey.currentState!.reset();
-
+    if (formKey.currentState != null) {
+      formKey.currentState!.reset();
+    }
     titleDropDownFieldValue = 'شارژ ماهیانه';
     dateTextController.clear();
     amountTextController.clear();
@@ -102,7 +103,6 @@ class ChargeController extends GetxController {
     floorDropdownButtonValue = 1;
     unitNumberDropdownButtonValue = 1;
 
-    //! TODO: update/edit 'charge state'.
     chargeToUpdate = null;
   }
 

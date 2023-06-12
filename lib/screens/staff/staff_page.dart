@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -23,7 +25,6 @@ class _StaffPageState extends State<StaffPage> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-
     return GetBuilder<StaffController>(builder: (staffController) {
       return Scaffold(
         resizeToAvoidBottomInset: false,
@@ -38,7 +39,7 @@ class _StaffPageState extends State<StaffPage> {
                     title: Text(
                       'افزودن کارکنان',
                       style: textTheme.headlineLarge,
-                    ), //const Text('یک نقش را انتخاب کنید: '),
+                    ),
                     content: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -94,7 +95,6 @@ class _StaffPageState extends State<StaffPage> {
                         ),
                       ],
                     ),
-
                     actions: [
                       TextButton(
                         onPressed: () => Get.back(),
@@ -110,6 +110,7 @@ class _StaffPageState extends State<StaffPage> {
                       TextButton(
                         onPressed: () {
                           Get.back();
+                          Future.delayed(Duration(milliseconds: 100)); //!
                           showStaffFormBottomSheet(context).then(
                             (value) => staffController.resetForm(),
                           );
@@ -127,8 +128,6 @@ class _StaffPageState extends State<StaffPage> {
                   ),
                 ),
               ),
-            ).then(
-              (value) => staffController.resetForm(),
             );
           },
         ),
@@ -157,8 +156,17 @@ class _StaffPageState extends State<StaffPage> {
                                 onSaved: null,
                               ),
                             ),
-                            SizedBox(
-                              height: Get.height * 0.79, //!
+                            Visibility(
+                              visible: false,
+                              child: Padding(
+                                padding: const EdgeInsets.only(bottom: 24),
+                                child: Text(
+                                  'اطلاعات کارکنان',
+                                  style: textTheme.titleLarge,
+                                ),
+                              ),
+                            ),
+                            Expanded(
                               child: ListView.separated(
                                 physics: const BouncingScrollPhysics(),
                                 itemCount: staffController.allStaff.length,
