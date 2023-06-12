@@ -120,7 +120,6 @@ class StaffController extends GetxController {
     allStaff.clear();
 
     allStaff.addAll(await StaffRepository.readAll());
-    log(allStaff.toString());
 
     //Reversing the list to get the recent added items first.
     allStaff = List.from(allStaff.reversed);
@@ -212,7 +211,8 @@ class StaffController extends GetxController {
     try {
       await StaffRepository.update(updatedStaff);
 
-      if (staffToUpdate == Get.find<AuthController>().loggedInUser) {
+      if (staffToUpdate!.username ==
+          Get.find<AuthController>().loggedInUser!.username) {
         Get.find<AuthController>().loggedInUser = updatedStaff;
       }
 

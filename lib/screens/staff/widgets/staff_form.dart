@@ -27,7 +27,6 @@ class StaffForm extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
 
     Staff loggedInUser = Get.find<AuthController>().loggedInUser!;
-    log(loggedInUser.username!); //!
 
     bool isStaffToupdate = staffController.staffToUpdate == null ? false : true;
     bool isUserItem = false;
@@ -40,7 +39,6 @@ class StaffForm extends StatelessWidget {
         isUserItem = false;
       }
     }
-    log(staffController.role);
 
     return GetBuilder<StaffController>(
       builder: (staffController) {

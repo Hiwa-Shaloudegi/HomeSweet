@@ -1,17 +1,18 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:home_sweet/controllers/auth_controller.dart';
+import 'package:home_sweet/controllers/staff_controller.dart';
 
 import '../constants/colors.dart';
 import '../controllers/main_controller.dart';
 import '../my_custom_icon_icons.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  final mainController = Get.find<MainController>();
+  CustomAppBar({super.key});
 
-  CustomAppBar({
-    super.key,
-  });
+  final mainController = Get.find<MainController>();
 
   @override
   Size get preferredSize => const Size.fromHeight(150);
@@ -93,39 +94,43 @@ class Username extends StatelessWidget {
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        mainController.authController.loggedInUser!.firstName != null
-            ? SizedBox(
-                width: 164,
-                child: Text(
-                  '${mainController.authController.loggedInUser!.firstName} ${mainController.authController.loggedInUser!.lastName}',
-                  style: textTheme.bodyLarge,
-                  textAlign: TextAlign.left,
-                ),
-              )
-            : GestureDetector(
-                onTap: () {},
-                child: const Text(
-                  'تکمیل پروفایل',
-                  style: TextStyle(
-                    color: AppColors.primaryColor,
-                    fontSize: 17,
-                    fontWeight: FontWeight.w500,
-                    decoration: TextDecoration.underline,
-                    decorationStyle: TextDecorationStyle.solid,
+    return GetBuilder<AuthController>(builder: (authController) {
+      return GetBuilder<StaffController>(builder: (staffController) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            authController.loggedInUser!.firstName != null
+                ? SizedBox(
+                    width: 164,
+                    child: Text(
+                      '${authController.loggedInUser!.firstName} ${authController.loggedInUser!.lastName}',
+                      style: textTheme.bodyLarge,
+                      textAlign: TextAlign.left,
+                    ),
+                  )
+                : GestureDetector(
+                    onTap: () {},
+                    child: const Text(
+                      'تکمیل پروفایل',
+                      style: TextStyle(
+                        color: AppColors.primaryColor,
+                        fontSize: 17,
+                        fontWeight: FontWeight.w500,
+                        decoration: TextDecoration.underline,
+                        decorationStyle: TextDecorationStyle.solid,
+                      ),
+                    ),
                   ),
-                ),
-              ),
-        const SizedBox(height: 8),
-        Text(
-          mainController.authController.loggedInUser!.role == 'manager'
-              ? 'مدیر ساختمان'
-              : 'لابی من',
-          style: textTheme.bodySmall,
-        ),
-      ],
-    );
+            const SizedBox(height: 8),
+            Text(
+              authController.loggedInUser!.role == 'manager'
+                  ? 'مدیر ساختمان'
+                  : 'لابی من',
+              style: textTheme.bodySmall,
+            ),
+          ],
+        );
+      });
+    });
   }
 }
