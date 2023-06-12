@@ -37,7 +37,9 @@ class StaffForm extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'ثبت اطلاعات ${staffController.role}', //!
+                          staffController.role == 'manager'
+                              ? 'ثبت اطلاعات مدیر'
+                              : 'ثبت اطلاعات لابی من',
                           style: textTheme.bodyLarge!.copyWith(
                             fontSize: 22,
                             fontWeight: FontWeight.normal,

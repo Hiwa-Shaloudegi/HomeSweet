@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:home_sweet/controllers/staff_controller.dart';
@@ -142,7 +144,9 @@ class StaffItem extends StatelessWidget {
                       ),
                       const SizedBox(width: 12),
                       const Text('نقش:  '),
-                      Text(staff.role!),
+                      Text(
+                        staff.role.toString() == 'manager' ? 'مدیر' : 'لابی من',
+                      ),
                     ],
                   ),
                   Row(

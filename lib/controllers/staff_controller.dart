@@ -30,7 +30,7 @@ class StaffController extends GetxController {
   String username = '';
   String password = '';
   int salary = 0;
-  String role = 'مدیر';
+  String role = 'manager';
 
   // States
   bool isLoading = true;
@@ -63,9 +63,9 @@ class StaffController extends GetxController {
   void Function(int?)? radioOnChanged(value) {
     radioGroupValue = value;
     if (radioGroupValue == 1) {
-      role = 'مدیر';
+      role = 'manager';
     } else if (radioGroupValue == 2) {
-      role = 'لابی من';
+      role = 'lobby man';
     }
     update();
     return null;
@@ -94,7 +94,7 @@ class StaffController extends GetxController {
     radioGroupValue = 1;
     isPasswordVisible = false;
 
-    role = 'مدیر';
+    role = 'manager';
     firstName = '';
     lastName = '';
     phoneNumber = '';
@@ -159,7 +159,11 @@ class StaffController extends GetxController {
       allStaff.insert(0, newStaff);
 
       Get.back();
-      AppSnackbar.successSnackbar('اطلاعات ${role} با موفقیت ثبت شد.');
+      AppSnackbar.successSnackbar(
+        role == 'manager'
+            ? 'اطلاعات مدیر با موفقیت ثبت شد.'
+            : 'اطلاعات لابی من با موفقیت ثبت شد.',
+      );
       resetForm();
     } catch (e) {
       throw Exception('CATCH ERROR: $e');
@@ -188,7 +192,10 @@ class StaffController extends GetxController {
         // Also removes the staff from list of costs state.
         allStaff.removeWhere((staff) => staff.id == id);
         AppSnackbar.successSnackbar(
-            'اطلاعلات ${staffToDelete.role} با موفقیت حذف شد.');
+          staffToDelete.role == 'manager'
+              ? 'اطلاعلات مدیر با موفقیت حذف شد.'
+              : 'اطلاعلات لابی من با موفقیت حذف شد.',
+        );
 
         update();
       },

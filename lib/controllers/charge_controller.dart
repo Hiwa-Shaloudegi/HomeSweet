@@ -172,7 +172,9 @@ class ChargeController extends GetxController {
       newCharge = await ChargeRepository.create(newCharge);
       allCharges.insert(0, newCharge);
 
-      Get.back();
+      Navigator.of(Get.overlayContext!)
+          .popUntil(ModalRoute.withName(AppRoutes.chargePage));
+
       AppSnackbar.successSnackbar(
           'اطلاعات ${title} با موفقیت ثبت شد.'); //TODO: charge or somthing else.
       resetForm();

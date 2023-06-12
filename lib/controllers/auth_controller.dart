@@ -64,18 +64,18 @@ class AuthController extends GetxController {
           password: signupFormController.password,
           firstName: null,
           lastName: null,
-          role: signupFormController.role,
+          role: 'manager',
           salary: null,
           staffPhoneNumber: null,
           startingDate: null,
         );
-        //!!!
+
         signupFormController.resetForm();
 
         try {
           await StaffRepository.create(staff);
 
-          // Transition to the home page
+          // Transition to the login page
           Get.offAndToNamed(AppRoutes.loginScreen);
           AppSnackbar.successSnackbar('حساب کاربری با موفقیت ساخته شد.');
         } catch (e) {

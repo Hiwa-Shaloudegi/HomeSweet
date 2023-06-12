@@ -37,7 +37,8 @@ class SignUpScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 16),
                     const Text(
-                      'ساخت حساب کاربری',
+                      'ساخت حساب کاربری \nمدیر',
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.w500,
