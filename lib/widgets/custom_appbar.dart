@@ -44,15 +44,35 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       var textTheme = Theme.of(context).textTheme;
 
       return Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          Text(
-            mainController.authController.loggedInUser!.username ??
-                'کیان صداقتی',
-            style: textTheme.bodyLarge,
-          ),
+          mainController.authController.loggedInUser!.firstName != null
+              ? SizedBox(
+                  width: 164,
+                  child: Text(
+                    '${mainController.authController.loggedInUser!.firstName} ${mainController.authController.loggedInUser!.lastName}',
+                    style: textTheme.bodyLarge,
+                    textAlign: TextAlign.left,
+                  ),
+                )
+              : GestureDetector(
+                  onTap: () {},
+                  child: const Text(
+                    'تکمیل پروفایل',
+                    style: TextStyle(
+                      color: AppColors.primaryColor,
+                      fontSize: 17,
+                      fontWeight: FontWeight.w500,
+                      decoration: TextDecoration.underline,
+                      decorationStyle: TextDecorationStyle.solid,
+                    ),
+                  ),
+                ),
           const SizedBox(height: 8),
           Text(
-            'مدیر ساختمان',
+            mainController.authController.loggedInUser!.role == 'manager'
+                ? 'مدیر ساختمان'
+                : 'لابی من',
             style: textTheme.bodySmall,
           ),
         ],

@@ -57,13 +57,39 @@ class SettingDrawer extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 18),
-        Text(
-          mainController.authController.loggedInUser!.username ?? 'کیان صداقتی',
-          style: textTheme.bodyLarge,
-        ),
+        // Text(
+        //   mainController.authController.loggedInUser!.username ?? 'کیان صداقتی',
+        //   style: textTheme.bodyLarge,
+        // ),
+        mainController.authController.loggedInUser!.firstName != null
+            ? SizedBox(
+                width: Get.width * 0.7,
+                child: Text(
+                  '${mainController.authController.loggedInUser!.firstName} ${mainController.authController.loggedInUser!.lastName}',
+                  style: textTheme.bodyLarge,
+                  textAlign: TextAlign.center,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              )
+            : GestureDetector(
+                onTap: () {},
+                child: const Text(
+                  'تکمیل پروفایل',
+                  style: TextStyle(
+                    color: AppColors.primaryColor,
+                    fontSize: 17,
+                    fontWeight: FontWeight.w500,
+                    decoration: TextDecoration.underline,
+                    decorationStyle: TextDecorationStyle.solid,
+                  ),
+                ),
+              ),
         const SizedBox(height: 8),
         Text(
-          'مدیر ساختمان',
+          mainController.authController.loggedInUser!.role == 'manager'
+              ? 'مدیر ساختمان'
+              : 'لابی من',
           style: textTheme.bodySmall,
         ),
       ],
