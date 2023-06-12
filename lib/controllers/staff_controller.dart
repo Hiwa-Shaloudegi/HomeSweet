@@ -212,7 +212,9 @@ class StaffController extends GetxController {
     try {
       await StaffRepository.update(updatedStaff);
 
-      Get.find<AuthController>().loggedInUser = updatedStaff;
+      if (staffToUpdate == Get.find<AuthController>().loggedInUser) {
+        Get.find<AuthController>().loggedInUser = updatedStaff;
+      }
 
       int index = allStaff.indexWhere((charge) => charge.id == updatedStaff.id);
       if (index != -1) {
