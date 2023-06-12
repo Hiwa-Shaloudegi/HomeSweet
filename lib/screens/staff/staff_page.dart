@@ -9,6 +9,7 @@ import 'package:home_sweet/screens/auth/widgets/custom_text_field.dart';
 import 'package:home_sweet/screens/staff/widgets/staff_bottomsheet.dart';
 import 'package:home_sweet/screens/staff/widgets/staff_item.dart';
 
+import '../../controllers/auth_controller.dart';
 import '../../widgets/empty_state.dart';
 import '../../widgets/fab.dart';
 
@@ -21,6 +22,11 @@ class StaffPage extends StatefulWidget {
 
 class _StaffPageState extends State<StaffPage> {
   final staffController = Get.put(StaffController());
+  @override
+  void initState() {
+    staffController.getAllStaff();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,108 +34,112 @@ class _StaffPageState extends State<StaffPage> {
     return GetBuilder<StaffController>(builder: (staffController) {
       return Scaffold(
         resizeToAvoidBottomInset: false,
-        floatingActionButton: Fab(
-          onPressed: () {
-            showCupertinoDialog(
-              context: context,
-              builder: (context) => StatefulBuilder(
-                builder: (context, setState) => Material(
-                  color: Colors.transparent,
-                  child: CupertinoAlertDialog(
-                    title: Text(
-                      'افزودن کارکنان',
-                      style: textTheme.headlineLarge,
-                    ),
-                    content: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 16),
-                          child: Text(
-                            'یک نقش را انتخاب کنید: ',
-                            style: textTheme.titleLarge!.copyWith(
-                              fontSize: 16,
+        floatingActionButton: Visibility(
+          visible: Get.find<AuthController>().loggedInUser!.role == 'manager',
+          child: Fab(
+            onPressed: () {
+              showCupertinoDialog(
+                context: context,
+                builder: (context) => StatefulBuilder(
+                  builder: (context, setState) => Material(
+                    color: Colors.transparent,
+                    child: CupertinoAlertDialog(
+                      title: Text(
+                        'افزودن کارکنان',
+                        style: textTheme.headlineLarge,
+                      ),
+                      content: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 16),
+                            child: Text(
+                              'یک نقش را انتخاب کنید: ',
+                              style: textTheme.titleLarge!.copyWith(
+                                fontSize: 16,
+                                fontWeight: FontWeight.normal,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 105,
+                            child: Row(
+                              children: [
+                                Text(
+                                  'مدیر',
+                                  style: textTheme.titleLarge!
+                                      .copyWith(fontSize: 18),
+                                ),
+                                const Spacer(),
+                                Radio(
+                                    value: 1,
+                                    groupValue: staffController.radioGroupValue,
+                                    onChanged: (value) {
+                                      staffController.radioOnChanged(value);
+                                      setState(() {});
+                                    }),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            width: 105,
+                            child: Row(
+                              children: [
+                                Text(
+                                  'لابی من',
+                                  style: textTheme.titleLarge!
+                                      .copyWith(fontSize: 18),
+                                ),
+                                const Spacer(),
+                                Radio(
+                                    value: 2,
+                                    groupValue: staffController.radioGroupValue,
+                                    onChanged: (value) {
+                                      staffController.radioOnChanged(value);
+                                      setState(() {});
+                                    }),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Get.back(),
+                          child: const Text(
+                            'بستن',
+                            style: TextStyle(
+                              color: Colors.red,
                               fontWeight: FontWeight.normal,
+                              fontSize: 18,
                             ),
                           ),
                         ),
-                        SizedBox(
-                          width: 105,
-                          child: Row(
-                            children: [
-                              Text(
-                                'مدیر',
-                                style: textTheme.titleLarge!
-                                    .copyWith(fontSize: 18),
-                              ),
-                              const Spacer(),
-                              Radio(
-                                  value: 1,
-                                  groupValue: staffController.radioGroupValue,
-                                  onChanged: (value) {
-                                    staffController.radioOnChanged(value);
-                                    setState(() {});
-                                  }),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          width: 105,
-                          child: Row(
-                            children: [
-                              Text(
-                                'لابی من',
-                                style: textTheme.titleLarge!
-                                    .copyWith(fontSize: 18),
-                              ),
-                              const Spacer(),
-                              Radio(
-                                  value: 2,
-                                  groupValue: staffController.radioGroupValue,
-                                  onChanged: (value) {
-                                    staffController.radioOnChanged(value);
-                                    setState(() {});
-                                  }),
-                            ],
+                        TextButton(
+                          onPressed: () {
+                            Get.back();
+                            Future.delayed(
+                                const Duration(milliseconds: 100)); //!
+                            showStaffFormBottomSheet(context).then(
+                              (value) => staffController.resetForm(),
+                            );
+                          },
+                          child: const Text(
+                            'ادامه',
+                            style: TextStyle(
+                              color: AppColors.primaryColor,
+                              fontWeight: FontWeight.normal,
+                              fontSize: 18,
+                            ),
                           ),
                         ),
                       ],
                     ),
-                    actions: [
-                      TextButton(
-                        onPressed: () => Get.back(),
-                        child: const Text(
-                          'بستن',
-                          style: TextStyle(
-                            color: Colors.red,
-                            fontWeight: FontWeight.normal,
-                            fontSize: 18,
-                          ),
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          Get.back();
-                          Future.delayed(Duration(milliseconds: 100)); //!
-                          showStaffFormBottomSheet(context).then(
-                            (value) => staffController.resetForm(),
-                          );
-                        },
-                        child: const Text(
-                          'ادامه',
-                          style: TextStyle(
-                            color: AppColors.primaryColor,
-                            fontWeight: FontWeight.normal,
-                            fontSize: 18,
-                          ),
-                        ),
-                      ),
-                    ],
                   ),
                 ),
-              ),
-            );
-          },
+              );
+            },
+          ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
         body: SafeArea(
@@ -174,8 +184,15 @@ class _StaffPageState extends State<StaffPage> {
                                   return StaffItem(
                                       staff: staffController.allStaff[index]);
                                 },
-                                separatorBuilder: (context, index) =>
-                                    const SizedBox(height: 24),
+                                separatorBuilder: (context, index) => index == 0
+                                    ? const Divider(
+                                        color: AppColors.primaryColor,
+                                        thickness: 2,
+                                        height: 32,
+                                        indent: 10,
+                                        endIndent: 10,
+                                      )
+                                    : const SizedBox(height: 24),
                               ),
                             ),
                           ],

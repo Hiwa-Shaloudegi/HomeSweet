@@ -143,7 +143,6 @@ class CostsController extends GetxController {
 
           Get.back();
           AppSnackbar.successSnackbar('اطلاعات هزینه با موفقیت ثبت شد.');
-          resetForm();
         } catch (e) {
           throw Exception('CATCH ERROR: $e');
         }

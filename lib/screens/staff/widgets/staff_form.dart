@@ -125,6 +125,7 @@ class StaffForm extends StatelessWidget {
 
                             CustomTextField.datePicker(
                               controller: staffController.dateTextController,
+                              enabled: loggedInUser.role == 'manager',
                               onTap: () async {
                                 FocusScope.of(context)
                                     .requestFocus(FocusNode());
@@ -157,6 +158,7 @@ class StaffForm extends StatelessWidget {
                             CustomTextField(
                               controller: staffController.salaryTextController,
                               hintText: 'حقوق ماهیانه',
+                              enabled: loggedInUser.role == 'manager',
                               keyboardType: TextInputType.number,
                               validator: Validators.amountInputValidator,
                               onSaved: (newValue) =>

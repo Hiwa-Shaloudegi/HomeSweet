@@ -16,6 +16,7 @@ class CustomTextField extends StatelessWidget {
   final Widget suffixIcon;
   final Widget? prefixIcon;
   final bool obscureText;
+  final bool enabled;
   final int? maxLines;
   // final int maxLength;
   final TextInputType keyboardType;
@@ -39,6 +40,7 @@ class CustomTextField extends StatelessWidget {
     this.suffixIcon = const SizedBox.shrink(),
     this.prefixIcon,
     this.obscureText = false,
+    this.enabled = true,
     this.readOnly = false,
     this.keyboardType = TextInputType.text,
     this.inputFormatters,
@@ -59,6 +61,7 @@ class CustomTextField extends StatelessWidget {
     this.suffixIcon = const Icon(Icons.visibility_off),
     this.prefixIcon,
     this.obscureText = true,
+    this.enabled = true,
     this.readOnly = false,
     this.keyboardType = TextInputType.number,
     this.inputFormatters,
@@ -79,6 +82,7 @@ class CustomTextField extends StatelessWidget {
     this.suffixIcon = const Icon(Icons.visibility_off),
     this.prefixIcon,
     this.obscureText = true,
+    this.enabled = true,
     this.readOnly = false,
     this.keyboardType = TextInputType.number,
     this.inputFormatters,
@@ -98,6 +102,7 @@ class CustomTextField extends StatelessWidget {
     this.suffixIcon = const SizedBox.shrink(),
     this.prefixIcon = const Icon(Icons.search),
     this.obscureText = false,
+    this.enabled = true,
     this.readOnly = false,
     this.keyboardType = TextInputType.text,
     this.inputFormatters,
@@ -117,6 +122,7 @@ class CustomTextField extends StatelessWidget {
     this.suffixIcon = const SizedBox.shrink(),
     this.prefixIcon,
     this.obscureText = false,
+    this.enabled = true,
     this.readOnly = false,
     this.keyboardType = TextInputType.text,
     this.inputFormatters,
@@ -128,6 +134,7 @@ class CustomTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var textFormField = TextFormField(
+      enabled: enabled,
       readOnly: readOnly,
       maxLines: maxLines,
       controller: controller,

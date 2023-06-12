@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:home_sweet/controllers/auth_controller.dart';
 import 'package:home_sweet/controllers/staff_controller.dart';
 import 'package:home_sweet/database/staff_repository.dart';
 import 'package:home_sweet/utils/extensions.dart';
@@ -87,39 +88,52 @@ class StaffItem extends StatelessWidget {
                 // const Spacer(),
                 Padding(
                   padding: const EdgeInsets.only(right: 14),
-                  child: IconButton(
-                    onPressed: () {
-                      //! selected Staff model.
-                      staffController.staffToUpdate = staff;
-                      staffController.loadSelectedStaffData();
+                  child: Visibility(
+                    visible: Get.find<AuthController>().loggedInUser!.role ==
+                            'manager'
+                        ? true
+                        : Get.find<AuthController>().loggedInUser!.username ==
+                            staff.username,
+                    child: IconButton(
+                      onPressed: () {
+                        //! selected Staff model.
+                        staffController.staffToUpdate = staff;
+                        staffController.loadSelectedStaffData();
 
-                      showStaffFormBottomSheet(context).then(
-                        (value) => staffController.resetForm(),
-                      );
+                        showStaffFormBottomSheet(context).then(
+                          (value) => staffController.resetForm(),
+                        );
+                      },
+                      splashColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      visualDensity: VisualDensity.compact,
+                      icon: const Icon(
+                        Icons.edit,
+                        color: Colors.white,
+                        size: 22,
+                      ),
+                    ),
+                  ),
+                ),
+                Visibility(
+                  visible:
+                      Get.find<AuthController>().loggedInUser!.role == 'manager'
+                          ? true
+                          : false,
+                  child: IconButton(
+                    onPressed: () async {
+                      int? id = await StaffRepository.getId(staff);
+                      if (id != null) {
+                        staffController.deleteStaff(id);
+                      }
                     },
                     splashColor: Colors.transparent,
                     highlightColor: Colors.transparent,
                     visualDensity: VisualDensity.compact,
                     icon: const Icon(
-                      Icons.edit,
-                      color: Colors.white,
-                      size: 22,
+                      Icons.delete_rounded,
+                      color: Colors.red,
                     ),
-                  ),
-                ),
-                IconButton(
-                  onPressed: () async {
-                    int? id = await StaffRepository.getId(staff);
-                    if (id != null) {
-                      staffController.deleteStaff(id);
-                    }
-                  },
-                  splashColor: Colors.transparent,
-                  highlightColor: Colors.transparent,
-                  visualDensity: VisualDensity.compact,
-                  icon: const Icon(
-                    Icons.delete_rounded,
-                    color: Colors.red,
                   ),
                 ),
               ],

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:home_sweet/constants/colors.dart';
 import 'package:home_sweet/controllers/apartment_form_controller.dart';
+import 'package:home_sweet/controllers/auth_controller.dart';
 import 'package:home_sweet/screens/auth/widgets/custom_text_field.dart';
 import 'package:home_sweet/screens/auth/widgets/save_button.dart';
 import 'package:home_sweet/utils/validators.dart';
@@ -26,6 +27,7 @@ class ApartmentFormPage extends StatelessWidget {
 
 Widget apartmentFormBody() {
   final apartmentFormController = Get.put(ApartmentFormController());
+  final authController = Get.find<AuthController>();
 
   return GetBuilder<ApartmentFormController>(builder: (_) {
     return SingleChildScrollView(
@@ -48,6 +50,7 @@ Widget apartmentFormBody() {
                     controller:
                         apartmentFormController.apartmentNameTextController,
                     hintText: 'نام آپارتمان',
+                    enabled: authController.loggedInUser!.role == 'manager',
                     validator: (value) => Validators.textInputValidator(value),
                     onSaved: (newValue) =>
                         apartmentFormController.apartmentNameOnSaved(newValue),
@@ -59,14 +62,19 @@ Widget apartmentFormBody() {
                       children: [
                         const Text('تعداد طبقات:'),
                         CountIconButton.add(
-                          onPressed: () =>
-                              apartmentFormController.addStoryNumber(),
+                          onPressed: authController.loggedInUser!.role ==
+                                  'manager'
+                              ? () => apartmentFormController.addStoryNumber()
+                              : () {},
                         ),
                         // TODO: Fix the input number by keyboard.
                         Text('${apartmentFormController.storyNumber}'),
                         CountIconButton.minus(
-                          onPressed: () =>
-                              apartmentFormController.removeStoryNumber(),
+                          onPressed: authController.loggedInUser!.role ==
+                                  'manager'
+                              ? () =>
+                                  apartmentFormController.removeStoryNumber()
+                              : () {},
                         ),
                         Container(
                           width: 1,
@@ -75,13 +83,17 @@ Widget apartmentFormBody() {
                         ),
                         const Text('تعداد واحدها:'),
                         CountIconButton.add(
-                          onPressed: () =>
-                              apartmentFormController.addUnitNumber(),
+                          onPressed: authController.loggedInUser!.role ==
+                                  'manager'
+                              ? () => apartmentFormController.addUnitNumber()
+                              : () {},
                         ),
                         Text('${apartmentFormController.unitNumber}'),
                         CountIconButton.minus(
-                          onPressed: () =>
-                              apartmentFormController.removeUnitNumber(),
+                          onPressed: authController.loggedInUser!.role ==
+                                  'manager'
+                              ? () => apartmentFormController.removeUnitNumber()
+                              : () {},
                         ),
                       ],
                     ),
@@ -89,6 +101,7 @@ Widget apartmentFormBody() {
                   CustomTextField(
                     controller: apartmentFormController.addressTextController,
                     hintText: 'آدرس',
+                    enabled: authController.loggedInUser!.role == 'manager',
                     validator: (value) => Validators.textInputValidator(value),
                     onSaved: (newValue) =>
                         apartmentFormController.addressOnSaved(newValue),
@@ -102,6 +115,7 @@ Widget apartmentFormBody() {
                     controller:
                         apartmentFormController.chargeAmountTextController,
                     hintText: 'شارژ ماهیانه هر واحد',
+                    enabled: authController.loggedInUser!.role == 'manager',
                     keyboardType: TextInputType.number,
                     validator: (value) =>
                         Validators.amountInputValidator(value),
@@ -111,6 +125,7 @@ Widget apartmentFormBody() {
                   CustomTextField(
                     controller: apartmentFormController.budgetTextController,
                     hintText: 'موجودی صندوق',
+                    enabled: authController.loggedInUser!.role == 'manager',
                     keyboardType: TextInputType.number,
                     validator: (value) =>
                         Validators.amountInputValidator(value),
@@ -134,13 +149,17 @@ Widget apartmentFormBody() {
                     onSaved: (newValue) =>
                         apartmentFormController.budgetOnSaved(newValue),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 24, bottom: 16),
-                    child: SaveButton(
-                      text: 'ثبت اطلاعات',
-                      onPressed: () {
-                        apartmentFormController.saveApartmentInfo();
-                      },
+                  Visibility(
+                    visible: Get.find<AuthController>().loggedInUser!.role ==
+                        'manager',
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 24, bottom: 16),
+                      child: SaveButton(
+                        text: 'ثبت اطلاعات',
+                        onPressed: () {
+                          apartmentFormController.saveApartmentInfo();
+                        },
+                      ),
                     ),
                   ),
                 ],

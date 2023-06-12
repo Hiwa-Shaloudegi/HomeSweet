@@ -125,6 +125,13 @@ class StaffController extends GetxController {
     //Reversing the list to get the recent added items first.
     allStaff = List.from(allStaff.reversed);
 
+    var loggedInuser = allStaff.firstWhere(
+      (element) =>
+          element.username == Get.find<AuthController>().loggedInUser!.username,
+    );
+    allStaff.remove(loggedInuser);
+    allStaff.insert(0, loggedInuser);
+
     await Future.delayed(const Duration(milliseconds: 350));
     isLoading = false;
     update();
@@ -158,7 +165,7 @@ class StaffController extends GetxController {
 
     try {
       newStaff = await StaffRepository.create(newStaff);
-      allStaff.insert(0, newStaff);
+      allStaff.insert(1, newStaff);
 
       Get.back();
       AppSnackbar.successSnackbar(
@@ -166,7 +173,6 @@ class StaffController extends GetxController {
             ? 'اطلاعات مدیر با موفقیت ثبت شد.'
             : 'اطلاعات لابی من با موفقیت ثبت شد.',
       );
-      resetForm();
     } catch (e) {
       throw Exception('CATCH ERROR: $e');
     } finally {
