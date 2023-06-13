@@ -131,6 +131,7 @@ class AuthController extends GetxController {
     isUserLoggedIn = false;
     update();
     //!
+    AppSnackbar.successSnackbar('از حساب کاربری خود خارج شدید.');
     Get.offNamed(AppRoutes.loginScreen);
   }
 }

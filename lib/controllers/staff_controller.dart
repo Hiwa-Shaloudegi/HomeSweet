@@ -243,17 +243,20 @@ class StaffController extends GetxController {
         var staffToDelete = await StaffRepository.read(id);
         await StaffRepository.delete(id);
 
-        // Removes any snackbar or dialog on the stack until it gets to the actual screen.
-        Navigator.of(Get.overlayContext!)
-            .popUntil(ModalRoute.withName(AppRoutes.staffPage));
-
-        // Also removes the staff from list of costs state.
-        allStaff.removeWhere((staff) => staff.id == id);
-        AppSnackbar.successSnackbar(
-          staffToDelete.role == 'manager'
-              ? 'اطلاعلات مدیر با موفقیت حذف شد.'
-              : 'اطلاعلات لابی من با موفقیت حذف شد.',
-        );
+        if (id == Get.find<AuthController>().loggedInUser!.id) {
+          Get.find<AuthController>().logout();
+        } else {
+          // Removes any snackbar or dialog on the stack until it gets to the actual screen.
+          Navigator.of(Get.overlayContext!)
+              .popUntil(ModalRoute.withName(AppRoutes.staffPage));
+          // Also removes the staff from list of costs state.
+          allStaff.removeWhere((staff) => staff.id == id);
+          AppSnackbar.successSnackbar(
+            staffToDelete.role == 'manager'
+                ? 'اطلاعلات مدیر با موفقیت حذف شد.'
+                : 'اطلاعلات لابی من با موفقیت حذف شد.',
+          );
+        }
 
         update();
       },
