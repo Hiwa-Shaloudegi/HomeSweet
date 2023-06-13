@@ -90,32 +90,6 @@ class SignUpScreen extends StatelessWidget {
                         onSaved: (newValue) {},
                       );
                     }),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10),
-                      child: GetBuilder<SignupFormController>(
-                          builder: (signupFormController) {
-                        return Row(
-                          children: [
-                            const Text('نقش خود را انتخاب کنید: '),
-                            Radio(
-                              value: 'مدیر',
-                              groupValue: signupFormController.roleGroupValue,
-                              onChanged: (newValue) => signupFormController
-                                  .roleGroupValueOnChanged(newValue),
-                            ),
-                            const Text('مدیر'),
-                            const Spacer(),
-                            Radio(
-                              value: 'لابی من',
-                              groupValue: signupFormController.roleGroupValue,
-                              onChanged: (newValue) => signupFormController
-                                  .roleGroupValueOnChanged(newValue),
-                            ),
-                            const Text('لابی من'),
-                          ],
-                        );
-                      }),
-                    ),
                     const SizedBox(height: 16),
                     _goToLoginScreenSection(context),
                     const SizedBox(height: 50),

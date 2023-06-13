@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:home_sweet/controllers/auth_controller.dart';
 import 'package:home_sweet/controllers/staff_controller.dart';
+import 'package:home_sweet/routes/routes.dart';
 
 import '../constants/colors.dart';
 import '../controllers/main_controller.dart';
 import '../my_custom_icon_icons.dart';
+import '../screens/staff/widgets/staff_bottomsheet.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   CustomAppBar({super.key});
@@ -109,7 +111,17 @@ class Username extends StatelessWidget {
                     ),
                   )
                 : GestureDetector(
-                    onTap: () {},
+                    onTap: () async {
+                      Get.toNamed(AppRoutes.staffPage);
+
+                      staffController.staffToUpdate =
+                          authController.loggedInUser;
+                      staffController.loadSelectedStaffData();
+
+                      await showStaffFormBottomSheet(context).then(
+                        (value) => staffController.resetForm(),
+                      );
+                    },
                     child: const Text(
                       'تکمیل پروفایل',
                       style: TextStyle(
