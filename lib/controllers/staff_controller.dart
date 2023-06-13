@@ -124,16 +124,19 @@ class StaffController extends GetxController {
     //Reversing the list to get the recent added items first.
     allStaff = List.from(allStaff.reversed);
 
-    var loggedInuser = allStaff.firstWhere(
+    Staff? loggedInuser = allStaff.firstWhere(
       (element) =>
           element.username == Get.find<AuthController>().loggedInUser!.username,
+      orElse: () => Staff(),
     );
-    allStaff.remove(loggedInuser);
-    allStaff.insert(0, loggedInuser);
+    if (loggedInuser.username != null) {
+      allStaff.remove(loggedInuser);
+      allStaff.insert(0, loggedInuser);
 
-    await Future.delayed(const Duration(milliseconds: 350));
-    isLoading = false;
-    update();
+      await Future.delayed(const Duration(milliseconds: 350));
+      isLoading = false;
+      update();
+    }
   }
 
   saveData() async {
@@ -243,25 +246,30 @@ class StaffController extends GetxController {
         var staffToDelete = await StaffRepository.read(id);
         await StaffRepository.delete(id);
 
+        allStaff.removeWhere((staff) => staff.id == id);
+
         if (id == Get.find<AuthController>().loggedInUser!.id) {
+          log('Logging Out');
           Get.find<AuthController>().logout();
         } else {
           // Removes any snackbar or dialog on the stack until it gets to the actual screen.
           Navigator.of(Get.overlayContext!)
               .popUntil(ModalRoute.withName(AppRoutes.staffPage));
+
           // Also removes the staff from list of costs state.
-          allStaff.removeWhere((staff) => staff.id == id);
           AppSnackbar.successSnackbar(
             staffToDelete.role == 'manager'
                 ? 'اطلاعلات مدیر با موفقیت حذف شد.'
                 : 'اطلاعلات لابی من با موفقیت حذف شد.',
           );
         }
+        isLoading = false;
 
         update();
       },
     );
 
     isLoading = false;
+    update();
   }
 }

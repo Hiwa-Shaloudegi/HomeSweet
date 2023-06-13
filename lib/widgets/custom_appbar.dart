@@ -96,52 +96,57 @@ class Username extends StatelessWidget {
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
 
-    return GetBuilder<AuthController>(builder: (authController) {
+    return GetBuilder<MainController>(builder: (mainController) {
       return GetBuilder<StaffController>(builder: (staffController) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            authController.loggedInUser!.firstName != null
-                ? SizedBox(
-                    width: 164,
-                    child: Text(
-                      '${authController.loggedInUser!.firstName} ${authController.loggedInUser!.lastName}',
-                      style: textTheme.bodyLarge,
-                      textAlign: TextAlign.left,
-                    ),
-                  )
-                : GestureDetector(
-                    onTap: () async {
-                      Get.toNamed(AppRoutes.staffPage);
+        return mainController.authController.loggedInUser == null
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  mainController.authController.loggedInUser!.firstName != null
+                      ? SizedBox(
+                          width: 164,
+                          child: Text(
+                            '${mainController.authController.loggedInUser!.firstName} ${mainController.authController.loggedInUser!.lastName}',
+                            style: textTheme.bodyLarge,
+                            textAlign: TextAlign.left,
+                          ),
+                        )
+                      : GestureDetector(
+                          onTap: () async {
+                            Get.toNamed(AppRoutes.staffPage);
 
-                      staffController.staffToUpdate =
-                          authController.loggedInUser;
-                      staffController.loadSelectedStaffData();
+                            staffController.staffToUpdate =
+                                mainController.authController.loggedInUser;
+                            staffController.loadSelectedStaffData();
 
-                      await showStaffFormBottomSheet(context).then(
-                        (value) => staffController.resetForm(),
-                      );
-                    },
-                    child: const Text(
-                      'تکمیل پروفایل',
-                      style: TextStyle(
-                        color: AppColors.primaryColor,
-                        fontSize: 17,
-                        fontWeight: FontWeight.w500,
-                        decoration: TextDecoration.underline,
-                        decorationStyle: TextDecorationStyle.solid,
-                      ),
-                    ),
+                            await showStaffFormBottomSheet(context).then(
+                              (value) => staffController.resetForm(),
+                            );
+                          },
+                          child: const Text(
+                            'تکمیل پروفایل',
+                            style: TextStyle(
+                              color: AppColors.primaryColor,
+                              fontSize: 17,
+                              fontWeight: FontWeight.w500,
+                              decoration: TextDecoration.underline,
+                              decorationStyle: TextDecorationStyle.solid,
+                            ),
+                          ),
+                        ),
+                  const SizedBox(height: 8),
+                  Text(
+                    mainController.authController.loggedInUser!.role ==
+                            'manager'
+                        ? 'مدیر ساختمان'
+                        : 'لابی من',
+                    style: textTheme.bodySmall,
                   ),
-            const SizedBox(height: 8),
-            Text(
-              authController.loggedInUser!.role == 'manager'
-                  ? 'مدیر ساختمان'
-                  : 'لابی من',
-              style: textTheme.bodySmall,
-            ),
-          ],
-        );
+                ],
+              );
       });
     });
   }

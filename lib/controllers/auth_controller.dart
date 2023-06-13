@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:home_sweet/controllers/staff_controller.dart';
@@ -19,6 +21,7 @@ class AuthController extends GetxController {
   final loginFormController = Get.find<LoginFormController>();
 
   // States
+  bool isLoading = false;
   bool isUserLoggedIn = false;
   Staff? loggedInUser;
 
@@ -88,6 +91,7 @@ class AuthController extends GetxController {
   void login() async {
     if (loginFormController.validate()) {
       loginFormController.saveUserInputs();
+      loginFormController.resetForm();
 
       try {
         loggedInUser = await StaffRepository.getLoginUser(
@@ -98,8 +102,6 @@ class AuthController extends GetxController {
         isUserLoggedIn = true;
 
         if (loggedInUser != null) {
-          loginFormController.resetForm();
-
           // Managing logged-in user session
           var box = GetStorage();
           await box.write(StorageKeys.user, loggedInUser!.toMap());
@@ -124,14 +126,19 @@ class AuthController extends GetxController {
   }
 
   void logout() async {
+    isLoading = true;
     var box = GetStorage();
     await box.remove(StorageKeys.user);
-    loggedInUser = null;
-    //! using ever
-    isUserLoggedIn = false;
-    update();
-    //!
+
     AppSnackbar.successSnackbar('از حساب کاربری خود خارج شدید.');
-    Get.offNamed(AppRoutes.loginScreen);
+    Get.offAllNamed(AppRoutes.loginScreen);
+    //! using ever
+    loggedInUser = null;
+    isUserLoggedIn = false;
+    //!
+    isLoading = false;
+    log('Logged Out');
+
+    update();
   }
 }
