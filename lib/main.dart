@@ -57,7 +57,7 @@ class TheApp extends StatelessWidget {
           _themeController.switchValue ? ThemeMode.light : ThemeMode.dark,
       initialRoute: authController.isUserLoggedIn
           ? AppRoutes.mainScreen
-          : AppRoutes.signUpScreen,
+          : AppRoutes.loginScreen,
       getPages: AppPages.getPages,
     );
   }

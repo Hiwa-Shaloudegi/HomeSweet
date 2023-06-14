@@ -4,6 +4,7 @@ import 'package:home_sweet/screens/apartment/apartment_form_page.dart';
 
 import '../../controllers/apartment_form_controller.dart';
 import '../../controllers/main_controller.dart';
+import '../../controllers/staff_controller.dart';
 import '../../widgets/custom_appbar.dart';
 import '../../widgets/navbar.dart';
 import 'home_nav_item.dart';
@@ -12,10 +13,9 @@ import 'widgets/app_drawer.dart';
 class MainScreen extends StatelessWidget {
   MainScreen({super.key});
 
-
   final mainController = Get.put(MainController());
   final apartmentFormController = Get.put(ApartmentFormController());
-
+  final staffController = Get.put(StaffController());
 
   @override
   Widget build(BuildContext context) {

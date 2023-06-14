@@ -16,7 +16,6 @@ import 'signup_form_controller.dart';
 
 class AuthController extends GetxController {
   // Controllers
-  final staffController = Get.put(StaffController());
   final signupFormController = Get.find<SignupFormController>();
   final loginFormController = Get.find<LoginFormController>();
 
