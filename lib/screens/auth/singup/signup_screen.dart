@@ -28,6 +28,7 @@ class SignUpScreen extends StatelessWidget {
               key: authController.signupFormController.formKey,
               child: Center(
                 child: Column(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     const SizedBox(height: 60),
                     Image.asset(
@@ -37,7 +38,7 @@ class SignUpScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 16),
                     const Text(
-                      'ساخت حساب کاربری \nمدیر',
+                      'ساخت حساب کاربری مدیر',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 24,
@@ -90,9 +91,9 @@ class SignUpScreen extends StatelessWidget {
                         onSaved: (newValue) {},
                       );
                     }),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 8),
                     _goToLoginScreenSection(context),
-                    const SizedBox(height: 50),
+                    const SizedBox(height: 60),
                     SaveButton(
                       text: 'ثبت نام',
                       onPressed: () => authController.signup(),

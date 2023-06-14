@@ -65,13 +65,6 @@ class LoginScreen extends StatelessWidget {
                     );
                   }),
                   const SizedBox(height: 8),
-                  const Divider(
-                    color: Color(0xffCACACF),
-                    indent: 120,
-                    endIndent: 120,
-                    thickness: 2,
-                    height: 20,
-                  ),
                   _goToSignUpScreen(context),
                   const SizedBox(height: 180),
                   SaveButton(
@@ -88,17 +81,28 @@ class LoginScreen extends StatelessWidget {
   }
 
   Widget _goToSignUpScreen(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Get.offAndToNamed(AppRoutes.signUpScreen);
-      },
-      child: Text(
-        'ساخت حساب کاربری',
-        style: Theme.of(context).textTheme.bodySmall!.copyWith(
-              fontSize: 14,
-              color: AppColors.primaryColor,
-            ),
-      ),
+    return Column(
+      children: [
+        const Divider(
+          color: Color(0xffCACACF),
+          indent: 120,
+          endIndent: 120,
+          thickness: 2,
+          height: 20,
+        ),
+        GestureDetector(
+          onTap: () {
+            Get.offAndToNamed(AppRoutes.signUpScreen);
+          },
+          child: Text(
+            'ساخت حساب کاربری',
+            style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                  fontSize: 14,
+                  color: AppColors.primaryColor,
+                ),
+          ),
+        ),
+      ],
     );
   }
 }
