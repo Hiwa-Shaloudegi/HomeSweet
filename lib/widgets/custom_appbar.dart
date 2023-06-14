@@ -69,7 +69,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       height: 80,
       margin: const EdgeInsets.only(right: 8),
       decoration: BoxDecoration(
-        // color: Colors.grey,
+        border: Border.all(color: AppColors.primaryColor, width: 0.75),
         shape: BoxShape.circle,
         image: const DecorationImage(
           image: AssetImage('assets/images/manager.png'),

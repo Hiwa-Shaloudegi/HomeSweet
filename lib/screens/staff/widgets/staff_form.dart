@@ -225,22 +225,28 @@ class StaffForm extends StatelessWidget {
                 // ),
                 Positioned(
                   top: Get.height * 0.25 - 70,
-                  right: (Get.width - Get.width * 0.26) / 2,
-                  child: SizedBox(
-                    width: Get.width * 0.26,
-                    height: Get.width * 0.26,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(100),
-                      child: Image.asset(
-                        'assets/images/manager.png',
-                        fit: BoxFit.contain,
+                  left: Get.width * 0.5 - (Get.width * 0.26) * 0.5,
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Container(
+                      width: Get.width * 0.26,
+                      height: Get.width * 0.26,
+                      margin: const EdgeInsets.only(right: 8),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                            color: AppColors.primaryColor, width: 0.75),
+                        image: const DecorationImage(
+                          image: AssetImage('assets/images/manager.png'),
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                   ),
                 ),
                 Positioned(
-                  top: Get.height * 0.25 + 2,
-                  right: ((Get.width - Get.width * 0.26) / 2) - 6,
+                  top: Get.height * 0.25,
+                  right: ((Get.width - Get.width * 0.26) / 2) - 5,
                   child: const Icon(
                     Icons.camera_enhance,
                     color: AppColors.primaryColor,

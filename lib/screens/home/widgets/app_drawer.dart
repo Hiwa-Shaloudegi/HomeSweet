@@ -35,7 +35,7 @@ class SettingDrawer extends StatelessWidget {
               const SizedBox(height: 30),
               _profileSection(textTheme),
               const SizedBox(height: 24),
-              ...itemsList(),
+              ...itemsList(context),
             ],
           ),
         ),
@@ -51,10 +51,10 @@ class SettingDrawer extends StatelessWidget {
             width: 110,
             height: 110,
             margin: const EdgeInsets.only(right: 8),
-            decoration: const BoxDecoration(
-              // color: Colors.grey,
+            decoration: BoxDecoration(
               shape: BoxShape.circle,
-              image: DecorationImage(
+              border: Border.all(color: AppColors.primaryColor, width: 0.75),
+              image: const DecorationImage(
                 image: AssetImage('assets/images/manager.png'),
                 fit: BoxFit.cover,
               ),
@@ -137,12 +137,20 @@ class SettingDrawer extends StatelessWidget {
     );
   }
 
-  List itemsList() {
+  List itemsList(BuildContext context) {
     return [
       SettingItem(
         title: 'حساب کاربری',
         icon: const Icon(MyCustomIcon.profile),
-        onTap: () {},
+        onTap: () async {
+          staffController.staffToUpdate =
+              mainController.authController.loggedInUser;
+          staffController.loadSelectedStaffData();
+
+          await showStaffFormBottomSheet(context).then(
+            (value) => staffController.resetForm(),
+          );
+        },
       ),
       SettingItem(
         title: 'تم اپلیکیشن',
