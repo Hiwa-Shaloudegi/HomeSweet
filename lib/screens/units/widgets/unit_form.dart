@@ -97,45 +97,48 @@ class UnitForm extends StatelessWidget {
                     // },
                   ),
                   const SizedBox(height: 16),
-                  Row(
-                    children: [
-                      const Text('وضعیت سکونت: '),
-                      Radio(
-                        value: 1,
-                        groupValue: unitFormController.radioGroupValue,
-                        onChanged: (value) =>
-                            unitFormController.radioOnChanged(value),
-                        visualDensity: VisualDensity.compact,
-                        fillColor: const MaterialStatePropertyAll(
-                          AppColors.primaryColor,
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [
+                        const Text('وضعیت سکونت: '),
+                        Radio(
+                          value: 1,
+                          groupValue: unitFormController.radioGroupValue,
+                          onChanged: (value) =>
+                              unitFormController.radioOnChanged(value),
+                          visualDensity: VisualDensity.compact,
+                          fillColor: const MaterialStatePropertyAll(
+                            AppColors.primaryColor,
+                          ),
                         ),
-                      ),
-                      const Text('مالک'),
-                      const SizedBox(width: 8),
-                      Radio(
-                        value: 2,
-                        groupValue: unitFormController.radioGroupValue,
-                        onChanged: (value) =>
-                            unitFormController.radioOnChanged(value),
-                        visualDensity: VisualDensity.compact,
-                        fillColor: const MaterialStatePropertyAll(
-                          AppColors.primaryColor,
+                        const Text('مالک'),
+                        const SizedBox(width: 8),
+                        Radio(
+                          value: 2,
+                          groupValue: unitFormController.radioGroupValue,
+                          onChanged: (value) =>
+                              unitFormController.radioOnChanged(value),
+                          visualDensity: VisualDensity.compact,
+                          fillColor: const MaterialStatePropertyAll(
+                            AppColors.primaryColor,
+                          ),
                         ),
-                      ),
-                      const Text('خالی'),
-                      const SizedBox(width: 8),
-                      Radio(
-                        value: 3,
-                        groupValue: unitFormController.radioGroupValue,
-                        onChanged: (value) =>
-                            unitFormController.radioOnChanged(value),
-                        visualDensity: VisualDensity.compact,
-                        fillColor: const MaterialStatePropertyAll(
-                          AppColors.primaryColor,
+                        const Text('خالی'),
+                        const SizedBox(width: 8),
+                        Radio(
+                          value: 3,
+                          groupValue: unitFormController.radioGroupValue,
+                          onChanged: (value) =>
+                              unitFormController.radioOnChanged(value),
+                          visualDensity: VisualDensity.compact,
+                          fillColor: const MaterialStatePropertyAll(
+                            AppColors.primaryColor,
+                          ),
                         ),
-                      ),
-                      const Text('اجاره'),
-                    ],
+                        const Text('اجاره'),
+                      ],
+                    ),
                   ),
                   const Divider(
                     color: AppColors.dividerColor,

@@ -23,7 +23,11 @@ class MainScreen extends StatelessWidget {
       builder: (mainController) => Scaffold(
         extendBodyBehindAppBar: true,
         appBar: mainController.currentIndex == 2 ? null : CustomAppBar(),
-        drawer: SettingDrawer(),
+        drawer: Drawer(
+            width: Get.width,
+            backgroundColor: Colors.white,
+            child: SingleChildScrollView(
+                scrollDirection: Axis.vertical, child: SettingDrawer())),
         body: _buildPageBody(mainController.currentIndex),
         bottomNavigationBar: NavBar(),
       ),
