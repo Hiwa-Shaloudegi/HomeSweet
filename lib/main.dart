@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:home_sweet/constants/colors.dart';
 import 'package:home_sweet/controllers/login_form_controller.dart';
 import 'package:home_sweet/controllers/main_controller.dart';
 import 'package:home_sweet/controllers/signup_form_controller.dart';
 
 import 'controllers/auth_controller.dart';
-import 'controllers/staff_controller.dart';
 import 'controllers/theme_controller.dart';
 import 'routes/pages.dart';
 import 'routes/routes.dart';
@@ -17,7 +17,11 @@ Future<void> initApp() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   SystemChrome.setSystemUIOverlayStyle(
-    const SystemUiOverlayStyle(statusBarColor: Colors.transparent),
+    const SystemUiOverlayStyle(
+      statusBarColor: Colors.black12,
+      systemNavigationBarColor: Color(0xFFFAFAFA),
+      systemNavigationBarIconBrightness: Brightness.dark,
+    ),
   );
 
   await GetStorage.init();
@@ -55,9 +59,10 @@ class TheApp extends StatelessWidget {
       darkTheme: AppTheme.darkTheme(),
       themeMode:
           _themeController.switchValue ? ThemeMode.light : ThemeMode.dark,
-      initialRoute: authController.isUserLoggedIn
-          ? AppRoutes.mainScreen
-          : AppRoutes.loginScreen,
+      initialRoute: AppRoutes.splashScreen,
+      // authController.isUserLoggedIn
+      //     ? AppRoutes.splashScreen
+      //     : AppRoutes.loginScreen,
       getPages: AppPages.getPages,
     );
   }

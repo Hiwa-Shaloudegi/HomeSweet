@@ -3,6 +3,7 @@ import 'package:home_sweet/screens/apartment/apartment_form_page.dart';
 import 'package:home_sweet/screens/charge/charge_page.dart';
 import 'package:home_sweet/screens/costs/costs_page.dart';
 import 'package:home_sweet/screens/home/main_screen.dart';
+import 'package:home_sweet/screens/splash/splash_screen.dart';
 import 'package:home_sweet/screens/staff/staff_page.dart';
 import 'package:home_sweet/screens/units/unit_page.dart';
 
@@ -13,6 +14,7 @@ import 'routes.dart';
 class AppPages {
   AppPages._();
   static final List<GetPage> getPages = [
+    GetPage(name: AppRoutes.splashScreen, page: () => SplashScreen()),
     GetPage(name: AppRoutes.mainScreen, page: () => MainScreen()),
     GetPage(name: AppRoutes.loginScreen, page: () => LoginScreen()),
     GetPage(name: AppRoutes.signUpScreen, page: () => SignUpScreen()),

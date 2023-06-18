@@ -40,6 +40,10 @@ flutter:
         - asset: assets/fonts/IranSans_medium.ttf
         - asset: assets/fonts/IranSans_bold.ttf
         
+    - family: ghasem
+      fonts:
+        - asset: assets/fonts/AGhasem.ttf
+        
     - family:  MyCustomIcon
       fonts:
        - asset: assets/fonts/MyCustomIcon.ttf
