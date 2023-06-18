@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:home_sweet/screens/auth/widgets/custom_text_field.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../controllers/costs_controller.dart';
+import '../../themes/app_theme.dart';
 import '../../widgets/empty_state.dart';
 import '../../widgets/fab.dart';
 import 'widgets/cost_bottomsheet.dart';

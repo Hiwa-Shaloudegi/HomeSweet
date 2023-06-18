@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 import '../themes/app_theme.dart';
 
 class EmptyState extends StatelessWidget {
   final String message;
 
-  const EmptyState({
-    super.key,
-    required this.message,
-  });
+  const EmptyState({super.key, required this.message});
 
   @override
   Widget build(BuildContext context) {
@@ -19,14 +17,12 @@ class EmptyState extends StatelessWidget {
           SizedBox(
             height: 400,
             child: Center(
-              child: Image.asset(
-                'assets/images/empty.png',
-                fit: BoxFit.cover,
-                width: double.infinity,
-              ),
-              // SvgPicture.asset(
-              //   'assets/images/empty.svg',
+              child: Lottie.asset('assets/lotties/not_found.json'),
+
+              // Image.asset(
+              //   'assets/images/empty.png',
               //   fit: BoxFit.cover,
+              //   width: double.infinity,
               // ),
             ),
           ),
