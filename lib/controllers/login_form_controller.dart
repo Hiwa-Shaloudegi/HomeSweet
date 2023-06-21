@@ -12,12 +12,12 @@ class LoginFormController extends GetxController {
 
   bool isPasswordVisible = false;
 
-  @override
-  void onClose() {
-    super.onClose();
-    usernameTextController.clear();
-    passwordTextController.clear();
-  }
+  // @override
+  // void onClose() {
+  //   super.onClose();
+  //   usernameTextController.clear();
+  //   passwordTextController.clear();
+  // }
 
   void togglePasswordVisibility() {
     isPasswordVisible = !isPasswordVisible;

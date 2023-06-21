@@ -14,7 +14,8 @@ class ApartmentFormPage extends StatelessWidget {
   ApartmentFormPage({super.key});
 
   // Controllers
-  final apartmentFormController = Get.put(ApartmentFormController());
+  final apartmentFormController =
+      Get.put(ApartmentFormController(), permanent: true);
 
   // UI
   @override

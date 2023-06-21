@@ -18,8 +18,8 @@ class ApartmentFormController extends GetxController {
   String address = '';
   String chargeAmount = '';
   String budget = '';
-  int storyNumber = 0;
-  int unitNumber = 0;
+  int storyNumber = 1;
+  int unitNumber = 1;
 
   Apartment? apartment;
 
