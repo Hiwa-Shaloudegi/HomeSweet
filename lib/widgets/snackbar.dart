@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:home_sweet/constants/colors.dart';
+import 'package:sweet_home/constants/colors.dart';
 
 class AppSnackbar {
   AppSnackbar._();

@@ -1,20 +1,18 @@
-import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:home_sweet/constants/colors.dart';
-import 'package:home_sweet/controllers/staff_controller.dart';
-import 'package:home_sweet/screens/auth/widgets/custom_text_field.dart';
-import 'package:home_sweet/screens/staff/widgets/staff_bottomsheet.dart';
-import 'package:home_sweet/screens/staff/widgets/staff_item.dart';
+import 'package:sweet_home/constants/colors.dart';
+import 'package:sweet_home/controllers/staff_controller.dart';
+import 'package:sweet_home/screens/auth/widgets/custom_text_field.dart';
+import 'package:sweet_home/screens/staff/widgets/staff_bottomsheet.dart';
+import 'package:sweet_home/screens/staff/widgets/staff_item.dart';
 
 import '../../controllers/auth_controller.dart';
 import '../../widgets/empty_state.dart';
 import '../../widgets/fab.dart';
 
 class StaffPage extends StatefulWidget {
-  StaffPage({super.key});
+  const StaffPage({super.key});
 
   @override
   State<StaffPage> createState() => _StaffPageState();
@@ -148,7 +146,7 @@ class _StaffPageState extends State<StaffPage> {
           ),
           floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
           body: authController.isLoading
-              ? Center(
+              ? const Center(
                   child: CircularProgressIndicator(),
                 )
               : SafeArea(

@@ -1,14 +1,12 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:home_sweet/database/owner_repository.dart';
-import 'package:home_sweet/database/tenant_repository.dart';
-import 'package:home_sweet/database/unit_repository.dart';
-import 'package:home_sweet/models/owner.dart';
-import 'package:home_sweet/models/tenant.dart';
-import 'package:home_sweet/models/unit.dart';
-import 'package:home_sweet/utils/extensions.dart';
+import 'package:sweet_home/database/owner_repository.dart';
+import 'package:sweet_home/database/tenant_repository.dart';
+import 'package:sweet_home/database/unit_repository.dart';
+import 'package:sweet_home/models/owner.dart';
+import 'package:sweet_home/models/tenant.dart';
+import 'package:sweet_home/models/unit.dart';
+import 'package:sweet_home/utils/extensions.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../routes/routes.dart';
@@ -171,13 +169,6 @@ class UnitFormController extends GetxController {
     return null;
   }
 
-  //TODO:!
-  // void radioOnSaved() {
-  //   if (unitStatus == UnitStatus.tenant) {
-
-  //   }
-  // }
-  // Database
   saveData() async {
     if (validate()) {
       saveUnitInputs();
@@ -444,7 +435,7 @@ class UnitFormController extends GetxController {
 
         // Also removes the unit from list of costs state.
         allUnits.removeWhere((unit) => unit.id == id);
-        AppSnackbar.successSnackbar('اطلاعلات واحد با موفقیت حذف شد.');
+        AppSnackbar.successSnackbar('اطلاعات واحد با موفقیت حذف شد.');
         isLoading = false;
 
         update();

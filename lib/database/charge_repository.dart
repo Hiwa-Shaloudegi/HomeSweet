@@ -1,4 +1,4 @@
-import 'package:home_sweet/models/cost.dart';
+import 'package:sweet_home/models/cost.dart';
 
 import '../models/charge.dart';
 import 'db_helper.dart';

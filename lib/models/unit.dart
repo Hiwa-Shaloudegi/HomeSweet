@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'tenant.dart';
 import 'owner.dart';
 

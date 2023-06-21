@@ -1,4 +1,4 @@
-import 'package:home_sweet/models/apartment.dart';
+import 'package:sweet_home/models/apartment.dart';
 
 import 'db_helper.dart';
 
@@ -21,13 +21,12 @@ class ApartmentRepository {
       ApartmentTable.name,
       columns: ApartmentTable.allColumns,
       where: '${ApartmentTable.id} = ?',
-      whereArgs: [id], //TODO: 1
+      whereArgs: [id],
     );
 
     if (maps.isNotEmpty) {
       return Apartment.fromMap(maps.first);
     } else {
-      //TODO: should return null OR throw exception ?
       // throw Exception('ID $id not found');
       return null;
     }
@@ -40,7 +39,7 @@ class ApartmentRepository {
       ApartmentTable.name,
       apartment.toMap(),
       where: '${ApartmentTable.id} = ?',
-      whereArgs: [apartment.id], //TODO: 1
+      whereArgs: [apartment.id],
     );
   }
 
@@ -50,7 +49,7 @@ class ApartmentRepository {
     return await db.delete(
       ApartmentTable.name,
       where: '${ApartmentTable.id} = ?',
-      whereArgs: [id], //TODO: 1
+      whereArgs: [id],
     );
   }
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:home_sweet/utils/extensions.dart';
+import 'package:sweet_home/utils/extensions.dart';
 
 import '../constants/colors.dart';
 

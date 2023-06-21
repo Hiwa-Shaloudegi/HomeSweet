@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:home_sweet/controllers/costs_controller.dart';
-import 'package:home_sweet/database/cost_repository.dart';
-import 'package:home_sweet/utils/extensions.dart';
+import 'package:sweet_home/controllers/costs_controller.dart';
+import 'package:sweet_home/database/cost_repository.dart';
+import 'package:sweet_home/utils/extensions.dart';
 
 import '../../../constants/colors.dart';
 import '../../../models/cost.dart';

@@ -1,4 +1,4 @@
-import 'package:home_sweet/models/cost.dart';
+import 'package:sweet_home/models/cost.dart';
 
 import 'db_helper.dart';
 
@@ -27,7 +27,6 @@ class CostRepository {
     if (maps.isNotEmpty) {
       return Cost.fromMap(maps.first);
     } else {
-      //TODO: should return null OR throw exception ?
       // throw Exception('ID $id not found');
       return null;
     }

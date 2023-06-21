@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:home_sweet/controllers/auth_controller.dart';
 
 class SaveButton extends StatelessWidget {
   final String text;

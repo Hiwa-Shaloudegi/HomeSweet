@@ -39,19 +39,6 @@ class Charge {
     date = map[ChargeTable.date];
     amount = map[ChargeTable.amount];
     unitId = map[ChargeTable.unitId];
-    //! TODO: unit obj
-    // unit = Unit(
-    //   id: map['ownerId'],
-    //   floor: map['floor'],
-    //   number: map['number'],
-    //   phoneNumber: map['unitPhoneNumber'],
-    //   unitStatus: map['unitStatus'],
-    //   ownerId: map['ownerId'],
-    //   tenantId: map['tenantId'],
-    //   owner: Owner(),
-    //   //! TODO: tenant obj
-    //   tenant: map['tenantId'] != null ? Tenant() : null,
-    // );
   }
 
   Map<String, dynamic> toMap() {

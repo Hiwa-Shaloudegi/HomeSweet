@@ -2,8 +2,8 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:home_sweet/controllers/auth_controller.dart';
-import 'package:home_sweet/utils/extensions.dart';
+import 'package:sweet_home/controllers/auth_controller.dart';
+import 'package:sweet_home/utils/extensions.dart';
 
 import '../database/staff_repository.dart';
 import '../models/staff.dart';
@@ -69,6 +69,7 @@ class StaffController extends GetxController {
       role = 'lobby man';
     }
     update();
+    return null;
   }
 
   void togglePasswordVisibility() {
@@ -259,8 +260,8 @@ class StaffController extends GetxController {
           // Also removes the staff from list of costs state.
           AppSnackbar.successSnackbar(
             staffToDelete.role == 'manager'
-                ? 'اطلاعلات مدیر با موفقیت حذف شد.'
-                : 'اطلاعلات لابی من با موفقیت حذف شد.',
+                ? 'اطلاعات مدیر با موفقیت حذف شد.'
+                : 'اطلاعات لابی من با موفقیت حذف شد.',
           );
         }
         isLoading = false;

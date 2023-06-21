@@ -52,7 +52,6 @@ class ChargePage extends StatelessWidget {
                           physics: const BouncingScrollPhysics(),
                           itemCount: chargeController.allCharges.length,
                           itemBuilder: (context, index) {
-                            //TODO*: better solution?
                             return FutureBuilder<Unit?>(
                               future: chargeController.getRelatedUnit(
                                   chargeController.allCharges[index]),

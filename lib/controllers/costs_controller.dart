@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:home_sweet/database/cost_repository.dart';
-import 'package:home_sweet/routes/routes.dart';
-import 'package:home_sweet/widgets/app_dialog.dart';
+import 'package:sweet_home/controllers/apartment_form_controller.dart';
+import 'package:sweet_home/database/cost_repository.dart';
+import 'package:sweet_home/routes/routes.dart';
+import 'package:sweet_home/widgets/app_dialog.dart';
 
 import '../models/cost.dart';
 import '../widgets/snackbar.dart';
@@ -59,9 +60,7 @@ class CostsController extends GetxController {
   }
 
   void addnumberOfUnits() {
-    //TODO: get the units number from apartment table?
-    //!
-    if (numberOfUnits < 5) {
+    if (numberOfUnits < Get.find<ApartmentFormController>().unitNumber) {
       numberOfUnits++;
       update();
     }
@@ -111,7 +110,6 @@ class CostsController extends GetxController {
     //Reversing the list to get the recent added items first.
     allCosts = List.from(allCosts.reversed);
 
-    //TODO: delay
     await Future.delayed(const Duration(milliseconds: 500));
     isLoading = false;
     update();
@@ -217,7 +215,7 @@ class CostsController extends GetxController {
 
         // Also removes the cost from list of costs state.
         allCosts.removeWhere((cost) => cost.id == id);
-        AppSnackbar.successSnackbar('اطلاعلات هزینه با موفقیت حذف شد.');
+        AppSnackbar.successSnackbar('اطلاعات هزینه با موفقیت حذف شد.');
 
         update();
       },

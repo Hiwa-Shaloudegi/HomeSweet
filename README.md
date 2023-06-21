@@ -1,3 +1,3 @@
-# home_sweet
+# sweet_home
 
 A new Flutter project.

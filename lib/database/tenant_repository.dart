@@ -1,4 +1,4 @@
-import 'package:home_sweet/models/tenant.dart';
+import 'package:sweet_home/models/tenant.dart';
 
 import 'db_helper.dart';
 

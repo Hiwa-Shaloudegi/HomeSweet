@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:home_sweet/database/charge_repository.dart';
-import 'package:home_sweet/database/unit_repository.dart';
-import 'package:home_sweet/routes/routes.dart';
-import 'package:home_sweet/utils/extensions.dart';
-import 'package:home_sweet/widgets/snackbar.dart';
+import 'package:sweet_home/database/charge_repository.dart';
+import 'package:sweet_home/database/unit_repository.dart';
+import 'package:sweet_home/routes/routes.dart';
+import 'package:sweet_home/utils/extensions.dart';
+import 'package:sweet_home/widgets/snackbar.dart';
 
 import '../models/charge.dart';
 import '../models/unit.dart';
@@ -112,12 +112,6 @@ class ChargeController extends GetxController {
     super.onInit();
   }
 
-  @override
-  void onClose() {
-    // TODO: implement onClose
-    super.onClose();
-  }
-
   bool isLoading = false;
   loadData() async {
     isLoading = true;
@@ -175,8 +169,7 @@ class ChargeController extends GetxController {
       Navigator.of(Get.overlayContext!)
           .popUntil(ModalRoute.withName(AppRoutes.chargePage));
 
-      AppSnackbar.successSnackbar(
-          'اطلاعات ${title} با موفقیت ثبت شد.'); //TODO: charge or somthing else.
+      AppSnackbar.successSnackbar('اطلاعات $title با موفقیت ثبت شد.');
     } catch (e) {
       throw Exception('CATCH ERROR: $e');
     } finally {
@@ -258,7 +251,7 @@ class ChargeController extends GetxController {
 
         // Also removes the charge from list of costs state.
         allCharges.removeWhere((charge) => charge.id == id);
-        AppSnackbar.successSnackbar('اطلاعلات قبض با موفقیت حذف شد.');
+        AppSnackbar.successSnackbar('اطلاعات قبض با موفقیت حذف شد.');
 
         update();
       },

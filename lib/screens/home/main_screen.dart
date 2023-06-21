@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:home_sweet/screens/apartment/apartment_form_page.dart';
+import 'package:sweet_home/screens/apartment/apartment_form_page.dart';
 
 import '../../controllers/apartment_form_controller.dart';
 import '../../controllers/main_controller.dart';

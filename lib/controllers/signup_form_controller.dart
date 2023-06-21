@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:home_sweet/utils/extensions.dart';
+import 'package:sweet_home/utils/extensions.dart';
 
 class SignupFormController extends GetxController {
   final formKey = GlobalKey<FormState>();
@@ -39,6 +39,7 @@ class SignupFormController extends GetxController {
   void Function(String?)? roleGroupValueOnChanged(String? newValue) {
     roleGroupValue = newValue!;
     update();
+    return null;
   }
 
   bool validate() {

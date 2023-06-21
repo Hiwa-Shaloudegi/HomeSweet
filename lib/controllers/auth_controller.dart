@@ -2,10 +2,9 @@ import 'dart:developer';
 
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:home_sweet/controllers/staff_controller.dart';
-import 'package:home_sweet/database/apartment_repository.dart';
-import 'package:home_sweet/database/staff_repository.dart';
-import 'package:home_sweet/models/staff.dart';
+import 'package:sweet_home/database/apartment_repository.dart';
+import 'package:sweet_home/database/staff_repository.dart';
+import 'package:sweet_home/models/staff.dart';
 
 import '../constants/storage_keys.dart';
 import '../widgets/snackbar.dart';

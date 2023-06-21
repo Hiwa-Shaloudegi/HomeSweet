@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:home_sweet/controllers/main_controller.dart';
+import 'package:sweet_home/controllers/main_controller.dart';
 
 import '../constants/colors.dart';
 import '../my_custom_icon_icons.dart';

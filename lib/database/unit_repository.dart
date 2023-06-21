@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import '../models/owner.dart';
 import '../models/tenant.dart';
 import '../models/unit.dart';
@@ -90,7 +88,7 @@ class UnitRepository {
         unit.floor,
         unit.number,
         unit.phoneNumber,
-        unit.unitStatus, //TODO: maybe --> toString()
+        unit.unitStatus,
       ],
     );
 
@@ -104,14 +102,14 @@ class UnitRepository {
   static Future<int> update(Unit unit) async {
     var db = await _databaseHelper.database;
 
-    var a = await db.update(
+    var numberOfChanges = await db.update(
       UnitTable.name,
       unit.toMap(),
       where: '${UnitTable.id} = ?',
       whereArgs: [unit.id],
     );
 
-    return a; //TODO: delete this
+    return numberOfChanges;
   }
 
   static Future<int> delete(int id) async {

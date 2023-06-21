@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:home_sweet/database/apartment_repository.dart';
-import 'package:home_sweet/models/apartment.dart';
+import 'package:sweet_home/database/apartment_repository.dart';
+import 'package:sweet_home/models/apartment.dart';
 
 import '../routes/routes.dart';
 import '../widgets/snackbar.dart';

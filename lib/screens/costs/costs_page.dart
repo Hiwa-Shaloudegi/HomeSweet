@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:home_sweet/screens/auth/widgets/custom_text_field.dart';
-import 'package:lottie/lottie.dart';
+import 'package:sweet_home/screens/auth/widgets/custom_text_field.dart';
 
 import '../../controllers/costs_controller.dart';
-import '../../themes/app_theme.dart';
 import '../../widgets/empty_state.dart';
 import '../../widgets/fab.dart';
 import 'widgets/cost_bottomsheet.dart';
@@ -32,7 +30,6 @@ class CostsPage extends StatelessWidget {
         child: GetBuilder<CostsController>(
           builder: (costsController) {
             if (costsController.isLoading) {
-              //TODO: create a beautiful loading widget
               return const Center(child: CircularProgressIndicator());
             } else {
               return costsController.allCosts.isEmpty

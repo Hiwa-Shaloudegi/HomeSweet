@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:home_sweet/controllers/auth_controller.dart';
+import 'package:sweet_home/controllers/auth_controller.dart';
 
 class MainController extends GetxController {
   // Controllers

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:home_sweet/constants/colors.dart';
-import 'package:home_sweet/controllers/auth_controller.dart';
-import 'package:home_sweet/routes/routes.dart';
+import 'package:sweet_home/constants/colors.dart';
+import 'package:sweet_home/controllers/auth_controller.dart';
+import 'package:sweet_home/routes/routes.dart';
 import 'package:lottie/lottie.dart';
 
 class SplashScreen extends StatefulWidget {

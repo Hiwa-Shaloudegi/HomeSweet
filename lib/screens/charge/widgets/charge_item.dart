@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:home_sweet/database/charge_repository.dart';
-import 'package:home_sweet/screens/charge/widgets/charge_bottomsheet.dart';
-import 'package:home_sweet/utils/extensions.dart';
+import 'package:sweet_home/database/charge_repository.dart';
+import 'package:sweet_home/screens/charge/widgets/charge_bottomsheet.dart';
+import 'package:sweet_home/utils/extensions.dart';
 
 import '../../../constants/colors.dart';
 import '../../../controllers/charge_controller.dart';

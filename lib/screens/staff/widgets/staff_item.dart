@@ -1,11 +1,9 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:home_sweet/controllers/auth_controller.dart';
-import 'package:home_sweet/controllers/staff_controller.dart';
-import 'package:home_sweet/database/staff_repository.dart';
-import 'package:home_sweet/utils/extensions.dart';
+import 'package:sweet_home/controllers/auth_controller.dart';
+import 'package:sweet_home/controllers/staff_controller.dart';
+import 'package:sweet_home/database/staff_repository.dart';
+import 'package:sweet_home/utils/extensions.dart';
 
 import '../../../constants/colors.dart';
 import '../../../models/staff.dart';
@@ -32,7 +30,7 @@ class StaffItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<StaffController>(builder: (staffController) {
       return Get.find<AuthController>().loggedInUser == null
-          ? Center()
+          ? const Center()
           : Container(
               width: double.infinity,
               height: totalHeight,

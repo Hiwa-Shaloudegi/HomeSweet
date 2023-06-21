@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:home_sweet/widgets/custom_dropdown.dart';
+import 'package:sweet_home/widgets/custom_dropdown.dart';
 
 import '../../../constants/colors.dart';
 import '../../../controllers/apartment_form_controller.dart';

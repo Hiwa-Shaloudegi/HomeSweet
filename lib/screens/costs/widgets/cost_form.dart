@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:home_sweet/utils/extensions.dart';
+import 'package:sweet_home/utils/extensions.dart';
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 
 import '../../../controllers/costs_controller.dart';

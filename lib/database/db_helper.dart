@@ -1,7 +1,6 @@
 import 'dart:developer';
 
-import 'package:flutter/material.dart';
-import 'package:home_sweet/models/apartment.dart';
+import 'package:sweet_home/models/apartment.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -144,7 +143,5 @@ class DatabaseHelper {
       ${ChargeTable.unitId} $foreignKeyType
       )
 """);
-
-    // TODO: Create other tables.
   }
 }

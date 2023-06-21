@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:home_sweet/constants/colors.dart';
-import 'package:home_sweet/controllers/apartment_form_controller.dart';
-import 'package:home_sweet/controllers/auth_controller.dart';
-import 'package:home_sweet/screens/auth/widgets/custom_text_field.dart';
-import 'package:home_sweet/screens/auth/widgets/save_button.dart';
-import 'package:home_sweet/utils/validators.dart';
+import 'package:sweet_home/constants/colors.dart';
+import 'package:sweet_home/controllers/apartment_form_controller.dart';
+import 'package:sweet_home/controllers/auth_controller.dart';
+import 'package:sweet_home/screens/auth/widgets/custom_text_field.dart';
+import 'package:sweet_home/screens/auth/widgets/save_button.dart';
+import 'package:sweet_home/utils/validators.dart';
 
 import 'widgets/counter_icon_button.dart';
 import 'widgets/header_image.dart';
@@ -68,7 +68,6 @@ Widget apartmentFormBody() {
                               ? () => apartmentFormController.addStoryNumber()
                               : () {},
                         ),
-                        // TODO: Fix the input number by keyboard.
                         Text('${apartmentFormController.storyNumber}'),
                         CountIconButton.minus(
                           onPressed: authController.loggedInUser!.role ==
@@ -130,23 +129,6 @@ Widget apartmentFormBody() {
                     keyboardType: TextInputType.number,
                     validator: (value) =>
                         Validators.amountInputValidator(value),
-                    // onChanged: (value) {
-                    // TODO: FIX the issue: farsi number in textField
-                    //   if (value != null) {
-                    //     // apartmentFormController.budgetTextController.text =
-                    //     //     value.toTooman();
-
-                    //     // apartmentFormController.budgetTextController.text =
-                    //     //     value.toTooman();
-
-                    //     // ScaffoldMessenger.of(context).showSnackBar(
-                    //     //   SnackBar(
-                    //     //     content: Text(
-                    //     //         '${apartmentFormController.budgetTextController.text}'),
-                    //     //   ),
-                    //     // );
-                    //   }
-                    // },
                     onSaved: (newValue) =>
                         apartmentFormController.budgetOnSaved(newValue),
                   ),

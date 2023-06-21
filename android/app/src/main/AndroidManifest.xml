@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.home_sweet">
+    package="com.example.sweet_home">
    <application
-        android:label="home_sweet"
+        android:label="SweetHome"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

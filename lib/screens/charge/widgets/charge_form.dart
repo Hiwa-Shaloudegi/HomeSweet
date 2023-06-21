@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:home_sweet/controllers/charge_controller.dart';
-import 'package:home_sweet/utils/extensions.dart';
+import 'package:sweet_home/controllers/charge_controller.dart';
+import 'package:sweet_home/utils/extensions.dart';
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 
 import '../../../constants/colors.dart';
@@ -90,30 +90,10 @@ class ChargeForm extends StatelessWidget {
                           style: Theme.of(context).textTheme.bodyMedium,
                         ),
                         const SizedBox(height: 14),
-                        Container(
-                          // height:
-                          //     70, // set the height of the Container to your desired value
-                          // decoration: BoxDecoration(
-                          //   borderRadius: BorderRadius.circular(10),
-                          //   border: Border.all(
-                          //     color: Theme.of(context).dividerColor,
-                          //     width: 1,
-                          //   ),
-                          // ),
-                          //TODO: increase the height.
-                          child: ChargeDropdownButtonField(),
-                        ),
+                        ChargeDropdownButtonField(),
                       ],
                     ),
                   ),
-                  // CustomTextField(
-                  //   controller: chargeController.titleTextController,
-                  //   hintText: 'عنوان هزینه',
-                  //   keyboardType: TextInputType.text,
-                  //   validator: Validators.textInputValidator,
-                  //   onSaved: (newValue) =>
-                  //       chargeController.titleOnSaved(newValue),
-                  // ),
                   CustomTextField.datePicker(
                     controller: chargeController.dateTextController,
                     onTap: () async {

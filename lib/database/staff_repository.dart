@@ -1,5 +1,5 @@
-import 'package:home_sweet/models/staff.dart';
-import 'package:home_sweet/utils/extensions.dart';
+import 'package:sweet_home/models/staff.dart';
+import 'package:sweet_home/utils/extensions.dart';
 
 import 'db_helper.dart';
 

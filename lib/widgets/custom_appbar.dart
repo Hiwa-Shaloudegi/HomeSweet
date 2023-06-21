@@ -1,10 +1,8 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:home_sweet/controllers/auth_controller.dart';
-import 'package:home_sweet/controllers/staff_controller.dart';
-import 'package:home_sweet/routes/routes.dart';
+import 'package:sweet_home/controllers/auth_controller.dart';
+import 'package:sweet_home/controllers/staff_controller.dart';
+import 'package:sweet_home/routes/routes.dart';
 
 import '../constants/colors.dart';
 import '../controllers/main_controller.dart';

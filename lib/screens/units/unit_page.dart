@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:home_sweet/widgets/empty_state.dart';
+import 'package:sweet_home/widgets/empty_state.dart';
 
 import '../../controllers/unit_controller.dart';
 import '../../widgets/fab.dart';
@@ -32,7 +32,7 @@ class UnitPage extends StatelessWidget {
           } else {
             return unitFormController.allUnits.isEmpty
                 ? const EmptyState(message: 'هنوز هیچ واحدی ثبت نشده است.')
-                : UnitList();
+                : const UnitList();
           }
         },
       ),

@@ -1,5 +1,4 @@
-import 'package:home_sweet/models/cost.dart';
-import 'package:home_sweet/models/owner.dart';
+import 'package:sweet_home/models/owner.dart';
 
 import 'db_helper.dart';
 
@@ -28,7 +27,6 @@ class OwnerRepository {
     if (maps.isNotEmpty) {
       return Owner.fromMap(maps.first);
     } else {
-      //TODO: should return null OR throw exception ?
       // throw Exception('ID $id not found');
       return null;
     }

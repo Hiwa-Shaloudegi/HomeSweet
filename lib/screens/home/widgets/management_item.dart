@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:home_sweet/routes/routes.dart';
+import 'package:sweet_home/routes/routes.dart';
 
 // ignore: must_be_immutable
 class ManagementItem extends StatelessWidget {
