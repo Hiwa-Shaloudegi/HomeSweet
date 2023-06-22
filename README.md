@@ -7,8 +7,7 @@
   </p>
 
   <p align="left">
-    This app is local and is built using the Sqflite package. You can download the app from this <a href="https://github.com/Hiwa-Shaloudegi/sweet-          
-    home/releases/">link.</a>
+    This app is local and is built using the Sqflite package. You can download the app from this <a href="https://github.com/Hiwa-Shaloudegi/HomeSweet/releases/">link.</a>
   </p>
 
 </p>
